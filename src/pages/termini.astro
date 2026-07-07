@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, SLOTS } from '../config';
+---
+
+<Base title={`Termini di servizio — ${SITE.name}`} description="Condizioni essenziali del servizio in abbonamento: attivazione, pagamenti, pause, garanzia e proprietà del codice." floatCta={false}>
+  <article class="wrap terms">
+    <header>
+      <h1>Termini di servizio</h1>
+      <p class="updated">Ultimo aggiornamento: 7 luglio 2026</p>
+      <p class="intro">
+        Condizioni volutamente brevi e leggibili. Regolano il servizio di product engineering in abbonamento offerto
+        da {SITE.name} ("io") al cliente ("tu"). Attivando un abbonamento le accetti.
+      </p>
+    </header>
+
+    <section>
+      <h2>1. Il servizio</h2>
+      <p>
+        L'abbonamento include l'attività di un product engineer senior sul tuo prodotto: discovery, sviluppo, review e
+        rilascio in produzione. Si lavora su <strong>una priorità attiva alla volta</strong>, definita insieme su una
+        board condivisa, con aggiornamenti asincroni e risposta entro 24 ore lavorative (lun–ven, festività italiane
+        escluse). Non sono inclusi: reperibilità h24, on-call e attività non concordate sulla board.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Attivazione e pagamenti</h2>
+      <p>
+        Il pagamento è anticipato, a inizio periodo (mese, trimestre o sprint), tramite abbonamento con carta o
+        addebito SEPA, oppure bonifico su fattura con scadenza a 7 giorni. Il lavoro inizia alla conferma
+        dell'incasso. Per ogni incasso viene emessa regolare fattura elettronica. Tutti i prezzi si intendono IVA
+        esclusa.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Slot limitati</h2>
+      <p>
+        Per garantire qualità e tempi di risposta, tengo attivi al massimo {SLOTS.total} abbonamenti
+        contemporaneamente. L'attivazione è quindi soggetta a disponibilità; il piano trimestrale riserva lo slot per
+        tutta la durata del trimestre.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Pausa e disdetta</h2>
+      <p>
+        Puoi mettere in pausa l'abbonamento a fine mese, senza penali: lo slot resta riservato per 30 giorni e i
+        periodi non utilizzati non si pagano. Puoi disdire in qualsiasi momento, con effetto alla fine del periodo già
+        pagato. Se interrompi un trimestrale prima della scadenza, i mesi già goduti vengono ricalcolati alla tariffa
+        mensile. Anch'io posso interrompere il servizio con 30 giorni di preavviso, rimborsando i periodi pagati e non
+        goduti.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Garanzia primo mese</h2>
+      <p>
+        Se sei un nuovo cliente sul piano Solo: primo deploy in produzione entro 5 giorni lavorativi dal kickoff, o il
+        primo mese è gratuito. La garanzia presuppone che gli accessi necessari (repository, ambienti) siano forniti
+        al kickoff; il criterio è oggettivo — o il codice è in produzione, o non lo è.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Proprietà del lavoro</h2>
+      <p>
+        Tutto ciò che produco per te — codice, design, documentazione — è tuo dal primo giorno: il codice vive nel tuo
+        repository, senza alcun lock-in. Mi riservo la possibilità di citare il progetto come caso studio in forma
+        anonimizzata o previa tua approvazione; se preferisci la riservatezza totale, basta dirlo.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Riservatezza</h2>
+      <p>
+        Le informazioni non pubbliche scambiate durante la collaborazione (codice, dati, metriche, strategie) restano
+        riservate, da entrambe le parti, anche dopo la fine del rapporto.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Responsabilità</h2>
+      <p>
+        Lavoro con la diligenza professionale di un senior, ma il software comporta rischi intrinseci: la mia
+        responsabilità complessiva è limitata all'importo dell'ultimo mese fatturato ed esclude danni indiretti
+        (mancato guadagno, perdita di dati causata da terzi, fermi non imputabili al mio lavoro).
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Legge applicabile</h2>
+      <p>
+        Questi termini sono regolati dalla legge italiana. Per qualsiasi dubbio, prima dei tribunali c'è la mia email:
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .terms{max-width:720px;padding-top:88px;padding-bottom:96px}
+  .terms h1{font-size:clamp(2.2rem,4.5vw,3.2rem);margin-bottom:12px}
+  .updated{font-size:.85rem;color:var(--muted);margin-bottom:24px}
+  .intro{color:var(--muted);font-size:1.05rem;margin-bottom:12px}
+  .terms section{margin-top:44px}
+  .terms h2{font-size:1.3rem;margin-bottom:12px}
+  .terms p{color:var(--muted);font-size:.98rem}
+  .terms p strong{color:var(--ink);font-weight:650}
+  .terms a{color:var(--accent);font-weight:600}
+</style>

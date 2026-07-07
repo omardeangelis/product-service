@@ -9,3 +9,17 @@ export const SITE = {
   email: 'omardeangelis.business@gmail.com',
   linkedin: 'https://www.linkedin.com/in/omar-de-angelis-879b5614b/',
 } as const;
+
+// Capienza del piano Solo. Quando un abbonamento parte o si chiude,
+// aggiorna `taken` e pusha: badge e note sul sito si aggiornano da soli.
+export const SLOTS = {
+  total: 2,
+  taken: 0,
+};
+
+// Payment link Stripe (interni: si mandano via email dopo la call, non sono
+// esposti sul sito). Da compilare quando i link vengono creati in dashboard.
+export const STRIPE_LINKS = {
+  soloMensile: '',
+  soloTrimestrale: '',
+};

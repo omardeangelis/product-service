@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../config';
+import { SITE, SLOTS } from '../config';
+
+const slotsFree = SLOTS.total - SLOTS.taken;
 ---
 
 <Base title={`Pricing — ${SITE.title}`} active="pricing">
@@ -25,6 +27,16 @@ import { SITE } from '../config';
 
         <div class="roster">
           <span class="member"><span class="avatar">👨‍💻</span><span>1 Product Engineer<small>senior · 10 anni di esperienza</small></span></span>
+          <span class:list={['member', 'slot-chip', { full: slotsFree === 0 }]}>
+            <span class="slot-dot"></span>
+            {
+              slotsFree === 0
+                ? 'Slot al completo — lista d’attesa'
+                : slotsFree === 1
+                  ? 'Ultimo slot disponibile'
+                  : `${slotsFree} slot su ${SLOTS.total} disponibili`
+            }
+          </span>
         </div>
 
         <div class="tiers">
@@ -243,6 +255,9 @@ import { SITE } from '../config';
     background:var(--accent-soft);
   }
   .roster .member small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;line-height:1.2}
+  .roster .slot-chip{background:var(--ok-soft);border-color:transparent;color:var(--ok);padding:7px 14px}
+  .roster .slot-chip .slot-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+  .roster .slot-chip.full{background:#f7efe0;color:#9a6a1b}
 
   /* ---------- free review banner ---------- */
   .freewrap{padding:16px 0 72px}

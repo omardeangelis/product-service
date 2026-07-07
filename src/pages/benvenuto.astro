@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+
+<Base
+  title={`Benvenuto a bordo — ${SITE.name}`}
+  description="Abbonamento attivato: ecco cosa succede adesso e come lavoreremo insieme."
+  nav="minimal"
+  floatCta={false}
+  noindex={true}
+>
+  <header class="hero wrap">
+    <div class="badge reveal in">Abbonamento attivato</div>
+    <h1 class="reveal in">Benvenuto a bordo.</h1>
+    <p class="lead reveal in">
+      Il pagamento è andato a buon fine — riceverai a breve la conferma di Stripe via email (la fattura arriva a
+      parte). Ecco esattamente cosa succede adesso, così non devi chiederti nulla.
+    </p>
+  </header>
+
+  <section class="wrap steps">
+    <ol>
+      <li class="card">
+        <span class="step-num">1</span>
+        <div>
+          <h3>Entro 24 ore lavorative ti arrivano gli inviti</h3>
+          <p>
+            Ti invito nella <strong>board Linear condivisa</strong> — dove vivono le priorità e lo stato di ogni
+            attività — e nel <strong>canale Slack</strong> per gli update rapidi. Due strumenti, zero meeting inutili.
+          </p>
+        </div>
+      </li>
+      <li class="card">
+        <span class="step-num">2</span>
+        <div>
+          <h3>Kickoff di 30 minuti</h3>
+          <p>
+            Una call operativa, non cerimoniale: mi dai il contesto, sistemiamo gli accessi (repository, staging,
+            analytics) e scegliamo insieme la <strong>prima priorità</strong>. Da qui parte il conto della garanzia:
+            primo deploy in produzione entro 5 giorni lavorativi.
+          </p>
+        </div>
+      </li>
+      <li class="card">
+        <span class="step-num">3</span>
+        <div>
+          <h3>Si spedisce</h3>
+          <p>
+            Una priorità attiva alla volta, update async su Slack, PR pronte per il merge. La prima arriva tipicamente
+            entro la prima settimana. Pausa o disdetta quando vuoi, dalla pagina di gestione del tuo abbonamento.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap prep">
+    <div class="card">
+      <h3>Per partire più veloci, tieni pronti:</h3>
+      <ul>
+        <li>l'accesso al repository (o chi può darmelo)</li>
+        <li>un referente unico per le decisioni di prodotto</li>
+        <li>le 2–3 cose che ti bruciano di più, anche solo in testa: le prioritizziamo al kickoff</li>
+        <li>eventuali accessi a staging e analytics, se esistono</li>
+      </ul>
+      <p class="note">
+        Hai pagato con addebito SEPA? L'incasso impiega qualche giorno lavorativo: gli inviti partono subito, il
+        lavoro parte alla conferma dell'incasso.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap contact">
+    <p>
+      Domande nel frattempo? Scrivimi: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero{padding:96px 24px 40px;max-width:760px}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ok-soft);color:var(--ok);
+    padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:28px;
+  }
+  .badge::before{content:"✓";font-weight:700}
+  .hero h1{margin-bottom:20px}
+  .hero .lead{max-width:600px}
+
+  .steps{max-width:760px;padding:24px 24px 0}
+  .steps ol{list-style:none;display:flex;flex-direction:column;gap:16px}
+  .steps .card{display:flex;gap:22px;align-items:flex-start;padding:30px 32px}
+  .step-num{
+    flex:none;width:38px;height:38px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:1.05rem;margin-top:2px;
+  }
+  .steps h3{margin-bottom:8px}
+  .steps p strong{color:var(--ink);font-weight:650}
+
+  .prep{max-width:760px;padding:16px 24px 0}
+  .prep .card{background:var(--accent-soft);border-color:transparent}
+  .prep ul{list-style:none;display:grid;gap:10px;margin-top:6px}
+  .prep li{padding-left:26px;position:relative;font-size:.95rem}
+  .prep li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .prep .note{margin-top:20px;font-size:.88rem;color:var(--muted)}
+
+  .contact{max-width:760px;padding:40px 24px 96px;color:var(--muted)}
+  .contact a{color:var(--accent);font-weight:600}
+</style>

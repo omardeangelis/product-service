@@ -1,19 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { SITE } from '../config';
+import { SITE, SLOTS } from '../config';
 
 const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
 );
 const caseCount = String(caseStudies.length).padStart(2, '0');
+
+const slotsFree = SLOTS.total - SLOTS.taken;
+const slotsLabel =
+  slotsFree === 0
+    ? 'Slot al completo — lista d’attesa aperta'
+    : slotsFree === 1
+      ? 'Ultimo slot disponibile'
+      : `${slotsFree} slot disponibili`;
 ---
 
 <Base>
   <!-- ============ HERO ============ -->
   <header class="hero">
     <div class="wrap">
-      <div class="badge">1 slot disponibile per Luglio</div>
+      <div class:list={['badge', { full: slotsFree === 0 }]}>{slotsLabel}</div>
       <h1>Building products that<br />solve <em>real problems</em>.</h1>
       <p class="lead">
         Sono Omar, <strong>Product Engineer freelance</strong> con 10 anni di esperienza. Un abbonamento mensile ti dà
@@ -296,6 +304,16 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
         </p>
       </div>
 
+      <p class:list={['slot-note', { full: slotsFree === 0 }]}>
+        {
+          slotsFree === 0
+            ? 'Slot Solo al completo — prenota comunque una call per entrare in lista d’attesa'
+            : slotsFree === 1
+              ? 'Ultimo slot Solo disponibile — il trimestrale lo blocca per 3 mesi'
+              : `${slotsFree} slot Solo disponibili — il trimestrale blocca il tuo per 3 mesi`
+        }
+      </p>
+
       <div class="toggle" role="tablist">
         <button class="active" data-group="solo" role="tab">Solo · lavori con me</button>
         <button data-group="team" role="tab">Team · scala di più</button>
@@ -455,6 +473,8 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
   }
   .hero .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(10,125,85,.4)}50%{box-shadow:0 0 0 6px rgba(10,125,85,0)}}
+  .hero .badge.full{background:#f7efe0;color:#9a6a1b}
+  .hero .badge.full::before{background:#c98a2b;animation:none}
   .hero h1 em{font-style:normal;color:var(--accent)}
   .hero .lead{margin:24px 0 40px}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
@@ -719,6 +739,13 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
   }
 
   /* ---------- pricing ---------- */
+  .slot-note{
+    display:flex;width:fit-content;align-items:center;gap:8px;
+    background:var(--ok-soft);color:var(--ok);
+    padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:28px;
+  }
+  .slot-note::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
+  .slot-note.full{background:#f7efe0;color:#9a6a1b}
   .toggle{
     display:inline-flex;background:var(--surface);border:1px solid var(--line);
     border-radius:999px;padding:5px;margin-bottom:48px;

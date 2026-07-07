@@ -5,9 +5,13 @@ import { SITE } from '../config';
 interface Props {
   title?: string;
   description?: string;
-  /** 'default' = nav completa · 'case-study' = logo + link di ritorno */
-  nav?: 'default' | 'case-study';
+  /** 'default' = nav completa · 'case-study' = logo + link di ritorno · 'minimal' = solo logo */
+  nav?: 'default' | 'case-study' | 'minimal';
   active?: 'pricing';
+  /** CTA flottante "Prenota una call" — da spegnere sulle pagine post-vendita */
+  floatCta?: boolean;
+  /** Pagine operative (es. /benvenuto) da tenere fuori dai motori di ricerca */
+  noindex?: boolean;
 }
 
 const {
@@ -15,6 +19,8 @@ const {
   description = SITE.description,
   nav = 'default',
   active,
+  floatCta = true,
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -32,6 +38,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -41,7 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         {
           nav === 'case-study' ? (
             <a class="back" href="/#shipped">← Tutti i casi studio</a>
-          ) : (
+          ) : nav === 'minimal' ? null : (
             <div class="nav-links">
               <a href="/#modello">Come funziona</a>
               <a href="/#confronto">Confronto</a>
@@ -61,14 +68,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <span>© 2026 {SITE.name} — {SITE.role}</span>
         <span>
           <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a> ·
-          <a href={`mailto:${SITE.email}`}>Email</a>
+          <a href={`mailto:${SITE.email}`}>Email</a> ·
+          <a href="/termini">Termini</a>
         </span>
       </div>
     </footer>
 
-    <a class="float-cta" href={SITE.calUrl} target="_blank" rel="noopener">
-      <span class="fc-long">Review gratuita del tuo prodotto.&nbsp;</span><strong>Prenota 30 minuti&nbsp;→</strong>
-    </a>
+    {
+      floatCta && (
+        <a class="float-cta" href={SITE.calUrl} target="_blank" rel="noopener">
+          <span class="fc-long">Review gratuita del tuo prodotto.&nbsp;</span>
+          <strong>Prenota 30 minuti&nbsp;→</strong>
+        </a>
+      )
+    }
 
     <script>
       /* ----- scroll reveal ----- */
