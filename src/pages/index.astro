@@ -320,8 +320,16 @@ const slotsLabel =
       </p>
 
       <div class="toggle" role="tablist">
-        <button class="active" data-group="partner" role="tab">Partner · lavori con il founder</button>
-        <button data-group="team" role="tab">Team · scala di più</button>
+        <button class="active" data-group="partner" role="tab" aria-selected="true">
+          <span class="toggle-name">Partner</span>
+          <span class="toggle-desc">Il founder come tuo product engineer dedicato. Per chi ha una direzione chiara e vuole eseguirla in fretta.</span>
+          <span class="toggle-price">da 2.200€/mese</span>
+        </button>
+        <button data-group="team" role="tab" aria-selected="false">
+          <span class="toggle-name">Team</span>
+          <span class="toggle-desc">Product lead, engineer e designer senior. Per chi deve costruire direzione e prodotto insieme.</span>
+          <span class="toggle-price">da 5.000€/sprint</span>
+        </button>
       </div>
 
       <!-- SOLO -->
@@ -764,14 +772,25 @@ const slotsLabel =
   .slot-note::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
   .slot-note.full{background:#f7efe0;color:#9a6a1b}
   .toggle{
-    display:inline-flex;background:var(--surface);border:1px solid var(--line);
-    border-radius:999px;padding:5px;margin-bottom:48px;
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin-bottom:48px;
   }
   .toggle button{
-    border:0;background:transparent;padding:11px 28px;border-radius:999px;
-    font-size:.95rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;
+    position:relative;text-align:left;display:grid;gap:8px;
+    background:var(--surface);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;cursor:pointer;font-family:inherit;
+    transition:border-color .2s,box-shadow .2s;
   }
-  .toggle button.active{background:var(--ink);color:#fff}
+  .toggle button::after{
+    content:"";position:absolute;top:22px;right:22px;width:18px;height:18px;
+    border-radius:50%;border:2px solid var(--line);background:#fff;
+  }
+  .toggle button.active{border-color:var(--accent);box-shadow:0 8px 30px rgba(47,75,255,.1)}
+  .toggle button.active::after{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px #fff}
+  .toggle-name{font-size:1.1rem;font-weight:700;color:var(--ink)}
+  .toggle button.active .toggle-name{color:var(--accent)}
+  .toggle-desc{font-size:.88rem;color:var(--muted);line-height:1.5;padding-right:30px}
+  .toggle-price{font-size:.85rem;font-weight:600;color:var(--ink)}
+  @media(max-width:640px){.toggle{grid-template-columns:1fr}}
   .price-card{position:relative;display:flex;flex-direction:column}
   .price-card.featured{border:2px solid var(--accent);box-shadow:0 12px 40px rgba(47,75,255,.1)}
   .price-badge{
@@ -837,9 +856,13 @@ const slotsLabel =
   /* ----- pricing toggle ----- */
   document.querySelectorAll<HTMLButtonElement>('.toggle button').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.toggle button').forEach((b) => b.classList.remove('active'));
+      document.querySelectorAll('.toggle button').forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       document.querySelectorAll('.price-group').forEach((g) => g.classList.remove('active'));
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       document.getElementById('group-' + btn.dataset.group)?.classList.add('active');
     });
   });
