@@ -327,10 +327,10 @@ const slotsLabel =
           <p class:list={['slot-note', { full: slotsFree === 0 }]}>
             {
               slotsFree === 0
-                ? 'Slot Partner al completo · prenota una call per entrare in lista d’attesa'
+                ? 'Gli slot Partner sono al completo: prenota una call per entrare in lista d’attesa'
                 : slotsFree === 1
-                  ? 'Ultimo slot Partner disponibile · il trimestrale lo blocca per 3 mesi'
-                  : `${slotsFree} slot Partner disponibili · il trimestrale blocca il tuo per 3 mesi`
+                  ? 'È rimasto un solo slot Partner: con il trimestrale lo blocchi per 3 mesi'
+                  : `Ci sono ancora ${slotsFree} slot Partner: con il trimestrale blocchi il tuo per 3 mesi`
             }
           </p>
           <div class="plan-split">
@@ -372,7 +372,7 @@ const slotsLabel =
           <p class="group-desc">
             Product lead, engineer e designer senior. Per chi deve costruire direzione e prodotto insieme.
           </p>
-          <p class="slot-note">1 team senior disponibile · prossimo sprint al via subito</p>
+          <p class="slot-note">Un team senior è disponibile: il prossimo sprint può partire subito</p>
           <div class="plan-split">
             <div class="plan-hero">
               <span class="plan-hero-badge">Miglior valore</span>
