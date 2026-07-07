@@ -66,8 +66,9 @@
   .logo{font-weight:700;letter-spacing:-0.02em;text-decoration:none}
   .logo span{color:var(--accent)}
   .nav-links{display:flex;gap:28px;align-items:center;font-size:.95rem}
-  .nav-links a{text-decoration:none;color:var(--muted)}
-  .nav-links a:hover{color:var(--ink)}
+  .nav-links a{text-decoration:none}
+  .nav-links a:not(.btn){color:var(--muted)}
+  .nav-links a:not(.btn):hover{color:var(--ink)}
   .btn{
     display:inline-block;padding:14px 26px;border-radius:999px;
     font-weight:600;font-size:1rem;text-decoration:none;
@@ -389,6 +390,7 @@
   .price-group{display:none}
   .price-group.active{display:grid}
   .pricing-footnote{margin-top:32px;color:var(--muted);font-size:.9rem}
+  .pricing-more{margin-top:28px;text-align:center}
 
   /* ---------- faq ---------- */
   .faq details{
@@ -435,7 +437,7 @@
       <a href="#modello">Come funziona</a>
       <a href="#confronto">Confronto</a>
       <a href="#shipped">Real shipped code</a>
-      <a href="#pricing">Prezzi</a>
+      <a href="pricing.html">Prezzi</a>
       <a class="btn btn-primary" href="#contatto">Prenota una call</a>
     </div>
   </div>
@@ -851,6 +853,7 @@
 
     <p class="pricing-footnote">🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff — o il primo mese è gratis.</p>
     <p class="pricing-footnote">Tutti i prezzi sono IVA esclusa. Non sei sicuro di quale formula faccia per te? <a href="#contatto">Prenota una call</a>, la scegliamo insieme in 30 minuti.</p>
+    <p class="pricing-more"><a class="btn btn-ghost" href="pricing.html">Vedi la pagina prezzi completa — garanzia, condizioni e FAQ →</a></p>
   </div>
 </section>
 
