@@ -16,10 +16,3 @@ export const SLOTS = {
   total: 2,
   taken: 0,
 };
-
-// Payment link Stripe (interni: si mandano via email dopo la call, non sono
-// esposti sul sito). Da compilare quando i link vengono creati in dashboard.
-export const STRIPE_LINKS = {
-  partnerMensile: '',
-  partnerTrimestrale: '',
-};
