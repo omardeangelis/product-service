@@ -303,118 +303,110 @@ const slotsLabel =
       <div class="section-head reveal">
         <div class="eyebrow"><span class="num">05</span> Prezzi</div>
         <h2>Un prezzo fisso. Nessuna sorpresa.</h2>
-        <p class="lead">
-          Scegli se lavorare direttamente con il founder o con un product team completo. In entrambi i casi: prezzo
-          chiaro, pause libere, niente costi nascosti.
-        </p>
+        <p class="lead">Scegli con chi lavorare, poi il ritmo. Ti mostriamo subito il piano consigliato.</p>
       </div>
 
-      <p class:list={['slot-note', { full: slotsFree === 0 }]}>
-        {
-          slotsFree === 0
-            ? 'Slot Partner al completo: prenota comunque una call per entrare in lista d’attesa'
-            : slotsFree === 1
-              ? 'Ultimo slot Partner disponibile: il trimestrale lo blocca per 3 mesi'
-              : `${slotsFree} slot Partner disponibili: il trimestrale blocca il tuo per 3 mesi`
-        }
-      </p>
+      <div class="pricing-panel reveal d1">
+        <div class="seg" role="tablist">
+          <button class="seg-btn active" data-group="partner" role="tab" aria-selected="true">
+            <span class="seg-name">Partner</span>
+            <span class="seg-sub">Il founder dedicato · da 2.200€/mese</span>
+          </button>
+          <button class="seg-btn" data-group="team" role="tab" aria-selected="false">
+            <span class="seg-name">Team</span>
+            <span class="seg-sub">Product team completo · da 5.000€/sprint</span>
+          </button>
+        </div>
 
-      <div class="toggle" role="tablist">
-        <button class="active" data-group="partner" role="tab" aria-selected="true">
-          <span class="toggle-name">Partner</span>
-          <span class="toggle-desc">Il founder come tuo product engineer dedicato. Per chi ha una direzione chiara e vuole eseguirla in fretta.</span>
-          <span class="toggle-price">da 2.200€/mese</span>
-        </button>
-        <button data-group="team" role="tab" aria-selected="false">
-          <span class="toggle-name">Team</span>
-          <span class="toggle-desc">Product lead, engineer e designer senior. Per chi deve costruire direzione e prodotto insieme.</span>
-          <span class="toggle-price">da 5.000€/sprint</span>
-        </button>
-      </div>
+        <!-- PARTNER -->
+        <div class="price-group active" id="group-partner">
+          <p class="group-desc">
+            Il founder come tuo product engineer dedicato. Per chi ha una direzione chiara e vuole eseguirla in
+            fretta.
+          </p>
+          <p class:list={['slot-note', { full: slotsFree === 0 }]}>
+            {
+              slotsFree === 0
+                ? 'Slot Partner al completo · prenota una call per entrare in lista d’attesa'
+                : slotsFree === 1
+                  ? 'Ultimo slot Partner disponibile · il trimestrale lo blocca per 3 mesi'
+                  : `${slotsFree} slot Partner disponibili · il trimestrale blocca il tuo per 3 mesi`
+            }
+          </p>
+          <div class="plan-split">
+            <div class="plan-hero">
+              <span class="plan-hero-badge">Blocca lo slot</span>
+              <span class="plan-kicker">Trimestrale</span>
+              <div class="plan-price">2.200€<small>/mese</small></div>
+              <p class="plan-meta">6.600€ fatturato a trimestre · risparmi 600€ rispetto al mensile</p>
+              <p class="plan-desc">
+                Blocca il tuo slot Partner per 3 mesi. Il founder dedicato al tuo prodotto, in continuità.
+              </p>
+              <ul class="plan-checks">
+                <li>Founder dedicato, referente unico</li>
+                <li>Slot garantito per 3 mesi</li>
+                <li>Priorità sulla roadmap</li>
+                <li>Board condivisa e update async su Slack</li>
+              </ul>
+              <a class="btn btn-accent plan-cta" href={SITE.calUrl} target="_blank" rel="noopener">Blocca lo slot</a>
+            </div>
+            <div class="plan-side">
+              <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
+                <span class="plan-kicker">Mensile</span>
+                <div class="plan-mini-price">2.400€<small>/mese</small></div>
+                <p>Il founder sul tuo prodotto, mese per mese. Cancella quando vuoi.</p>
+                <span class="plan-mini-link">Scegli Mensile →</span>
+              </a>
+              <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
+                <span class="plan-kicker">Non sei sicuro?</span>
+                <div class="plan-mini-price">Parla col founder</div>
+                <p>30 minuti per capire se Partner o Team è la scelta giusta per te.</p>
+                <span class="plan-mini-link">Prenota una call →</span>
+              </a>
+            </div>
+          </div>
+        </div>
 
-      <!-- SOLO -->
-      <div class="grid grid-3 price-group active" id="group-partner">
-        <div class="card price-card">
-          <span class="plan">Mensile</span>
-          <div class="price">2.400€<small>/mese</small></div>
-          <p class="price-note">Per chi vuole flessibilità totale, un mese alla volta.</p>
-          <ul>
-            <li>Il founder come tuo product engineer dedicato</li>
-            <li>Una priorità attiva alla volta</li>
-            <li>Board condivisa + update async su Slack</li>
-            <li>Pausa o disdetta in qualsiasi momento</li>
-          </ul>
-          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
-        </div>
-        <div class="card price-card featured">
-          <span class="price-badge">Più scelto</span>
-          <span class="plan">Trimestrale</span>
-          <div class="price">2.200€<small>/mese</small></div>
-          <p class="price-note">Paghi mese per mese. Risparmi 600€ e blocchi lo slot.</p>
-          <ul>
-            <li>Tutto il piano mensile</li>
-            <li>Roadmap di trimestre costruita insieme</li>
-            <li>Review mensile delle metriche di prodotto</li>
-            <li>Slot garantito per 3 mesi</li>
-          </ul>
-          <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
-        </div>
-        <div class="card price-card">
-          <span class="plan">MVP</span>
-          <div class="price">4.500€<small>/mese</small></div>
-          <p class="price-note">Da zero a prodotto lanciato. Per founder che devono validare.</p>
-          <ul>
-            <li>Discovery + scope definition inclusi</li>
-            <li>Focus esclusivo sul tuo MVP</li>
-            <li>Setup analytics per misurare la validazione</li>
-            <li>Handoff pulito o continuità in abbonamento</li>
-          </ul>
-          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Parliamone</a>
-        </div>
-      </div>
-
-      <!-- TEAM -->
-      <div class="grid grid-3 price-group" id="group-team">
-        <div class="card price-card">
-          <span class="plan">Sprint</span>
-          <div class="price">5.000€<small>/sprint</small></div>
-          <p class="price-note">Un team completo, uno sprint alla volta. Ideale per iniziare.</p>
-          <ul>
-            <li>Product lead + 1 Product Engineer + 1 Product Designer</li>
-            <li>Sprint di 2 settimane con demo finale</li>
-            <li>Io come referente unico</li>
-            <li>Nessun impegno oltre lo sprint</li>
-          </ul>
-          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
-        </div>
-        <div class="card price-card featured">
-          <span class="price-badge">Miglior valore</span>
-          <span class="plan">Trimestre</span>
-          <div class="price">28.000€<small>/trimestre</small></div>
-          <p class="price-note">6 sprint consecutivi. Risparmi 2.000€ rispetto ai singoli sprint.</p>
-          <ul>
-            <li>Tutto il piano Sprint</li>
-            <li>Roadmap di trimestre e obiettivi misurabili</li>
-            <li>Continuità: stesso team per tutto il periodo</li>
-            <li>Review di metriche a fine trimestre</li>
-          </ul>
-          <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
-        </div>
-        <div class="card price-card">
-          <span class="plan">A progetto</span>
-          <div class="price">Scope based</div>
-          <p class="price-note">Un obiettivo definito, un prezzo definito. Per iniziative con confini chiari.</p>
-          <ul>
-            <li>Scope e deliverable concordati prima</li>
-            <li>Prezzo fisso, nessuna sorpresa in corsa</li>
-            <li>Milestone con criteri di accettazione</li>
-            <li>Garanzia sul risultato concordato</li>
-          </ul>
-          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Richiedi una stima</a>
+        <!-- TEAM -->
+        <div class="price-group" id="group-team">
+          <p class="group-desc">
+            Product lead, engineer e designer senior. Per chi deve costruire direzione e prodotto insieme.
+          </p>
+          <p class="slot-note">1 team senior disponibile · prossimo sprint al via subito</p>
+          <div class="plan-split">
+            <div class="plan-hero">
+              <span class="plan-hero-badge">Miglior valore</span>
+              <span class="plan-kicker">Trimestre</span>
+              <div class="plan-price">28.000€<small>/trimestre</small></div>
+              <p class="plan-meta">4.667€ a sprint · fatturato a trimestre</p>
+              <p class="plan-desc">6 sprint consecutivi con lo stesso team. Risparmi 2.000€ rispetto ai singoli sprint.</p>
+              <ul class="plan-checks">
+                <li>Tutto il piano Sprint, in continuità</li>
+                <li>Roadmap di trimestre e obiettivi misurabili</li>
+                <li>Stesso team senior per tutto il periodo</li>
+                <li>Review di metriche a fine trimestre</li>
+              </ul>
+              <a class="btn btn-accent plan-cta" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
+            </div>
+            <div class="plan-side">
+              <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
+                <span class="plan-kicker">Sprint</span>
+                <div class="plan-mini-price">5.000€<small>/sprint</small></div>
+                <p>Un team completo, uno sprint alla volta. Ideale per iniziare.</p>
+                <span class="plan-mini-link">Scegli Sprint →</span>
+              </a>
+              <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
+                <span class="plan-kicker">A progetto</span>
+                <div class="plan-mini-price">Scope based</div>
+                <p>Un obiettivo definito, un prezzo definito. Milestone con criteri di accettazione.</p>
+                <span class="plan-mini-link">Richiedi una stima →</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <p class="pricing-footnote">
+      <p class="pricing-guarantee">
         🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff, o
         il primo mese è gratis.
       </p>
@@ -764,52 +756,84 @@ const slotsLabel =
   }
 
   /* ---------- pricing ---------- */
+  .pricing-panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:26px;
+    padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.04);
+  }
+  .seg{display:flex;gap:6px;background:#f0efea;padding:6px;border-radius:18px}
+  .seg-btn{
+    flex:1;display:flex;flex-direction:column;gap:3px;text-align:left;
+    padding:14px 20px;border:0;border-radius:13px;cursor:pointer;font-family:inherit;
+    background:transparent;color:var(--muted);
+    transition:background .2s,box-shadow .2s,color .2s;
+  }
+  .seg-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(15,22,38,.12)}
+  .seg-name{font-size:1.05rem;font-weight:700}
+  .seg-sub{font-size:.8rem;font-weight:500;opacity:.75}
+  .price-group{display:none;padding:22px 12px 12px}
+  .price-group.active{display:block}
+  .group-desc{color:var(--muted);font-size:.95rem;max-width:640px;margin-bottom:12px}
   .slot-note{
     display:flex;width:fit-content;align-items:center;gap:8px;
     background:var(--ok-soft);color:var(--ok);
-    padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:28px;
+    padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:20px;
   }
   .slot-note::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
   .slot-note.full{background:#f7efe0;color:#9a6a1b}
-  .toggle{
-    display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin-bottom:48px;
+  .plan-split{display:grid;grid-template-columns:1.12fr .88fr;gap:14px;align-items:stretch}
+  .plan-hero{
+    background:var(--ink);border-radius:22px;padding:36px;
+    display:flex;flex-direction:column;color:#fff;
   }
-  .toggle button{
-    position:relative;text-align:left;display:grid;gap:8px;
-    background:var(--surface);border:1px solid var(--line);border-radius:18px;
-    padding:22px 24px;cursor:pointer;font-family:inherit;
-    transition:border-color .2s,box-shadow .2s;
+  .plan-hero-badge{
+    align-self:flex-start;background:var(--accent);color:#fff;
+    font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    padding:6px 13px;border-radius:999px;margin-bottom:20px;
   }
-  .toggle button::after{
-    content:"";position:absolute;top:22px;right:22px;width:18px;height:18px;
-    border-radius:50%;border:2px solid var(--line);background:#fff;
+  .plan-kicker{
+    display:block;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--muted);margin-bottom:12px;
   }
-  .toggle button.active{border-color:var(--accent);box-shadow:0 8px 30px rgba(47,75,255,.1)}
-  .toggle button.active::after{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px #fff}
-  .toggle-name{font-size:1.1rem;font-weight:700;color:var(--ink)}
-  .toggle button.active .toggle-name{color:var(--accent)}
-  .toggle-desc{font-size:.88rem;color:var(--muted);line-height:1.5;padding-right:30px}
-  .toggle-price{font-size:.85rem;font-weight:600;color:var(--ink)}
-  @media(max-width:640px){.toggle{grid-template-columns:1fr}}
-  .price-card{position:relative;display:flex;flex-direction:column}
-  .price-card.featured{border:2px solid var(--accent);box-shadow:0 12px 40px rgba(47,75,255,.1)}
-  .price-badge{
-    position:absolute;top:-13px;left:36px;background:var(--accent);color:#fff;
-    font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:999px;
-    text-transform:uppercase;letter-spacing:.06em;
+  .plan-hero .plan-kicker{color:#8a93ff}
+  .plan-price{font-size:3rem;font-weight:700;letter-spacing:-0.03em;line-height:1}
+  .plan-price small{font-size:1rem;font-weight:500;color:#9aa3b5;letter-spacing:0}
+  .plan-meta{font-size:.85rem;color:#727d95;margin:10px 0 18px}
+  .plan-desc{color:#c3c9d6;font-size:.98rem;max-width:400px;margin-bottom:24px}
+  .plan-checks{list-style:none;display:grid;gap:12px;margin-bottom:28px}
+  .plan-checks li{padding-left:26px;position:relative;font-size:.95rem;color:#e6e7ea}
+  .plan-checks li::before{content:"✓";position:absolute;left:0;color:#8a93ff;font-weight:700}
+  .plan-cta{margin-top:auto;width:100%;text-align:center}
+  .plan-side{display:flex;flex-direction:column;gap:14px}
+  .plan-mini{
+    flex:1;display:flex;flex-direction:column;text-decoration:none;
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;
+    transition:transform .18s,box-shadow .18s,border-color .18s;
   }
-  .price-card .plan{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
-  .price{margin:18px 0 6px;font-size:2.6rem;font-weight:700;letter-spacing:-0.03em}
-  .price small{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0}
-  .price-note{font-size:.9rem;color:var(--muted);margin-bottom:24px;min-height:2.7em}
-  .price-card ul{list-style:none;margin-bottom:32px;display:grid;gap:12px}
-  .price-card li{padding-left:28px;position:relative;font-size:.95rem;color:var(--ink)}
-  .price-card li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
-  .price-card .btn{margin-top:auto;text-align:center}
-  .price-group{display:none}
-  .price-group.active{display:grid}
-  .pricing-footnote{margin-top:32px;color:var(--muted);font-size:.9rem}
+  .plan-mini:hover{transform:translateY(-3px);border-color:#c9ccf0;box-shadow:0 12px 26px rgba(15,22,38,.08)}
+  .plan-mini-price{font-size:1.6rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+  .plan-mini-price small{font-size:.9rem;font-weight:500;color:var(--muted);letter-spacing:0}
+  .plan-mini p{color:var(--muted);font-size:.92rem;margin-bottom:18px}
+  .plan-mini-link{margin-top:auto;color:var(--accent);font-weight:600;font-size:.92rem}
+  .pricing-guarantee{
+    margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.92rem;
+  }
+  .pricing-guarantee strong{color:var(--ink)}
+  .pricing-footnote{margin-top:14px;color:var(--muted);font-size:.9rem}
   .pricing-more{margin-top:28px;text-align:center}
+  @media(max-width:900px){
+    .plan-split{grid-template-columns:1fr}
+    .plan-hero{padding:28px}
+    .plan-side{display:grid;grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .price-group{padding:18px 4px 4px}
+    .seg-btn{padding:11px 14px}
+    .seg-name{font-size:.95rem}
+    .seg-sub{font-size:.72rem}
+    .plan-side{grid-template-columns:1fr}
+    .plan-price{font-size:2.4rem}
+  }
 
   /* ---------- faq ---------- */
   .faq details{
@@ -854,9 +878,9 @@ const slotsLabel =
 
 <script>
   /* ----- pricing toggle ----- */
-  document.querySelectorAll<HTMLButtonElement>('.toggle button').forEach((btn) => {
+  document.querySelectorAll<HTMLButtonElement>('.seg-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.toggle button').forEach((b) => {
+      document.querySelectorAll('.seg-btn').forEach((b) => {
         b.classList.remove('active');
         b.setAttribute('aria-selected', 'false');
       });
