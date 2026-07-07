@@ -31,10 +31,10 @@ const slotsFree = SLOTS.total - SLOTS.taken;
             <span class="slot-dot"></span>
             {
               slotsFree === 0
-                ? 'Slot al completo: lista d’attesa'
+                ? 'Gli slot sono al completo: entra in lista d’attesa'
                 : slotsFree === 1
-                  ? 'Ultimo slot disponibile'
-                  : `${slotsFree} slot su ${SLOTS.total} disponibili`
+                  ? 'È rimasto un solo slot disponibile'
+                  : `Ci sono ancora ${slotsFree} slot disponibili su ${SLOTS.total}`
             }
           </span>
         </div>
@@ -78,6 +78,10 @@ const slotsFree = SLOTS.total - SLOTS.taken;
           <span class="member"><span class="avatar">🧭</span><span>Product Lead<small>discovery &amp; priorità</small></span></span>
           <span class="member"><span class="avatar">👨‍💻</span><span>1 Product Engineer<small>delivery</small></span></span>
           <span class="member"><span class="avatar">🎨</span><span>1 Product Designer<small>UI &amp; design system</small></span></span>
+          <span class="member slot-chip">
+            <span class="slot-dot"></span>
+            Un team è disponibile: il prossimo sprint può partire subito
+          </span>
         </div>
 
         <div class="tiers">
