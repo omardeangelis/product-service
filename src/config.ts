@@ -10,7 +10,7 @@ export const SITE = {
   linkedin: 'https://www.linkedin.com/in/omar-de-angelis-879b5614b/',
 } as const;
 
-// Capienza del piano Solo. Quando un abbonamento parte o si chiude,
+// Capienza del piano Partner. Quando un abbonamento parte o si chiude,
 // aggiorna `taken` e pusha: badge e note sul sito si aggiornano da soli.
 export const SLOTS = {
   total: 2,
@@ -20,6 +20,6 @@ export const SLOTS = {
 // Payment link Stripe (interni: si mandano via email dopo la call, non sono
 // esposti sul sito). Da compilare quando i link vengono creati in dashboard.
 export const STRIPE_LINKS = {
-  soloMensile: '',
-  soloTrimestrale: '',
+  partnerMensile: '',
+  partnerTrimestrale: '',
 };

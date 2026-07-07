@@ -307,20 +307,20 @@ const slotsLabel =
       <p class:list={['slot-note', { full: slotsFree === 0 }]}>
         {
           slotsFree === 0
-            ? 'Slot Solo al completo — prenota comunque una call per entrare in lista d’attesa'
+            ? 'Slot Partner al completo — prenota comunque una call per entrare in lista d’attesa'
             : slotsFree === 1
-              ? 'Ultimo slot Solo disponibile — il trimestrale lo blocca per 3 mesi'
-              : `${slotsFree} slot Solo disponibili — il trimestrale blocca il tuo per 3 mesi`
+              ? 'Ultimo slot Partner disponibile — il trimestrale lo blocca per 3 mesi'
+              : `${slotsFree} slot Partner disponibili — il trimestrale blocca il tuo per 3 mesi`
         }
       </p>
 
       <div class="toggle" role="tablist">
-        <button class="active" data-group="solo" role="tab">Solo · lavori con me</button>
+        <button class="active" data-group="partner" role="tab">Partner · lavori con me</button>
         <button data-group="team" role="tab">Team · scala di più</button>
       </div>
 
       <!-- SOLO -->
-      <div class="grid grid-3 price-group active" id="group-solo">
+      <div class="grid grid-3 price-group active" id="group-partner">
         <div class="card price-card">
           <span class="plan">Mensile</span>
           <div class="price">2.600€<small>/mese</small></div>
@@ -439,8 +439,8 @@ const slotsLabel =
         <p>Sì, in qualsiasi momento e senza penali. I giorni non utilizzati restano tuoi: riprendi quando ti serve.</p>
       </details>
       <details>
-        <summary>Qual è la differenza tra "Solo" e "Team"?</summary>
-        <p>Con "Solo" lavori direttamente e solo con me: massima profondità, una priorità alla volta. Con "Team" coordino un gruppo multidisciplinare per te: più superficie di lavoro in parallelo, io resto il tuo unico referente.</p>
+        <summary>Qual è la differenza tra "Partner" e "Team"?</summary>
+        <p>Con "Partner" lavori direttamente e solo con me: massima profondità, una priorità alla volta. Con "Team" coordino un gruppo multidisciplinare per te: più superficie di lavoro in parallelo, io resto il tuo unico referente.</p>
       </details>
       <details>
         <summary>Come funziona il servizio MVP?</summary>
