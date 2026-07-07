@@ -11,7 +11,7 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
 const slotsFree = SLOTS.total - SLOTS.taken;
 const slotsLabel =
   slotsFree === 0
-    ? 'Slot al completo — lista d’attesa aperta'
+    ? 'Slot al completo: lista d’attesa aperta'
     : slotsFree === 1
       ? 'Ultimo slot disponibile'
       : `${slotsFree} slot disponibili`;
@@ -24,9 +24,8 @@ const slotsLabel =
       <div class:list={['badge', { full: slotsFree === 0 }]}>{slotsLabel}</div>
       <h1>Building products that<br />solve <em>real problems</em>.</h1>
       <p class="lead">
-        <strong>Spatalo</strong> è lo studio di product engineering fondato da Omar De Angelis. Un abbonamento mensile
-        ti dà un senior nel team che pensa al prodotto, non solo al codice — senza mesi di hiring, senza overhead di
-        agenzia.
+        <strong>Product engineering in abbonamento</strong>: un prezzo fisso al mese e un senior nel team che pensa al
+        prodotto, non solo al codice. Attivi in 24 ore, in pausa quando vuoi.
       </p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
@@ -84,7 +83,7 @@ const slotsLabel =
               <div class="mock-title">Hiring: Senior Engineer <span class="chip chip-red">Mese 4</span></div>
               <div class="hire-row" style="--d:.15s"><span class="hire-dot done"></span> Job post pubblicato <b>Sett. 1</b></div>
               <div class="hire-row" style="--d:.65s"><span class="hire-dot done"></span> Screening 120 CV <b>Sett. 3</b></div>
-              <div class="hire-row" style="--d:1.15s"><span class="hire-dot done"></span> Colloqui — round 2 di 4 <b>Sett. 8</b></div>
+              <div class="hire-row" style="--d:1.15s"><span class="hire-dot done"></span> Colloqui: round 2 di 4 <b>Sett. 8</b></div>
               <div class="hire-row" style="--d:1.65s"><span class="hire-dot now"></span> Offerta + preavviso <b>Mese 4+</b></div>
               <div class="hire-wait">⏳ La tua feature? Ancora nel backlog.</div>
             </div>
@@ -93,7 +92,7 @@ const slotsLabel =
           <!-- pane 1: preventivo agenzia -->
           <div class="pane">
             <div class="mock">
-              <div class="mock-title">Preventivo — rev. 3 <span class="chip chip-red">+40% vs rev. 1</span></div>
+              <div class="mock-title">Preventivo rev. 3 <span class="chip chip-red">+40% vs rev. 1</span></div>
               <div class="inv-row" style="--d:.15s">Sviluppo feature <b>24h</b></div>
               <div class="inv-row" style="--d:.65s">Account management <b>12h</b></div>
               <div class="inv-row" style="--d:1.15s">Riunioni di allineamento <b>8h</b></div>
@@ -123,7 +122,7 @@ const slotsLabel =
     <div class="wrap">
       <div class="section-head center reveal">
         <div class="eyebrow"><span class="num">02</span> Il modello</div>
-        <h2>Un abbonamento. Un product engineer.<br />Zero attrito.</h2>
+        <h2>Un abbonamento.<br />Un product engineer.<br />Zero attrito.</h2>
         <p class="lead">Non un esecutore di ticket: un partner tecnico che capisce il problema di business e lo porta in produzione.</p>
       </div>
       <div class="grid grid-3">
@@ -308,10 +307,10 @@ const slotsLabel =
       <p class:list={['slot-note', { full: slotsFree === 0 }]}>
         {
           slotsFree === 0
-            ? 'Slot Partner al completo — prenota comunque una call per entrare in lista d’attesa'
+            ? 'Slot Partner al completo: prenota comunque una call per entrare in lista d’attesa'
             : slotsFree === 1
-              ? 'Ultimo slot Partner disponibile — il trimestrale lo blocca per 3 mesi'
-              : `${slotsFree} slot Partner disponibili — il trimestrale blocca il tuo per 3 mesi`
+              ? 'Ultimo slot Partner disponibile: il trimestrale lo blocca per 3 mesi'
+              : `${slotsFree} slot Partner disponibili: il trimestrale blocca il tuo per 3 mesi`
         }
       </p>
 
@@ -403,7 +402,7 @@ const slotsLabel =
       </div>
 
       <p class="pricing-footnote">
-        🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff — o
+        🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff, o
         il primo mese è gratis.
       </p>
       <p class="pricing-footnote">
@@ -411,7 +410,7 @@ const slotsLabel =
         <a href="#contatto">Prenota una call</a>, la scegliamo insieme in 30 minuti.
       </p>
       <p class="pricing-more">
-        <a class="btn btn-ghost" href="/pricing">Vedi la pagina prezzi completa — garanzia, condizioni e FAQ →</a>
+        <a class="btn btn-ghost" href="/pricing">Vedi la pagina prezzi completa: garanzia, condizioni e FAQ →</a>
       </p>
     </div>
   </section>
@@ -441,7 +440,7 @@ const slotsLabel =
       </details>
       <details>
         <summary>Qual è la differenza tra "Partner" e "Team"?</summary>
-        <p>Con "Partner" lavori direttamente e solo con me, Omar — il founder dello studio: massima profondità, una priorità alla volta. Con "Team" guido come product lead un engineer e un designer dedicati: più superficie di lavoro in parallelo, io resto il tuo unico referente.</p>
+        <p>Con "Partner" lavori direttamente e solo con me, Omar, il founder dello studio: massima profondità, una priorità alla volta. Con "Team" guido come product lead un engineer e un designer dedicati: più superficie di lavoro in parallelo, io resto il tuo unico referente.</p>
       </details>
       <details>
         <summary>Come funziona il servizio MVP?</summary>

@@ -1,7 +1,7 @@
 ---
 # ⚠️ Contenuto placeholder — sostituire con dati e cliente reali.
 title: "Come un SaaS B2B ha quasi triplicato l'attivazione ripensando l'onboarding."
-excerpt: "Gli utenti si registravano ma non arrivavano mai al primo valore. In 3 settimane abbiamo portato la conversione al primo progetto dal 12% al 34% — senza aggiungere una sola feature."
+excerpt: "Gli utenti si registravano ma non arrivavano mai al primo valore. In 3 settimane abbiamo portato la conversione al primo progetto dal 12% al 34%, senza aggiungere una sola feature."
 tags: ["Real shipped code", "SaaS · B2B", "Piano trimestrale"]
 order: 1
 
@@ -25,7 +25,7 @@ meta:
 contesto:
   heading: "Un prodotto solido con un problema invisibile."
   paragraphs:
-    - "Il cliente è una piattaforma SaaS per la gestione di progetti in ambito manifatturiero: prodotto maturo, clienti fidelizzati, churn basso. Il marketing funzionava — il traffico e le registrazioni crescevano mese su mese."
+    - "Il cliente è una piattaforma SaaS per la gestione di progetti in ambito manifatturiero: prodotto maturo, clienti fidelizzati, churn basso. Il marketing funzionava: il traffico e le registrazioni crescevano mese su mese."
     - "Eppure il fatturato non seguiva. <strong>Le registrazioni raddoppiavano, i clienti paganti no.</strong> Da qualche parte, tra la registrazione e l'upgrade, gli utenti sparivano."
 
 problema:
@@ -39,13 +39,13 @@ problema:
     - title: "Solo il 12% arrivava a creare un progetto."
       text: "Il momento in cui il prodotto dimostra il suo valore era sepolto in fondo a un percorso a ostacoli."
   funnel:
-    title: "Funnel di onboarding — prima dell'intervento"
+    title: "Funnel di onboarding prima dell'intervento"
     rows:
       - { label: "Registrazione", width: "100%", value: "100%" }
       - { label: "Setup iniziale completato", width: "74%", value: "74%" }
       - { label: "\"Invita il tuo team\"", width: "29%", value: "29%" }
       - { label: "Primo progetto creato", width: "12%", value: "12%", drop: true }
-    note: "Dati dal tracking evento per evento instrumentato prima dell'intervento. <em>(Numeri placeholder — da sostituire con i dati reali.)</em>"
+    note: "Dati dal tracking evento per evento instrumentato prima dell'intervento. <em>(Numeri placeholder, da sostituire con i dati reali.)</em>"
 
 risultati:
   heading: "I numeri, prima di tutto."
@@ -63,7 +63,7 @@ risultati:
 
 soluzione:
   heading: "Meno onboarding, non più onboarding."
-  intro: "La tentazione era aggiungere: tooltip, video tutorial, una checklist gamificata. Ho proposto l'opposto — <strong>togliere tutto ciò che si frappone tra l'utente e il primo progetto.</strong>"
+  intro: "La tentazione era aggiungere: tooltip, video tutorial, una checklist gamificata. Ho proposto l'opposto: <strong>togliere tutto ciò che si frappone tra l'utente e il primo progetto.</strong>"
   items:
     - title: "Da 9 step a 3."
       text: "Nome, primo progetto, fatto. Tutto il resto (team, integrazioni, notifiche) è diventato configurazione differita, proposta nel momento in cui serve davvero."
@@ -71,12 +71,12 @@ soluzione:
       text: "L'utente atterra in un prodotto già vivo, non in una dashboard vuota. Il \"wow\" arriva al secondo 10, non al giorno 3."
     - title: "Ogni step misurato."
       text: "Eventi analytics su ogni transizione del funnel, così il team può vedere l'impatto di ogni futura modifica senza tirare a indovinare."
-  figure: "🖥️ Screenshot del nuovo flusso a 3 step — da sostituire con immagine reale"
+  figure: "🖥️ Screenshot del nuovo flusso a 3 step, da sostituire con immagine reale"
 
 sfide:
   heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
   paragraphs:
-    - "<strong>Il vincolo vero era il codice legacy:</strong> l'onboarding esistente era intrecciato con il sistema di permessi. Riscriverlo tutto avrebbe richiesto mesi. La soluzione è stata un nuovo flusso parallelo dietro feature flag, rilasciato al 10% degli utenti, poi al 50%, poi a tutti — con la possibilità di tornare indietro in un click."
+    - "<strong>Il vincolo vero era il codice legacy:</strong> l'onboarding esistente era intrecciato con il sistema di permessi. Riscriverlo tutto avrebbe richiesto mesi. La soluzione è stata un nuovo flusso parallelo dietro feature flag, rilasciato al 10% degli utenti, poi al 50%, poi a tutti, con la possibilità di tornare indietro in un click."
     - "Il rollout graduale ha anche risolto la seconda paura del team: <strong>che i numeri fossero un caso.</strong> Con l'A/B test attivo per due settimane, il confronto vecchio-vs-nuovo era statisticamente solido prima della release completa."
 
 primaDopo:
@@ -99,7 +99,7 @@ primaDopo:
       - "Ogni step misurato: le decisioni si prendono sui dati"
 
 quote:
-  text: "Omar non ci ha chiesto \"cosa devo costruire\". Ci ha chiesto \"qual è il problema\" — e poi ci ha mostrato coi numeri che la soluzione era togliere, non aggiungere. Testimonial placeholder, da sostituire con quote reale."
+  text: "Omar non ci ha chiesto \"cosa devo costruire\". Ci ha chiesto \"qual è il problema\", e poi ci ha mostrato coi numeri che la soluzione era togliere, non aggiungere. Testimonial placeholder, da sostituire con quote reale."
   initials: "MP"
   name: "Nome Cognome"
   role: "CEO, Nome Azienda"

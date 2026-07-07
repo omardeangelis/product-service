@@ -25,7 +25,7 @@ meta:
 contesto:
   heading: "Un negozio che cresceva, un checkout che frenava."
   paragraphs:
-    - "Il cliente è un e-commerce D2C con un catalogo consolidato e campagne social che funzionavano: il traffico cresceva trimestre su trimestre, soprattutto da Instagram e TikTok — quindi da mobile."
+    - "Il cliente è un e-commerce D2C con un catalogo consolidato e campagne social che funzionavano: il traffico cresceva trimestre su trimestre, soprattutto da Instagram e TikTok, quindi da mobile."
     - "Ma la crescita del traffico non si traduceva in ordini. <strong>Il carrello si riempiva, il checkout lo svuotava.</strong> Il tasso di abbandono al pagamento era il doppio del benchmark di settore."
 
 problema:
@@ -37,15 +37,15 @@ problema:
     - title: "5 schermate, 23 campi, zero autofill."
       text: "Su mobile significava minuti di digitazione. Ogni campo in più era una percentuale di utenti in meno."
     - title: "Errori di rete = carrello perso."
-      text: "Su connessioni mobili instabili un timeout buttava via l'intero stato del checkout. L'utente ricominciava da capo — o più spesso, non ricominciava."
+      text: "Su connessioni mobili instabili un timeout buttava via l'intero stato del checkout. L'utente ricominciava da capo. O più spesso, non ricominciava."
   funnel:
-    title: "Funnel di checkout — prima dell'intervento"
+    title: "Funnel di checkout prima dell'intervento"
     rows:
       - { label: "Carrello", width: "100%", value: "100%" }
       - { label: "Inizio checkout", width: "64%", value: "64%" }
       - { label: "Dati di spedizione completati", width: "38%", value: "38%" }
       - { label: "Pagamento completato", width: "21%", value: "21%", drop: true }
-    note: "Dati da tracking lato client su 30 giorni. <em>(Numeri placeholder — da sostituire con i dati reali.)</em>"
+    note: "Dati da tracking lato client su 30 giorni. <em>(Numeri placeholder, da sostituire con i dati reali.)</em>"
 
 risultati:
   heading: "I numeri, prima di tutto."
@@ -63,7 +63,7 @@ risultati:
 
 soluzione:
   heading: "Una pagina, due tap, niente da perdere."
-  intro: "Invece di ottimizzare il checkout esistente, l'ho sostituito con un flusso nuovo e brutalmente ridotto — <strong>una sola pagina, progettata per il pollice, non per il mouse.</strong>"
+  intro: "Invece di ottimizzare il checkout esistente, l'ho sostituito con un flusso nuovo e brutalmente ridotto: <strong>una sola pagina, progettata per il pollice, non per il mouse.</strong>"
   items:
     - title: "One-page checkout mobile-first."
       text: "Un'unica schermata con i 7 campi davvero necessari, autofill nativo del browser e wallet (Apple Pay / Google Pay) come prima scelta: pagamento in 2 tap."
@@ -71,7 +71,7 @@ soluzione:
       text: "Ogni campo salvato localmente man mano: un timeout o un refresh non buttano via niente. Il carrello sopravvive alla metropolitana."
     - title: "Payment element isolato dal resto del sito."
       text: "Il checkout carica solo il codice che gli serve: 1.2 secondi al form di pagamento anche su rete 4G, misurati sul percentile 75."
-  figure: "🖥️ Screenshot del checkout one-page — da sostituire con immagine reale"
+  figure: "🖥️ Screenshot del checkout one-page, da sostituire con immagine reale"
 
 sfide:
   heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
@@ -99,7 +99,7 @@ primaDopo:
       - "Apple Pay e Google Pay in 2 tap"
 
 quote:
-  text: "Pensavamo servisse un redesign del sito. Omar ci ha mostrato che il problema era un imbuto rotto in fondo al funnel — e l'ha sistemato senza toccare il resto. Testimonial placeholder, da sostituire con quote reale."
+  text: "Pensavamo servisse un redesign del sito. Omar ci ha mostrato che il problema era un imbuto rotto in fondo al funnel, e l'ha sistemato senza toccare il resto. Testimonial placeholder, da sostituire con quote reale."
   initials: "GB"
   name: "Nome Cognome"
   role: "Founder, Nome Brand"

@@ -45,7 +45,7 @@ problema:
       - { label: "Dopo la discovery", width: "45%", value: "18" }
       - { label: "Nello scope dell'MVP", width: "20%", value: "8" }
       - { label: "Necessarie per la prima transazione", width: "12%", value: "5", drop: true }
-    note: "Il resto è finito in una waiting list visibile ai clienti — che è diventata a sua volta uno strumento di validazione. <em>(Numeri placeholder.)</em>"
+    note: "Il resto è finito in una waiting list visibile ai clienti, che è diventata a sua volta uno strumento di validazione. <em>(Numeri placeholder.)</em>"
 
 risultati:
   heading: "I numeri, prima di tutto."
@@ -70,8 +70,8 @@ soluzione:
     - title: "Infrastruttura noiosa e solida."
       text: "Stack volutamente convenzionale, pagamenti su Stripe, audit trail su ogni operazione. In fintech l'originalità va spesa sul prodotto, non sull'infrastruttura."
     - title: "Analytics dal giorno uno."
-      text: "Ogni step del funnel misurato dal primo deploy: al giorno 30 sapevamo non solo che 12 clienti pagavano, ma quali segmenti convertivano meglio — dati che hanno guidato il pitch del round."
-  figure: "🖥️ Screenshot del flusso di richiesta anticipo — da sostituire con immagine reale"
+      text: "Ogni step del funnel misurato dal primo deploy: al giorno 30 sapevamo non solo che 12 clienti pagavano, ma quali segmenti convertivano meglio: dati che hanno guidato il pitch del round."
+  figure: "🖥️ Screenshot del flusso di richiesta anticipo, da sostituire con immagine reale"
 
 sfide:
   heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
@@ -99,12 +99,12 @@ primaDopo:
       - "Roadmap guidata dai dati, non dalle opinioni"
 
 quote:
-  text: "Mi aspettavo un preventivo per l'app dei miei sogni. Omar mi ha convinto a costruirne un decimo — ed è stato quello che ha chiuso il round. Testimonial placeholder, da sostituire con quote reale."
+  text: "Mi aspettavo un preventivo per l'app dei miei sogni. Omar mi ha convinto a costruirne un decimo, ed è stato quello che ha chiuso il round. Testimonial placeholder, da sostituire con quote reale."
   initials: "LM"
   name: "Nome Cognome"
   role: "Founder & CEO, Nome Startup"
 
 cta:
   heading: "Hai una tesi da validare?"
-  text: "Parliamone: 30 minuti per capire se un MVP è la risposta giusta — e quanto piccolo può essere."
+  text: "Parliamone: 30 minuti per capire se un MVP è la risposta giusta, e quanto piccolo può essere."
 ---
