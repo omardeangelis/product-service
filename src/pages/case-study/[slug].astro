@@ -1,0 +1,382 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('case-studies', ({ data }) => !data.draft);
+  return caseStudies.map((cs) => ({ params: { slug: cs.id }, props: { cs } }));
+}
+
+const { cs } = Astro.props;
+const d = cs.data;
+let sectionNum = 0;
+const num = () => String(++sectionNum).padStart(2, '0');
+---
+
+<Base title={`Real shipped code — ${d.home.title} · ${SITE.name}`} description={d.excerpt} nav="case-study">
+  <!-- ============ HERO ============ -->
+  <header class="cs-hero">
+    <div class="wrap">
+      <div class="tags reveal">
+        {d.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+      <h1 class="reveal d1">{d.title}</h1>
+      <p class="reveal d2">{d.excerpt}</p>
+      <div class="cs-meta reveal d3">
+        <div><b>Cliente</b><span>{d.meta.cliente}</span></div>
+        <div><b>Ruolo</b><span>{d.meta.ruolo}</span></div>
+        <div><b>Durata</b><span>{d.meta.durata}</span></div>
+        <div><b>Stack</b><span>{d.meta.stack}</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ CONTESTO ============ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">{num()} · Contesto</span>
+      <h2>{d.contesto.heading}</h2>
+      {d.contesto.paragraphs.map((p) => <p set:html={p} />)}
+    </div>
+  </section>
+
+  <!-- ============ PROBLEMA ============ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">{num()} · Problema</span>
+      <h2>{d.problema.heading}</h2>
+      <p set:html={d.problema.intro} />
+      <div class="card-list">
+        {
+          d.problema.items.map((item, i) => (
+            <div class:list={['card', 'reveal', { d1: i === 1, d2: i === 2 }]}>
+              <div class="n">{i + 1}</div>
+              <p>
+                <b>{item.title}</b> <Fragment set:html={item.text} />
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      {
+        d.problema.funnel && (
+          <div class="chart reveal">
+            <b class="chart-title">{d.problema.funnel.title}</b>
+            {d.problema.funnel.rows.map((row) => (
+              <div class:list={['frow', { drop: row.drop }]}>
+                <span>{row.label}</span>
+                <div class="fbar">
+                  <i style={`--w:${row.width}`} />
+                  <em>{row.value}</em>
+                </div>
+              </div>
+            ))}
+            <p class="chart-note" set:html={d.problema.funnel.note} />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ============ RISULTATI ============ -->
+  <section class="metrics-band">
+    <div class="wrap-wide">
+      <span class="eyebrow">{num()} · Risultati</span>
+      <h2>{d.risultati.heading}</h2>
+      <div class="metrics-grid">
+        {
+          d.risultati.cards.map((card, i) => (
+            <div class:list={['metric-card', 'reveal', { d1: i === 1, d2: i === 2 }]}>
+              {/* prettier-ignore */}
+              <b>{card.pre}{card.to !== undefined && <span class="cu" data-to={card.to}>{card.from}</span>}{card.post}</b>
+              <span>{card.label}</span>
+            </div>
+          ))
+        }
+      </div>
+      {
+        d.risultati.chart && (
+          <div class="chart dark reveal">
+            <b class="chart-title">{d.risultati.chart.title}</b>
+            {d.risultati.chart.rows.map((row) => (
+              <div class:list={['frow', { after: row.after, gap: row.gap }]}>
+                <span>{row.label}</span>
+                <div class="fbar">
+                  <i style={`--w:${row.width}`} />
+                  <em>{row.value}</em>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ============ SOLUZIONE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">{num()} · Soluzione</span>
+      <h2>{d.soluzione.heading}</h2>
+      <p set:html={d.soluzione.intro} />
+      <div class="card-list">
+        {
+          d.soluzione.items.map((item, i) => (
+            <div class:list={['card', 'reveal', { d1: i === 1, d2: i === 2 }]}>
+              <div class="n">→</div>
+              <p>
+                <b>{item.title}</b> <Fragment set:html={item.text} />
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      {d.soluzione.figure && <div class="figure reveal">{d.soluzione.figure}</div>}
+    </div>
+  </section>
+
+  <!-- ============ SFIDE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">{num()} · Sfide</span>
+      <h2>{d.sfide.heading}</h2>
+      {d.sfide.paragraphs.map((p) => <p set:html={p} />)}
+    </div>
+  </section>
+
+  <!-- ============ PRIMA / DOPO ============ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">{num()} · Prima / Dopo</span>
+      <h2>Cosa è cambiato davvero.</h2>
+      <div class="ba-grid">
+        <div class="ba before reveal">
+          <span class="label">Prima</span>
+          <div class="ba-stat">
+            <em>{d.primaDopo.statLabel}</em>
+            <b>{d.primaDopo.before.stat}</b>
+            <div class="sbar"><i style={`--w:${d.primaDopo.before.width}`}></i></div>
+          </div>
+          <ul>
+            {d.primaDopo.before.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="ba after reveal d1">
+          <span class="label">Dopo</span>
+          <div class="ba-stat">
+            <em>{d.primaDopo.statLabel}</em>
+            <b>{d.primaDopo.after.stat}</b>
+            <div class="sbar"><i style={`--w:${d.primaDopo.after.width}`}></i></div>
+          </div>
+          <ul>
+            {d.primaDopo.after.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIAL ============ -->
+  {
+    d.quote && (
+      <section class="quote">
+        <div class="wrap">
+          <span class="eyebrow">{num()} · Il cliente</span>
+          <blockquote class="reveal">{d.quote.text}</blockquote>
+          <div class="quote-author reveal d1">
+            <div class="avatar">{d.quote.initials}</div>
+            <div>
+              <b>{d.quote.name}</b>
+              <span>{d.quote.role}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ============ CTA ============ -->
+  <section class="final-cta">
+    <div class="wrap-wide">
+      <div class="inner reveal">
+        <h2 style="margin-bottom:16px">{d.cta.heading}</h2>
+        <p>{d.cta.text}</p>
+        <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
+        &nbsp;
+        <a class="btn btn-ghost cta-secondary" href="/#shipped">Altri casi studio</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wrap{max-width:840px}
+  .wrap-wide{max-width:1120px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0;border-bottom:1px solid var(--line);line-height:1.7}
+  section p{color:var(--muted);max-width:680px}
+  section p + p{margin-top:16px}
+  section :global(strong){color:var(--ink)}
+  h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-0.03em;line-height:1.12}
+  h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:20px;letter-spacing:-0.03em;line-height:1.12}
+  .eyebrow{
+    display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--accent);margin-bottom:16px;
+  }
+
+  /* hero */
+  .cs-hero{padding:88px 0 64px;border-bottom:1px solid var(--line)}
+  .cs-hero .tags{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+  .tag{font-size:.8rem;font-weight:600;padding:6px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+  .cs-hero p{font-size:1.15rem;color:var(--muted);margin-top:24px;max-width:640px}
+  .cs-meta{display:flex;gap:48px;flex-wrap:wrap;margin-top:48px}
+  .cs-meta div b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+  .cs-meta div span{font-weight:600}
+
+  /* metric band */
+  .metrics-band{background:var(--ink);border-bottom:0}
+  .metrics-band .eyebrow{color:#8a93ff}
+  .metrics-band h2{color:#fff}
+  .metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+  .metric-card{background:#171f33;border:1px solid #262f47;border-radius:var(--radius);padding:36px}
+  .metric-card b{display:block;font-size:2.6rem;letter-spacing:-0.04em;color:#fff;line-height:1.1}
+  .metric-card span{color:#9aa3b5;font-size:.95rem}
+
+  /* cards & lists */
+  .card{padding:32px}
+  .card-list{display:grid;gap:16px;margin-top:32px}
+  .card-list .card{display:flex;gap:18px;align-items:flex-start;padding:24px 28px}
+  .card-list .card .n{
+    flex-shrink:0;width:32px;height:32px;border-radius:10px;background:var(--accent-soft);
+    color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem;
+  }
+  .card-list .card p{margin:0;font-size:.98rem}
+  .card-list .card b{display:block;margin-bottom:2px;color:var(--ink)}
+
+  /* figure placeholder */
+  .figure{
+    margin:48px 0 0;border-radius:var(--radius);border:1px dashed var(--line);
+    background:var(--surface);padding:80px 24px;text-align:center;color:var(--muted);font-size:.9rem;
+  }
+
+  /* before / after */
+  .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+  .ba{border-radius:var(--radius);padding:32px}
+  .ba.before{background:var(--bad-soft)}
+  .ba.after{background:var(--ok-soft)}
+  .ba .label{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;display:block}
+  .ba.before .label{color:var(--bad)}
+  .ba.after .label{color:var(--ok)}
+  .ba ul{list-style:none;display:grid;gap:12px}
+  .ba li{font-size:.98rem;padding-left:26px;position:relative}
+  .ba.before li::before{content:"✕";position:absolute;left:0;color:var(--bad);font-weight:700}
+  .ba.after li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+
+  /* quote */
+  .quote{background:var(--surface)}
+  blockquote{font-size:1.4rem;letter-spacing:-0.02em;line-height:1.5;font-weight:500;max-width:720px}
+  blockquote::before{content:"“";color:var(--accent);font-size:3rem;line-height:0;vertical-align:-14px;margin-right:6px}
+  .quote-author{margin-top:28px;display:flex;align-items:center;gap:14px}
+  .quote-author .avatar{width:48px;height:48px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+  .quote-author b{display:block;line-height:1.3}
+  .quote-author span{color:var(--muted);font-size:.9rem}
+
+  /* cta */
+  .final-cta{border-bottom:0;padding:96px 0}
+  .final-cta .inner{background:var(--ink);color:#fff;text-align:center;padding:80px 40px;border-radius:var(--radius)}
+  .final-cta h2{color:#fff}
+  .final-cta p{color:#9aa3b5;margin:0 auto 32px;max-width:480px}
+  .cta-secondary{background:transparent;color:#fff;border-color:#3a4460}
+
+  /* ---------- funnel chart ---------- */
+  .chart{margin-top:48px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px}
+  .chart-title{display:block;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:24px}
+  .frow{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center}
+  .frow + .frow{margin-top:14px}
+  .frow > span{font-size:.9rem;color:var(--muted)}
+  .fbar{display:flex;align-items:center;gap:12px}
+  .fbar i{display:block;height:34px;width:0;border-radius:8px;background:var(--ink);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .frow.drop .fbar i{background:var(--bad)}
+  .fbar em{font-style:normal;font-weight:700;font-size:.95rem;opacity:0;transition:opacity .4s ease .6s}
+  .frow.drop .fbar em{color:var(--bad)}
+  .chart.in .fbar i{width:var(--w)}
+  .chart.in .fbar em{opacity:1}
+  .chart.in .frow:nth-child(3) i{transition-delay:.12s}
+  .chart.in .frow:nth-child(4) i{transition-delay:.24s}
+  .chart.in .frow:nth-child(5) i{transition-delay:.36s}
+  .chart-note{margin-top:22px;font-size:.85rem;color:var(--muted)}
+
+  /* ---------- chart prima/dopo (banda scura) ---------- */
+  .chart.dark{background:#171f33;border-color:#262f47;margin-top:20px}
+  .chart.dark .chart-title{color:#9aa3b5}
+  .chart.dark .frow > span{color:#9aa3b5}
+  .chart.dark .frow i{background:#39415c}
+  .chart.dark .frow.after i{background:var(--accent)}
+  .chart.dark .fbar em{color:#fff}
+  .chart.dark .frow.after em{color:#8a93ff}
+  .chart.dark .frow + .frow.after{margin-top:8px}
+  .chart.dark .frow.gap{margin-top:26px}
+
+  /* ---------- prima/dopo animato ---------- */
+  .ba-stat{margin-bottom:24px}
+  .ba-stat em{font-style:normal;display:block;font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+  .ba-stat b{font-size:2.2rem;letter-spacing:-0.04em;line-height:1.1}
+  .ba.before .ba-stat b{color:var(--bad)}
+  .ba.after .ba-stat b{color:var(--ok)}
+  .sbar{height:8px;border-radius:4px;background:rgba(15,22,38,.08);margin-top:12px;overflow:hidden}
+  .sbar i{display:block;height:100%;width:0;border-radius:4px;transition:width 1s cubic-bezier(.2,.8,.2,1) .15s}
+  .ba.before .sbar i{background:var(--bad)}
+  .ba.after .sbar i{background:var(--ok)}
+  .ba.in .sbar i{width:var(--w)}
+  .ba li{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+  .ba.in li{opacity:1;transform:none}
+  .ba.in li:nth-child(2){transition-delay:.1s}
+  .ba.in li:nth-child(3){transition-delay:.2s}
+  .ba.in li:nth-child(4){transition-delay:.3s}
+  @media(prefers-reduced-motion:reduce){
+    .chart .fbar i,.chart .fbar em,.ba .sbar i,.ba li{transition:none;opacity:1;transform:none}
+    .chart .fbar i,.ba .sbar i{width:var(--w)}
+  }
+
+  @media(max-width:800px){
+    .metrics-grid,.ba-grid{grid-template-columns:1fr}
+    section{padding:56px 0}
+    .frow{grid-template-columns:1fr;gap:6px}
+    .frow + .frow{margin-top:18px}
+  }
+</style>
+
+<script>
+  /* ----- count-up sui numeri dei risultati ----- */
+  (function () {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function run(el: HTMLElement) {
+      const to = +(el.dataset.to ?? 0);
+      const from = +(el.textContent ?? 0) || 0;
+      if (reduce) {
+        el.textContent = String(to);
+        return;
+      }
+      const dur = 1100;
+      const t0 = performance.now();
+      (function tick(t: number) {
+        const p = Math.min(1, (t - t0) / dur);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = String(Math.round(from + (to - from) * ease));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+    const cuIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            run(e.target as HTMLElement);
+            cuIO.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    document.querySelectorAll<HTMLElement>('.cu').forEach((el) => cuIO.observe(el));
+  })();
+</script>

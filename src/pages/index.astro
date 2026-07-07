@@ -1,0 +1,875 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+
+const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const caseCount = String(caseStudies.length).padStart(2, '0');
+---
+
+<Base>
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="badge">1 slot disponibile per Luglio</div>
+      <h1>Building products that<br />solve <em>real problems</em>.</h1>
+      <p class="lead">
+        Sono Omar, <strong>Product Engineer freelance</strong> con 10 anni di esperienza. Un abbonamento mensile ti dà
+        un senior nel team che pensa al prodotto, non solo al codice — senza mesi di hiring, senza overhead di agenzia.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
+        <a class="btn btn-ghost" href="#shipped">Guarda il codice spedito ↓</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof"><b>10 anni</b><span>di prodotti in produzione</span></div>
+        <div class="proof"><b>24h</b><span>per iniziare, non mesi</span></div>
+        <div class="proof"><b>0</b><span>meeting inutili</span></div>
+        <div class="proof"><b>∞</b><span>pause quando vuoi</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ 01 PROBLEMA — tabs animate ============ -->
+  <section id="problema">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <div class="eyebrow"><span class="num">01</span> Il problema</div>
+        <h2>La tua roadmap non dovrebbe<br />aspettare il tuo hiring pipeline.</h2>
+      </div>
+
+      <div class="tabs-layout reveal d1">
+        <div class="tabs-list">
+          <button class="tab-card active" data-pane="0">
+            <div class="tab-icon">🐌</div>
+            <div>
+              <h3>Assumere richiede mesi</h3>
+              <p>Job post, colloqui, notice period. Nel frattempo la feature che ti serviva è ancora nel backlog.</p>
+            </div>
+            <span class="tab-progress"></span>
+          </button>
+          <button class="tab-card" data-pane="1">
+            <div class="tab-icon">🏢</div>
+            <div>
+              <h3>Le agenzie vendono ore</h3>
+              <p>Account manager, handoff, preventivi che crescono in corsa. Paghi la struttura, non il risultato.</p>
+            </div>
+            <span class="tab-progress"></span>
+          </button>
+          <button class="tab-card" data-pane="2">
+            <div class="tab-icon">🎲</div>
+            <div>
+              <h3>I freelancer sono una lotteria</h3>
+              <p>Disponibilità a singhiozzo, qualità imprevedibile, sparizioni a metà progetto.</p>
+            </div>
+            <span class="tab-progress"></span>
+          </button>
+        </div>
+
+        <div class="tabs-pane">
+          <!-- pane 0: hiring pipeline -->
+          <div class="pane active">
+            <div class="mock">
+              <div class="mock-title">Hiring: Senior Engineer <span class="chip chip-red">Mese 4</span></div>
+              <div class="hire-row" style="--d:.15s"><span class="hire-dot done"></span> Job post pubblicato <b>Sett. 1</b></div>
+              <div class="hire-row" style="--d:.65s"><span class="hire-dot done"></span> Screening 120 CV <b>Sett. 3</b></div>
+              <div class="hire-row" style="--d:1.15s"><span class="hire-dot done"></span> Colloqui — round 2 di 4 <b>Sett. 8</b></div>
+              <div class="hire-row" style="--d:1.65s"><span class="hire-dot now"></span> Offerta + preavviso <b>Mese 4+</b></div>
+              <div class="hire-wait">⏳ La tua feature? Ancora nel backlog.</div>
+            </div>
+          </div>
+
+          <!-- pane 1: preventivo agenzia -->
+          <div class="pane">
+            <div class="mock">
+              <div class="mock-title">Preventivo — rev. 3 <span class="chip chip-red">+40% vs rev. 1</span></div>
+              <div class="inv-row" style="--d:.15s">Sviluppo feature <b>24h</b></div>
+              <div class="inv-row" style="--d:.65s">Account management <b>12h</b></div>
+              <div class="inv-row" style="--d:1.15s">Riunioni di allineamento <b>8h</b></div>
+              <div class="inv-row extra" style="--d:1.65s">Richieste "fuori scope" <b>???</b></div>
+              <div class="inv-total"><span>Totale</span><span>In aggiornamento…</span></div>
+            </div>
+          </div>
+
+          <!-- pane 2: chat freelancer -->
+          <div class="pane">
+            <div class="mock">
+              <div class="mock-title">Chat con il freelancer <span class="chip chip-red">Offline</span></div>
+              <div class="bubble me" style="--d:.2s">Ciao! Come procede la feature?</div>
+              <div class="bubble them" style="--d:1s">Tutto ok, consegno venerdì 👍</div>
+              <div class="bubble me" style="--d:2s">È lunedì… ci sei?</div>
+              <div class="bubble them typing" style="--d:2.9s"><i></i><i></i><i></i></div>
+              <div class="seen">Visualizzato · 3 giorni fa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 MODELLO — step visuali ============ -->
+  <section id="modello" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <div class="eyebrow"><span class="num">02</span> Il modello</div>
+        <h2>Un abbonamento. Un product engineer.<br />Zero attrito.</h2>
+        <p class="lead">Non un esecutore di ticket: un partner tecnico che capisce il problema di business e lo porta in produzione.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card step-card reveal">
+          <div class="step-visual">
+            <div class="mini-sub"><span class="switch"></span> Abbonamento attivo</div>
+          </div>
+          <div class="step-body">
+            <span class="step-num">STEP 1</span>
+            <h3>Attivi l'abbonamento</h3>
+            <p>Call di 30 minuti, poi si parte entro 24 ore. Pausa o disdetta quando vuoi.</p>
+          </div>
+        </div>
+        <div class="card step-card reveal d1">
+          <div class="step-visual">
+            <div class="mini-board">
+              <div class="mini-task hot"><span class="prio"></span> Nuovo onboarding</div>
+              <div class="mini-task dim"><span class="prio"></span> Refactor billing</div>
+              <div class="mini-task dim"><span class="prio"></span> Export PDF</div>
+            </div>
+          </div>
+          <div class="step-body">
+            <span class="step-num">STEP 2</span>
+            <h3>Definiamo le priorità</h3>
+            <p>Board condivisa, update async su Slack. Ti aiuto a scegliere <em>cosa</em> costruire, non solo a costruirlo.</p>
+          </div>
+        </div>
+        <div class="card step-card reveal d2">
+          <div class="step-visual">
+            <div class="mini-pr">
+              <div class="pr-title">feat: nuovo onboarding</div>
+              <div class="pr-row">
+                <span class="badge-merged">Merged</span>
+                <span class="badge-metric">+34% attivazione</span>
+              </div>
+            </div>
+          </div>
+          <div class="step-body">
+            <span class="step-num">STEP 3</span>
+            <h3>Codice in produzione</h3>
+            <p>PR pronte per il merge, impatto misurato dopo il rilascio. Finito = risolve il problema.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 CONFRONTO ============ -->
+  <section id="confronto" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <div class="eyebrow"><span class="num">03</span> Confronto</div>
+        <h2>Cosa rende diverso<br />il modello in abbonamento.</h2>
+      </div>
+      <div class="compare-scroll reveal d1">
+        <div class="compare">
+          <div class="col labels">
+            <div class="cell head">.</div>
+            <div class="cell">Prezzo</div>
+            <div class="cell">Time to start</div>
+            <div class="cell">Product thinking</div>
+            <div class="cell">Seniority garantita</div>
+            <div class="cell">Pause &amp; disdetta libere</div>
+            <div class="cell">Impatto misurato</div>
+            <div class="cell">Garanzia primo mese</div>
+          </div>
+          <div class="col featured">
+            <div class="cell head">Product Engineer<br />in abbonamento</div>
+            <div class="cell">Fisso mensile</div>
+            <div class="cell">&lt; 24 ore</div>
+            <div class="cell"><span class="mark-yes">✓</span></div>
+            <div class="cell"><span class="mark-yes">✓</span></div>
+            <div class="cell"><span class="mark-yes">✓</span></div>
+            <div class="cell"><span class="mark-yes">✓</span></div>
+            <div class="cell">Deploy in 5 giorni o mese gratis</div>
+          </div>
+          <div class="col">
+            <div class="cell head">Freelancer<br />classico</div>
+            <div class="cell">€/ora variabili</div>
+            <div class="cell">2+ settimane</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell">Lotteria</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell"><span class="mark-no">–</span></div>
+          </div>
+          <div class="col">
+            <div class="cell head">Agenzia /<br />software house</div>
+            <div class="cell">Preventivi + extra</div>
+            <div class="cell">4+ settimane</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell">Junior sul tuo progetto</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell"><span class="mark-no">–</span></div>
+          </div>
+          <div class="col">
+            <div class="cell head">Assunzione<br />interna</div>
+            <div class="cell">70-90k€/anno + oneri</div>
+            <div class="cell">4-6 mesi</div>
+            <div class="cell">Dipende</div>
+            <div class="cell">Dipende</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+            <div class="cell">Dipende</div>
+            <div class="cell"><span class="mark-no">–</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="compare-hint">← Scorri per vedere tutte le colonne →</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 REAL SHIPPED CODE ============ -->
+  <section class="cases" id="shipped">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">04</span> La prova</div>
+        <h2>Real shipped code.</h2>
+        <p class="lead">
+          Non portfolio, non mockup: casi studio di codice reale in produzione. Qual era il problema, come l'ho
+          risolto, cosa è cambiato nei numeri.
+        </p>
+      </div>
+    </div>
+
+    <div class="hscroll" id="hscroll">
+      <div class="hs-sticky">
+        <div class="hs-track" id="hsTrack">
+          {
+            caseStudies.map((cs, i) => (
+              <a class="hs-card" href={`/case-study/${cs.id}`}>
+                <div class="hs-top">
+                  <span class="case-tag">{cs.data.home.tag}</span>
+                  <span class="hs-idx">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <h3>{cs.data.home.title}</h3>
+                <div class="hs-cols">
+                  <div class="case-block">
+                    <b>Problema</b>
+                    <p>{cs.data.home.problem}</p>
+                  </div>
+                  <div class="case-block">
+                    <b>Soluzione</b>
+                    <p>{cs.data.home.solution}</p>
+                  </div>
+                </div>
+                <div class="hs-bottom">
+                  <div class="case-metrics">
+                    {cs.data.home.metrics.map((m) => (
+                      <div>
+                        <b>{m.value}</b>
+                        <span>{m.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <span class="case-link">Leggi il caso studio →</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+        <div class="hs-progress">
+          <span id="hsCount">01 / {caseCount}</span>
+          <div class="hs-bar"><i id="hsFill"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 PRICING ============ -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">05</span> Prezzi</div>
+        <h2>Un prezzo fisso. Nessuna sorpresa.</h2>
+        <p class="lead">
+          Scegli se lavorare con me o con un team completo. In entrambi i casi: prezzo chiaro, pause libere, niente
+          costi nascosti.
+        </p>
+      </div>
+
+      <div class="toggle" role="tablist">
+        <button class="active" data-group="solo" role="tab">Solo · lavori con me</button>
+        <button data-group="team" role="tab">Team · scala di più</button>
+      </div>
+
+      <!-- SOLO -->
+      <div class="grid grid-3 price-group active" id="group-solo">
+        <div class="card price-card">
+          <span class="plan">Mensile</span>
+          <div class="price">2.600€<small>/mese</small></div>
+          <p class="price-note">Per chi vuole flessibilità totale, un mese alla volta.</p>
+          <ul>
+            <li>Un product engineer senior dedicato</li>
+            <li>Una priorità attiva alla volta</li>
+            <li>Board condivisa + update async su Slack</li>
+            <li>Pausa o disdetta in qualsiasi momento</li>
+          </ul>
+          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
+        </div>
+        <div class="card price-card featured">
+          <span class="price-badge">Più scelto</span>
+          <span class="plan">Trimestrale</span>
+          <div class="price">2.200€<small>/mese</small></div>
+          <p class="price-note">Fatturato a trimestre. Risparmi 1.200€ e blocchi lo slot.</p>
+          <ul>
+            <li>Tutto il piano mensile</li>
+            <li>Roadmap di trimestre costruita insieme</li>
+            <li>Review mensile delle metriche di prodotto</li>
+            <li>Slot garantito per 3 mesi</li>
+          </ul>
+          <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
+        </div>
+        <div class="card price-card">
+          <span class="plan">MVP</span>
+          <div class="price">4.500€<small>/mese</small></div>
+          <p class="price-note">Da zero a prodotto lanciato. Per founder che devono validare.</p>
+          <ul>
+            <li>Discovery + scope definition inclusi</li>
+            <li>Focus esclusivo sul tuo MVP</li>
+            <li>Setup analytics per misurare la validazione</li>
+            <li>Handoff pulito o continuità in abbonamento</li>
+          </ul>
+          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Parliamone</a>
+        </div>
+      </div>
+
+      <!-- TEAM -->
+      <div class="grid grid-3 price-group" id="group-team">
+        <div class="card price-card">
+          <span class="plan">Sprint</span>
+          <div class="price">4.500€<small>/sprint</small></div>
+          <p class="price-note">Un team completo, uno sprint alla volta. Ideale per iniziare.</p>
+          <ul>
+            <li>Team multidisciplinare (eng + design)</li>
+            <li>Sprint di 2 settimane con demo finale</li>
+            <li>Io come referente unico e product lead</li>
+            <li>Nessun impegno oltre lo sprint</li>
+          </ul>
+          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
+        </div>
+        <div class="card price-card featured">
+          <span class="price-badge">Miglior valore</span>
+          <span class="plan">Trimestre</span>
+          <div class="price">24.000€<small>/trimestre</small></div>
+          <p class="price-note">6 sprint consecutivi. Risparmi 3.000€ rispetto ai singoli sprint.</p>
+          <ul>
+            <li>Tutto il piano Sprint</li>
+            <li>Roadmap di trimestre e obiettivi misurabili</li>
+            <li>Continuità: stesso team per tutto il periodo</li>
+            <li>Review di metriche a fine trimestre</li>
+          </ul>
+          <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Inizia ora</a>
+        </div>
+        <div class="card price-card">
+          <span class="plan">A progetto</span>
+          <div class="price">Scope based</div>
+          <p class="price-note">Un obiettivo definito, un prezzo definito. Per iniziative con confini chiari.</p>
+          <ul>
+            <li>Scope e deliverable concordati prima</li>
+            <li>Prezzo fisso, nessuna sorpresa in corsa</li>
+            <li>Milestone con criteri di accettazione</li>
+            <li>Garanzia sul risultato concordato</li>
+          </ul>
+          <a class="btn btn-ghost" href={SITE.calUrl} target="_blank" rel="noopener">Richiedi una stima</a>
+        </div>
+      </div>
+
+      <p class="pricing-footnote">
+        🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff — o
+        il primo mese è gratis.
+      </p>
+      <p class="pricing-footnote">
+        Tutti i prezzi sono IVA esclusa. Non sei sicuro di quale formula faccia per te?
+        <a href="#contatto">Prenota una call</a>, la scegliamo insieme in 30 minuti.
+      </p>
+      <p class="pricing-more">
+        <a class="btn btn-ghost" href="/pricing">Vedi la pagina prezzi completa — garanzia, condizioni e FAQ →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 06 FAQ ============ -->
+  <section class="faq" id="faq" style="padding-top:0">
+    <div class="wrap" style="max-width:800px">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">06</span> FAQ</div>
+        <h2>Domande frequenti.</h2>
+      </div>
+      <details>
+        <summary>Perché un abbonamento invece di un preventivo a progetto?</summary>
+        <p>Perché i prodotti non finiscono: evolvono. L'abbonamento elimina la negoziazione continua di preventivi e ti dà una velocità costante e prevedibile. Quando hai un obiettivo davvero chiuso e definito, esiste comunque l'opzione "A progetto".</p>
+      </details>
+      <details>
+        <summary>Cosa significa "Product Engineer" esattamente?</summary>
+        <p>Un ingegnere che parte dal problema di business, non dal ticket. Significa che partecipo alle decisioni di prodotto, propongo la soluzione più semplice che risolve il problema e misuro l'impatto dopo il rilascio. Meno codice, più risultato.</p>
+      </details>
+      <details>
+        <summary>Quanto velocemente vedo il primo risultato?</summary>
+        <p>Si parte entro 24 ore dall'attivazione. La prima PR arriva tipicamente entro la prima settimana, a seconda della complessità del contesto.</p>
+      </details>
+      <details>
+        <summary>Posso mettere in pausa l'abbonamento?</summary>
+        <p>Sì, in qualsiasi momento e senza penali. I giorni non utilizzati restano tuoi: riprendi quando ti serve.</p>
+      </details>
+      <details>
+        <summary>Qual è la differenza tra "Solo" e "Team"?</summary>
+        <p>Con "Solo" lavori direttamente e solo con me: massima profondità, una priorità alla volta. Con "Team" coordino un gruppo multidisciplinare per te: più superficie di lavoro in parallelo, io resto il tuo unico referente.</p>
+      </details>
+      <details>
+        <summary>Come funziona il servizio MVP?</summary>
+        <p>Partiamo da una discovery per ridurre lo scope al minimo che valida la tua tesi. Poi costruisco solo quello, con analytics già configurate per misurare se funziona. L'obiettivo non è "un'app completa": è la risposta più rapida possibile alla domanda "qualcuno lo pagherà?".</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINALE ============ -->
+  <section class="final-cta" id="contatto" style="padding-top:0">
+    <div class="wrap">
+      <div class="card reveal">
+        <h2>Parliamo del tuo prodotto.</h2>
+        <p>30 minuti, zero vincoli. Mi racconti il problema, ti dico onestamente se e come posso aiutarti.</p>
+        <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  section{padding:104px 0}
+
+  /* ---------- hero ---------- */
+  .hero{padding:120px 0 96px}
+  .hero .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ok-soft);color:var(--ok);
+    padding:8px 16px;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:28px;
+  }
+  .hero .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(10,125,85,.4)}50%{box-shadow:0 0 0 6px rgba(10,125,85,0)}}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .lead{margin:24px 0 40px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-proof{
+    display:flex;gap:48px;flex-wrap:wrap;margin-top:72px;
+    padding-top:40px;border-top:1px solid var(--line);
+  }
+  .proof b{display:block;font-size:1.9rem;letter-spacing:-0.03em}
+  .proof span{color:var(--muted);font-size:.9rem}
+
+  /* ============================================================
+     PROBLEMA — tabs animate stile Magier
+     ============================================================ */
+  .tabs-layout{--tab-duration:7s;display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:stretch}
+  .tabs-list{display:flex;flex-direction:column;gap:16px}
+  .tab-card{
+    position:relative;text-align:left;font-family:inherit;cursor:pointer;
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    padding:26px 28px;display:flex;gap:18px;align-items:flex-start;
+    transition:opacity .3s ease, box-shadow .3s ease, transform .3s ease;
+    opacity:.55;overflow:hidden;
+  }
+  .tab-card:hover{opacity:.85}
+  .tab-card.active{
+    opacity:1;box-shadow:0 12px 32px rgba(15,22,38,.08);transform:translateY(-2px);
+  }
+  .tab-icon{
+    flex-shrink:0;width:46px;height:46px;border-radius:14px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  }
+  .tab-card h3{font-size:1.1rem;margin-bottom:0}
+  .tab-card p{
+    color:var(--muted);font-size:.92rem;
+    max-height:0;opacity:0;overflow:hidden;
+    transition:max-height .45s ease, opacity .45s ease, margin .45s ease;
+  }
+  .tab-card.active p{max-height:120px;opacity:1;margin-top:6px}
+  .tab-progress{
+    position:absolute;left:0;bottom:0;height:3px;width:0;
+    background:var(--accent);border-radius:0 3px 3px 0;
+  }
+  .tab-card.active .tab-progress{animation:progress var(--tab-duration) linear forwards}
+  @keyframes progress{from{width:0}to{width:100%}}
+
+  .tabs-pane{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:44px;display:flex;align-items:center;justify-content:center;min-height:460px;
+  }
+  .pane{display:none;width:100%;max-width:460px}
+  .pane.active{display:block}
+
+  /* --- mock UI condivisi --- */
+  .mock{
+    background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:28px;
+  }
+  .mock-title{
+    display:flex;justify-content:space-between;align-items:center;
+    font-weight:700;letter-spacing:-0.02em;margin-bottom:20px;font-size:1.02rem;
+  }
+  .chip{font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:999px}
+  .chip-red{background:var(--bad-soft);color:var(--bad)}
+  .chip-ok{background:var(--ok-soft);color:var(--ok)}
+  .chip-accent{background:var(--accent-soft);color:var(--accent)}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes pop{0%{opacity:0;transform:scale(.6)}70%{transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+  @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+
+  /* pane 1 — hiring pipeline */
+  .hire-row{
+    display:flex;align-items:center;gap:12px;background:var(--surface);
+    border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px;
+    font-size:.95rem;animation:rise .5s both;animation-delay:var(--d);
+  }
+  .hire-row b{margin-left:auto;font-size:.8rem;color:var(--muted);font-weight:600;white-space:nowrap}
+  .hire-dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex-shrink:0}
+  .hire-dot.done{background:var(--ok)}
+  .hire-dot.now{background:var(--bad);animation:pulse-bad 1.6s infinite}
+  @keyframes pulse-bad{0%,100%{box-shadow:0 0 0 0 rgba(180,35,24,.35)}50%{box-shadow:0 0 0 6px rgba(180,35,24,0)}}
+  .hire-wait{
+    margin-top:18px;background:var(--bad-soft);color:var(--bad);border-radius:14px;
+    padding:14px 18px;font-size:.92rem;font-weight:600;
+    animation:rise .5s both;animation-delay:2.4s;
+  }
+
+  /* pane 2 — preventivo agenzia */
+  .inv-row{
+    display:flex;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px;
+    font-size:.95rem;animation:rise .5s both;animation-delay:var(--d);
+  }
+  .inv-row b{font-weight:600;color:var(--muted);font-size:.9rem}
+  .inv-row.extra{border-style:dashed;color:var(--bad);animation:rise .5s both, wiggle 2.5s ease-in-out 3s infinite;animation-delay:var(--d)}
+  .inv-row.extra b{color:var(--bad)}
+  .inv-total{
+    display:flex;justify-content:space-between;margin-top:18px;padding:16px 18px;
+    background:var(--ink);color:#fff;border-radius:14px;font-weight:700;
+    animation:rise .5s both;animation-delay:2.6s;
+  }
+  .inv-total span:last-child{color:#ff9d94}
+
+  /* pane 3 — chat freelancer */
+  .bubble{
+    max-width:78%;padding:12px 18px;border-radius:18px;font-size:.95rem;margin-bottom:10px;
+    animation:pop .45s both;animation-delay:var(--d);
+  }
+  .bubble.me{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:6px}
+  .bubble.them{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px}
+  .typing{display:inline-flex;gap:5px;padding:14px 18px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.2s}
+  .typing i:nth-child(3){animation-delay:.4s}
+  .seen{
+    text-align:center;font-size:.82rem;color:var(--muted);margin-top:16px;
+    animation:rise .6s both;animation-delay:3.6s;
+  }
+
+  /* ============================================================
+     MODELLO — step con mini-visual animate
+     ============================================================ */
+  .step-card{padding:0;overflow:hidden;display:flex;flex-direction:column}
+  .step-visual{
+    background:var(--accent-soft);min-height:170px;display:flex;
+    align-items:center;justify-content:center;padding:28px;
+    border-bottom:1px solid var(--line);
+  }
+  .step-body{padding:28px 32px 32px}
+  .step-num{font-size:.8rem;font-weight:700;color:var(--accent);letter-spacing:.08em;display:block;margin-bottom:10px}
+
+  /* mini 1 — abbonamento attivo */
+  .mini-sub{
+    background:var(--surface);border-radius:16px;padding:18px 24px;
+    display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(47,75,255,.12);
+    font-weight:600;
+  }
+  .mini-sub .switch{
+    width:46px;height:26px;border-radius:999px;background:var(--ok);position:relative;flex-shrink:0;
+  }
+  .mini-sub .switch::after{
+    content:"";position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;
+    animation:switch-on 3s ease-in-out infinite;
+  }
+  @keyframes switch-on{0%,15%{left:3px}35%,85%{left:23px}100%{left:23px}}
+
+  /* mini 2 — board priorità */
+  .mini-board{display:flex;flex-direction:column;gap:10px;width:100%;max-width:240px}
+  .mini-task{
+    background:var(--surface);border-radius:12px;padding:12px 16px;font-size:.85rem;font-weight:600;
+    display:flex;align-items:center;gap:10px;box-shadow:0 4px 14px rgba(15,22,38,.06);
+  }
+  .mini-task .prio{width:8px;height:8px;border-radius:50%;background:var(--line);flex-shrink:0}
+  .mini-task.hot{animation:task-up 4s ease-in-out infinite}
+  .mini-task.hot .prio{background:var(--accent)}
+  @keyframes task-up{0%,100%{transform:translateY(0);box-shadow:0 4px 14px rgba(15,22,38,.06)}50%{transform:translateY(-4px);box-shadow:0 10px 24px rgba(47,75,255,.18)}}
+  .mini-task.dim{opacity:.55}
+
+  /* mini 3 — PR merged */
+  .mini-pr{
+    background:var(--surface);border-radius:16px;padding:18px 22px;width:100%;max-width:260px;
+    box-shadow:0 8px 24px rgba(15,22,38,.08);
+  }
+  .mini-pr .pr-title{font-size:.88rem;font-weight:600;display:flex;gap:8px;align-items:center}
+  .mini-pr .pr-title::before{content:"⎇";color:var(--accent);font-weight:700}
+  .mini-pr .pr-row{display:flex;gap:8px;margin-top:12px;align-items:center}
+  .badge-merged{
+    background:#efe6ff;color:#6b21a8;font-size:.72rem;font-weight:700;
+    padding:4px 12px;border-radius:999px;animation:merged-pop 4s ease-in-out infinite;
+  }
+  @keyframes merged-pop{0%,10%{transform:scale(.9);opacity:.6}25%,90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+  .badge-metric{
+    background:var(--ok-soft);color:var(--ok);font-size:.72rem;font-weight:700;
+    padding:4px 12px;border-radius:999px;animation:pop 4s ease-in-out infinite;
+  }
+
+  /* ============================================================
+     CONFRONTO — tabella stile Magier
+     ============================================================ */
+  .compare-scroll{overflow-x:auto;padding:16px 4px 24px}
+  .compare{
+    display:grid;grid-template-columns:1.25fr 1.15fr 1fr 1fr 1fr;gap:14px;min-width:920px;
+  }
+  .compare .col{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    padding:8px 0;display:flex;flex-direction:column;
+  }
+  .compare .col.labels{background:transparent;border:0}
+  .compare .cell{
+    padding:20px 22px;font-size:.92rem;color:var(--muted);
+    border-bottom:1px solid var(--line);min-height:76px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+  }
+  .compare .cell:last-child{border-bottom:0}
+  .compare .col.labels .cell{
+    justify-content:flex-start;text-align:left;font-weight:600;color:var(--ink);
+    border-color:var(--line);
+  }
+  .compare .col.labels .cell::before{content:"✦";color:var(--accent);margin-right:10px;font-size:.8rem}
+  .compare .head{
+    font-weight:700;color:var(--ink);font-size:1.02rem;letter-spacing:-0.02em;min-height:88px;
+  }
+  .compare .col.labels .head{visibility:hidden}
+  .compare .col.labels .head::before{content:none}
+  .col.featured{
+    background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 0 5px var(--accent-soft), 0 20px 44px rgba(47,75,255,.25);
+    transform:translateY(-10px);
+  }
+  .col.featured .cell{color:rgba(255,255,255,.92);border-bottom-color:rgba(255,255,255,.18);font-weight:600}
+  .col.featured .head{color:#fff}
+  .mark-yes,.mark-no{
+    width:30px;height:30px;border-radius:50%;display:inline-flex;
+    align-items:center;justify-content:center;font-weight:700;font-size:.9rem;
+  }
+  .mark-yes{background:var(--ok-soft);color:var(--ok)}
+  .col.featured .mark-yes{background:#fff;color:var(--accent)}
+  .mark-no{background:#f1f1ef;color:#a5aab5}
+  .compare-hint{display:none;text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+
+  /* ---------- case studies (scroll orizzontale pinnato) ---------- */
+  .cases{background:var(--ink);color:#fff;overflow:clip;padding-bottom:0}
+  .cases .eyebrow{color:#9aa3b5}
+  .cases .lead{color:#9aa3b5}
+  .cases .section-head{margin-bottom:0}
+  .hscroll{position:relative;margin-top:-8px}
+  .hs-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:28px;overflow:hidden}
+  .hs-track{
+    display:flex;gap:28px;align-items:stretch;will-change:transform;
+    padding:0 max(24px, calc((100vw - min(880px, 78vw)) / 2));
+  }
+  .hs-card{
+    flex:0 0 min(880px, 78vw);min-height:min(560px,64vh);
+    background:#171f33;border:1px solid #262f47;border-radius:28px;
+    padding:clamp(32px,4.5vw,56px);display:flex;flex-direction:column;gap:26px;
+    text-decoration:none;transition:border-color .2s ease;
+  }
+  .hs-card:hover{border-color:var(--accent)}
+  .hs-top{display:flex;justify-content:space-between;align-items:center}
+  .hs-idx{font-size:.85rem;font-weight:600;color:#727d95;letter-spacing:.08em}
+  .hs-card h3{font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;max-width:15em}
+  .hs-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .hs-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:auto;padding-top:24px;border-top:1px solid #262f47;flex-wrap:wrap}
+  .case-tag{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#8a93ff}
+  .case-block b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#727d95;margin-bottom:4px}
+  .case-block p{color:#c3c9d6;font-size:.98rem}
+  .case-metrics{display:flex;gap:36px}
+  .case-metrics div b{display:block;font-size:clamp(1.7rem,2.4vw,2.2rem);letter-spacing:-0.03em;color:#fff}
+  .case-metrics div span{font-size:.82rem;color:#8a93a8}
+  .case-link{color:#8a93ff;font-weight:600;font-size:.95rem;white-space:nowrap}
+  .hs-progress{display:flex;align-items:center;gap:18px;max-width:var(--max);margin:0 auto;padding:0 24px;width:100%}
+  .hs-progress span{font-size:.85rem;font-weight:600;color:#727d95;letter-spacing:.1em;white-space:nowrap}
+  .hs-bar{flex:1;height:2px;background:#262f47;border-radius:2px;overflow:hidden}
+  .hs-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s linear}
+  @media(max-width:800px){
+    .cases{padding-bottom:72px}
+    .hs-sticky{position:static;height:auto;overflow:visible;padding:40px 0 0}
+    .hs-track{overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px;transform:none!important;-webkit-overflow-scrolling:touch}
+    .hs-card{flex:0 0 86vw;min-height:0;scroll-snap-align:center}
+    .hs-cols{grid-template-columns:1fr;gap:20px}
+    .hs-progress{display:none}
+  }
+
+  /* ---------- pricing ---------- */
+  .toggle{
+    display:inline-flex;background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:5px;margin-bottom:48px;
+  }
+  .toggle button{
+    border:0;background:transparent;padding:11px 28px;border-radius:999px;
+    font-size:.95rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;
+  }
+  .toggle button.active{background:var(--ink);color:#fff}
+  .price-card{position:relative;display:flex;flex-direction:column}
+  .price-card.featured{border:2px solid var(--accent);box-shadow:0 12px 40px rgba(47,75,255,.1)}
+  .price-badge{
+    position:absolute;top:-13px;left:36px;background:var(--accent);color:#fff;
+    font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.06em;
+  }
+  .price-card .plan{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .price{margin:18px 0 6px;font-size:2.6rem;font-weight:700;letter-spacing:-0.03em}
+  .price small{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0}
+  .price-note{font-size:.9rem;color:var(--muted);margin-bottom:24px;min-height:2.7em}
+  .price-card ul{list-style:none;margin-bottom:32px;display:grid;gap:12px}
+  .price-card li{padding-left:28px;position:relative;font-size:.95rem;color:var(--ink)}
+  .price-card li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .price-card .btn{margin-top:auto;text-align:center}
+  .price-group{display:none}
+  .price-group.active{display:grid}
+  .pricing-footnote{margin-top:32px;color:var(--muted);font-size:.9rem}
+  .pricing-more{margin-top:28px;text-align:center}
+
+  /* ---------- faq ---------- */
+  .faq details{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:24px 28px;margin-bottom:12px;
+  }
+  .faq summary{font-weight:600;cursor:pointer;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .faq summary::after{content:"+";font-size:1.4rem;color:var(--muted);font-weight:400}
+  .faq details[open] summary::after{content:"–"}
+  .faq details p{margin-top:14px;color:var(--muted)}
+
+  /* ---------- cta finale ---------- */
+  .final-cta .card{
+    background:var(--ink);color:#fff;text-align:center;
+    padding:88px 40px;border:0;
+  }
+  .final-cta h2{color:#fff;margin-bottom:16px}
+  .final-cta p{color:#9aa3b5;max-width:520px;margin:0 auto 36px}
+
+  @media(max-width:960px){
+    .tabs-layout{grid-template-columns:1fr}
+    .tabs-pane{min-height:420px;padding:28px}
+    .compare-hint{display:block}
+  }
+  @media(max-width:900px){
+    section{padding:72px 0}
+    .hero{padding:80px 0 64px}
+    .hero-proof{gap:28px}
+    .col.featured{transform:none}
+  }
+</style>
+
+<script>
+  /* ----- pricing toggle ----- */
+  document.querySelectorAll<HTMLButtonElement>('.toggle button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle button').forEach((b) => b.classList.remove('active'));
+      document.querySelectorAll('.price-group').forEach((g) => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('group-' + btn.dataset.group)?.classList.add('active');
+    });
+  });
+
+  /* ----- tabs problema: click + auto-rotate ----- */
+  (() => {
+    const tabs = [...document.querySelectorAll('.tab-card')];
+    const panes = [...document.querySelectorAll('.pane')];
+    const DURATION = 7000;
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    function activate(i: number) {
+      current = i;
+      tabs.forEach((t, k) => t.classList.toggle('active', k === i));
+      panes.forEach((p, k) => p.classList.toggle('active', k === i));
+      /* riavvia la progress bar */
+      const bar = tabs[i].querySelector<HTMLElement>('.tab-progress');
+      if (bar) {
+        bar.style.animation = 'none';
+        void bar.offsetWidth;
+        bar.style.animation = '';
+      }
+    }
+    function schedule() {
+      clearInterval(timer);
+      timer = setInterval(() => activate((current + 1) % tabs.length), DURATION);
+    }
+    tabs.forEach((t, i) =>
+      t.addEventListener('click', () => {
+        activate(i);
+        schedule();
+      })
+    );
+
+    /* parte solo quando la sezione è visibile */
+    const section = document.getElementById('problema');
+    if (section) {
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) schedule();
+            else clearInterval(timer);
+          });
+        },
+        { threshold: 0.25 }
+      ).observe(section);
+    }
+  })();
+
+  /* ----- case studies: scroll verticale → orizzontale ----- */
+  (function () {
+    const sec = document.getElementById('hscroll');
+    if (!sec) return;
+    const track = document.getElementById('hsTrack')!;
+    const fill = document.getElementById('hsFill')!;
+    const count = document.getElementById('hsCount')!;
+    const cards = track.children.length;
+    const mq = matchMedia('(max-width:800px)');
+    const rm = matchMedia('(prefers-reduced-motion: reduce)');
+    const off = () => mq.matches || rm.matches;
+    let maxX = 0;
+
+    function size() {
+      if (off()) {
+        sec!.style.height = '';
+        track.style.transform = '';
+        return;
+      }
+      maxX = track.scrollWidth - window.innerWidth;
+      /* altezza = viewport + corsa orizzontale: lo scroll resta 1:1 */
+      sec!.style.height = window.innerHeight + maxX + 'px';
+      update();
+    }
+    function update() {
+      if (off()) return;
+      const total = sec!.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      const p = Math.min(1, Math.max(0, -sec!.getBoundingClientRect().top / total));
+      track.style.transform = 'translate3d(' + -p * maxX + 'px,0,0)';
+      fill.style.width = p * 100 + '%';
+      count.textContent =
+        '0' + Math.min(cards, Math.floor(p * cards) + 1) + ' / 0' + cards;
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', size);
+    size();
+  })();
+</script>

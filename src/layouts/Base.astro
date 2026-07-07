@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** 'default' = nav completa · 'case-study' = logo + link di ritorno */
+  nav?: 'default' | 'case-study';
+  active?: 'pricing';
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  nav = 'default',
+  active,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <nav>
+      <div class="wrap nav-inner">
+        <a class="logo" href="/">omar<span>.</span>deangelis</a>
+        {
+          nav === 'case-study' ? (
+            <a class="back" href="/#shipped">← Tutti i casi studio</a>
+          ) : (
+            <div class="nav-links">
+              <a href="/#modello">Come funziona</a>
+              <a href="/#confronto">Confronto</a>
+              <a href="/#shipped">Real shipped code</a>
+              <a href="/pricing" class:list={[{ 'active-link': active === 'pricing' }]}>Prezzi</a>
+              <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call</a>
+            </div>
+          )
+        }
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>© 2026 {SITE.name} — {SITE.role}</span>
+        <span>
+          <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a> ·
+          <a href={`mailto:${SITE.email}`}>Email</a>
+        </span>
+      </div>
+    </footer>
+
+    <a class="float-cta" href={SITE.calUrl} target="_blank" rel="noopener">
+      <span class="fc-long">Review gratuita del tuo prodotto.&nbsp;</span><strong>Prenota 30 minuti&nbsp;→</strong>
+    </a>
+
+    <script>
+      /* ----- scroll reveal ----- */
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      /* ----- floating CTA ----- */
+      const fc = document.querySelector('.float-cta');
+      if (fc) {
+        const toggle = () => fc.classList.toggle('show', window.scrollY > 480);
+        window.addEventListener('scroll', toggle, { passive: true });
+        toggle();
+      }
+    </script>
+  </body>
+</html>
