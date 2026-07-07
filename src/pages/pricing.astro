@@ -25,6 +25,17 @@ const slotsFree = SLOTS.total - SLOTS.taken;
           shippo ogni settimana.
         </p>
 
+        <div class="tiers">
+          <div class="tier">
+            <span class="t-label">Mensile<span class="t-note">massima flessibilità</span></span>
+            <span class="t-price">2.400€ <small>/mese</small></span>
+          </div>
+          <div class="tier hot">
+            <span class="t-label">Trimestrale<span class="t-note">risparmi 600€ e blocchi lo slot</span></span>
+            <span class="t-price">2.200€ <small>/mese</small></span>
+          </div>
+        </div>
+
         <div class="roster">
           <span class="member"><span class="avatar">👨‍💻</span><span>Founder &amp; Product Engineer<small>senior · 10 anni di esperienza</small></span></span>
           <span class:list={['member', 'slot-chip', { full: slotsFree === 0 }]}>
@@ -37,17 +48,6 @@ const slotsFree = SLOTS.total - SLOTS.taken;
                   : `Ci sono ancora ${slotsFree} slot disponibili su ${SLOTS.total}`
             }
           </span>
-        </div>
-
-        <div class="tiers">
-          <div class="tier">
-            <span class="t-label">Mensile<span class="t-note">massima flessibilità</span></span>
-            <span class="t-price">2.400€ <small>/mese</small></span>
-          </div>
-          <div class="tier hot">
-            <span class="t-label">Trimestrale<span class="t-note">risparmi 600€ e blocchi lo slot</span></span>
-            <span class="t-price">2.200€ <small>/mese</small></span>
-          </div>
         </div>
 
         <ul>
@@ -74,16 +74,6 @@ const slotsFree = SLOTS.total - SLOTS.taken;
           settimana.
         </p>
 
-        <div class="roster">
-          <span class="member"><span class="avatar">🧭</span><span>Product Lead<small>discovery &amp; priorità</small></span></span>
-          <span class="member"><span class="avatar">👨‍💻</span><span>1 Product Engineer<small>delivery</small></span></span>
-          <span class="member"><span class="avatar">🎨</span><span>1 Product Designer<small>UI &amp; design system</small></span></span>
-          <span class="member slot-chip">
-            <span class="slot-dot"></span>
-            Un team è disponibile: il prossimo sprint può partire subito
-          </span>
-        </div>
-
         <div class="tiers">
           <div class="tier">
             <span class="t-label">Sprint<span class="t-note">2 settimane, scope definito insieme</span></span>
@@ -93,6 +83,16 @@ const slotsFree = SLOTS.total - SLOTS.taken;
             <span class="t-label">Trimestre<span class="t-note">6 sprint consecutivi · risparmi 2.000€</span></span>
             <span class="t-price">28.000€ <small>/trimestre</small></span>
           </div>
+        </div>
+
+        <div class="roster">
+          <span class="member"><span class="avatar">🧭</span><span>Product Lead<small>discovery &amp; priorità</small></span></span>
+          <span class="member"><span class="avatar">👨‍💻</span><span>1 Product Engineer<small>delivery</small></span></span>
+          <span class="member"><span class="avatar">🎨</span><span>1 Product Designer<small>UI &amp; design system</small></span></span>
+          <span class="member slot-chip">
+            <span class="slot-dot"></span>
+            Un team è disponibile: il prossimo sprint può partire subito
+          </span>
         </div>
 
         <ul>
