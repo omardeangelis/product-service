@@ -657,19 +657,21 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
   }
   .compare .col.labels .head{visibility:hidden}
   .compare .col.labels .head::before{content:none}
-  .col.featured{
+  /* prefisso .compare necessario: lo scoping di Astro aggiunge un attributo per
+     classe, quindi `.compare .col` supererebbe in specificità `.col.featured` */
+  .compare .col.featured{
     background:var(--accent);border-color:var(--accent);color:#fff;
     box-shadow:0 0 0 5px var(--accent-soft), 0 20px 44px rgba(47,75,255,.25);
     transform:translateY(-10px);
   }
-  .col.featured .cell{color:rgba(255,255,255,.92);border-bottom-color:rgba(255,255,255,.18);font-weight:600}
-  .col.featured .head{color:#fff}
+  .compare .col.featured .cell{color:rgba(255,255,255,.92);border-bottom-color:rgba(255,255,255,.18);font-weight:600}
+  .compare .col.featured .head{color:#fff}
   .mark-yes,.mark-no{
     width:30px;height:30px;border-radius:50%;display:inline-flex;
     align-items:center;justify-content:center;font-weight:700;font-size:.9rem;
   }
   .mark-yes{background:var(--ok-soft);color:var(--ok)}
-  .col.featured .mark-yes{background:#fff;color:var(--accent)}
+  .compare .col.featured .mark-yes{background:#fff;color:var(--accent)}
   .mark-no{background:#f1f1ef;color:#a5aab5}
   .compare-hint{display:none;text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
 
@@ -773,7 +775,7 @@ const caseCount = String(caseStudies.length).padStart(2, '0');
     section{padding:72px 0}
     .hero{padding:80px 0 64px}
     .hero-proof{gap:28px}
-    .col.featured{transform:none}
+    .compare .col.featured{transform:none}
   }
 </style>
 
