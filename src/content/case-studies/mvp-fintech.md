@@ -3,7 +3,7 @@
 title: "Da idea a primi clienti paganti in 8 settimane."
 excerpt: "Un founder non tecnico con una tesi validata a voce, zero prodotto e investitori in attesa di una demo. Otto settimane dopo: MVP in produzione e 12 clienti paganti al giorno 30."
 tags: ["Real shipped code", "Fintech · MVP", "Piano MVP"]
-order: 3
+order: 4
 
 home:
   tag: "Fintech · MVP"

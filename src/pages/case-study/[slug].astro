@@ -1,4 +1,5 @@
 ---
+import { Code } from 'astro:components';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config';
@@ -14,7 +15,7 @@ let sectionNum = 0;
 const num = () => String(++sectionNum).padStart(2, '0');
 ---
 
-<Base title={`Real shipped code — ${d.home.title} · ${SITE.name}`} description={d.excerpt} nav="case-study">
+<Base title={`Real shipped code · ${d.home.title} · ${SITE.name}`} description={d.excerpt} nav="case-study">
   <!-- ============ HERO ============ -->
   <header class="cs-hero">
     <div class="wrap">
@@ -76,6 +77,18 @@ const num = () => String(++sectionNum).padStart(2, '0');
           </div>
         )
       }
+      {
+        d.problema.gallery && (
+          <figure class="shots reveal">
+            <div class="shots-track">
+              {d.problema.gallery.shots.map((s) => (
+                <img src={s.src} alt={s.alt} loading="lazy" decoding="async" />
+              ))}
+            </div>
+            <figcaption>{d.problema.gallery.caption}</figcaption>
+          </figure>
+        )
+      }
     </div>
   </section>
 
@@ -111,6 +124,7 @@ const num = () => String(++sectionNum).padStart(2, '0');
           </div>
         )
       }
+      {d.risultati.note && <p class="metrics-note reveal" set:html={d.risultati.note} />}
     </div>
   </section>
 
@@ -133,8 +147,108 @@ const num = () => String(++sectionNum).padStart(2, '0');
         }
       </div>
       {d.soluzione.figure && <div class="figure reveal">{d.soluzione.figure}</div>}
+      {
+        d.soluzione.gallery && (
+          <figure class="shots reveal">
+            <div class="shots-track">
+              {d.soluzione.gallery.shots.map((s) => (
+                <img src={s.src} alt={s.alt} loading="lazy" decoding="async" />
+              ))}
+            </div>
+            <figcaption>{d.soluzione.gallery.caption}</figcaption>
+          </figure>
+        )
+      }
+      {
+        d.soluzione.video && (
+          <figure class="demo reveal">
+            <video src={d.soluzione.video.src} controls muted playsinline preload="metadata" />
+            <figcaption>{d.soluzione.video.caption}</figcaption>
+          </figure>
+        )
+      }
     </div>
   </section>
+
+  <!-- ============ PARTE TECNICA ============ -->
+  {
+    d.tech && (
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{num()} · Sotto il cofano</span>
+          <h2>{d.tech.heading}</h2>
+          <p set:html={d.tech.intro} />
+          <div class="card-list">
+            {d.tech.items.map((item, i) => (
+              <div class:list={['card', 'reveal', { d1: i === 1, d2: i === 2 }]}>
+                <div class="n mono">{'{'}{i + 1}{'}'}</div>
+                <div class="card-body">
+                  <p>
+                    <b>{item.title}</b> <Fragment set:html={item.text} />
+                  </p>
+                  {item.deepDive && (
+                    <details class="deepdive">
+                      <summary>
+                        {item.deepDive.label}
+                        <span class="dd-lang">
+                          {[...new Set(item.deepDive.blocks.map((b) => b.lang.toUpperCase()))].join(' · ')}
+                        </span>
+                      </summary>
+                      <div class="dd-body">
+                        {item.deepDive.blocks.map((b) => (
+                          <div class="dd-block">
+                            {b.title && <div class="dd-title">{b.title}</div>}
+                            <Code code={b.code.trim()} lang={b.lang} theme="github-dark-default" />
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ============ CHICCA ============ -->
+  {
+    d.chicca && (
+      <section>
+        <div class="wrap">
+          <span class="eyebrow">{num()} · La chicca</span>
+          <h2>{d.chicca.heading}</h2>
+          <p set:html={d.chicca.intro} />
+          {d.chicca.deepDive && (
+            <details class="deepdive standalone">
+              <summary>
+                {d.chicca.deepDive.label}
+                <span class="dd-lang">
+                  {[...new Set(d.chicca.deepDive.blocks.map((b) => b.lang.toUpperCase()))].join(' · ')}
+                </span>
+              </summary>
+              <div class="dd-body">
+                {d.chicca.deepDive.blocks.map((b) => (
+                  <div class="dd-block">
+                    {b.title && <div class="dd-title">{b.title}</div>}
+                    <Code code={b.code.trim()} lang={b.lang} theme="github-dark-default" />
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+          {d.chicca.video && (
+            <figure class="demo reveal">
+              <video src={d.chicca.video.src} controls muted playsinline preload="metadata" />
+              <figcaption>{d.chicca.video.caption}</figcaption>
+            </figure>
+          )}
+        </div>
+      </section>
+    )
+  }
 
   <!-- ============ SFIDE ============ -->
   <section>
@@ -240,18 +354,68 @@ const num = () => String(++sectionNum).padStart(2, '0');
   .metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
   .metric-card{background:#171f33;border:1px solid #262f47;border-radius:var(--radius);padding:36px}
   .metric-card b{display:block;font-size:2.6rem;letter-spacing:-0.04em;color:#fff;line-height:1.1}
-  .metric-card span{color:#9aa3b5;font-size:.95rem}
+  .metric-card>span{color:#9aa3b5;font-size:.95rem}
+  .metrics-note{margin-top:32px;max-width:760px;color:#c6cddd;font-size:1.05rem;line-height:1.75}
+  .metrics-note :global(strong){color:#fff}
 
   /* cards & lists */
   .card{padding:32px}
-  .card-list{display:grid;gap:16px;margin-top:32px}
-  .card-list .card{display:flex;gap:18px;align-items:flex-start;padding:24px 28px}
+  .card-list{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:32px}
+  .card-list .card{display:flex;gap:18px;align-items:flex-start;padding:24px 28px;min-width:0}
   .card-list .card .n{
     flex-shrink:0;width:32px;height:32px;border-radius:10px;background:var(--accent-soft);
     color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem;
   }
   .card-list .card p{margin:0;font-size:.98rem}
   .card-list .card b{display:block;margin-bottom:2px;color:var(--ink)}
+  .card-list .card .n.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.78rem;letter-spacing:-0.04em}
+  .card-list .card .card-body{min-width:0;flex:1}
+
+  /* accordion DeepDive con snippet di codice (evidenziati da Shiki via <Code>) */
+  .deepdive{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);min-width:0;max-width:100%}
+  .deepdive.standalone{margin-top:32px;max-width:760px}
+  .deepdive summary{
+    list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:11px 16px;
+    font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.8rem;font-weight:700;color:var(--accent);
+    user-select:none;
+  }
+  .deepdive summary::-webkit-details-marker{display:none}
+  .deepdive summary::before{content:"▸";transition:transform .2s ease}
+  .deepdive[open] summary::before{transform:rotate(90deg)}
+  .deepdive .dd-lang{
+    margin-left:auto;flex-shrink:0;font-size:.66rem;font-weight:600;letter-spacing:.08em;
+    color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px;
+  }
+  .deepdive .dd-body{background:var(--ink)}
+  .deepdive .dd-block + .dd-block{border-top:1px solid rgba(255,255,255,.08)}
+  .deepdive .dd-title{
+    font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.68rem;font-weight:700;
+    letter-spacing:.09em;text-transform:uppercase;color:#7f8aa8;padding:16px 22px 0;
+  }
+  /* il <pre> lo genera il componente Code: serve :global, e il bg del tema va allineato a --ink */
+  .deepdive :global(pre.astro-code){margin:0;background:var(--ink)!important;padding:16px 22px 20px;overflow-x:auto}
+  .deepdive :global(pre.astro-code code){
+    font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.78rem;line-height:1.7;white-space:pre;
+  }
+
+  /* striscia screenshot vecchio flusso */
+  .shots{margin:48px 0 0}
+  .shots-track{
+    display:grid;grid-auto-flow:column;grid-auto-columns:min(420px,78%);gap:16px;
+    overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;
+  }
+  .shots-track img{
+    width:100%;border-radius:var(--radius);border:1px solid var(--line);
+    scroll-snap-align:start;background:var(--surface);
+  }
+  .shots figcaption,.demo figcaption{margin-top:14px;font-size:.85rem;color:var(--muted)}
+
+  /* video demo */
+  .demo{margin:48px 0 0}
+  .demo video{
+    width:100%;display:block;border-radius:var(--radius);
+    border:1px solid var(--line);background:var(--ink);
+  }
 
   /* figure placeholder */
   .figure{

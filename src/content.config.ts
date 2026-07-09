@@ -6,6 +6,33 @@ import { glob } from 'astro/loaders';
  * src/pages/case-study/[slug].astro e dalla vetrina in homepage.
  * I campi di testo ammettono <strong>/<em> inline (renderizzati con set:html).
  */
+// Video dimostrativo (file in public/), con didascalia sotto il player.
+const video = z.object({
+  src: z.string(),
+  caption: z.string(),
+});
+
+// Striscia orizzontale di screenshot con didascalia.
+const gallery = z.object({
+  caption: z.string(),
+  shots: z.array(z.object({ src: z.string(), alt: z.string() })),
+});
+
+// Accordion con snippet di codice (chiuso di default). Ogni blocco ha un
+// titolo opzionale e viene evidenziato con Shiki in base a `lang`.
+const deepDive = z.object({
+  label: z.string().default('DeepDive'),
+  blocks: z
+    .array(
+      z.object({
+        title: z.string().optional(),
+        lang: z.string().default('ts'),
+        code: z.string(),
+      })
+    )
+    .min(1),
+});
+
 const caseStudies = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/case-studies' }),
   schema: z.object({
@@ -54,6 +81,8 @@ const caseStudies = defineCollection({
           note: z.string(),
         })
         .optional(),
+      // Striscia orizzontale di screenshot (es. gli step del vecchio flusso)
+      gallery: gallery.optional(),
     }),
 
     risultati: z.object({
@@ -83,6 +112,8 @@ const caseStudies = defineCollection({
           ),
         })
         .optional(),
+      // Paragrafo di chiusura sotto il grafico (es. per raccontare un dato inatteso)
+      note: z.string().optional(),
     }),
 
     soluzione: z.object({
@@ -90,7 +121,30 @@ const caseStudies = defineCollection({
       intro: z.string(),
       items: z.array(z.object({ title: z.string(), text: z.string() })),
       figure: z.string().optional(),
+      gallery: gallery.optional(),
+      video: video.optional(),
     }),
+
+    // Sezione opzionale di approfondimento tecnico (es. architettura dell'integrazione)
+    tech: z
+      .object({
+        heading: z.string(),
+        intro: z.string(),
+        items: z.array(
+          z.object({ title: z.string(), text: z.string(), deepDive: deepDive.optional() })
+        ),
+      })
+      .optional(),
+
+    // Sezione opzionale per un dettaglio di prodotto extra (es. re-sync del profilo)
+    chicca: z
+      .object({
+        heading: z.string(),
+        intro: z.string(),
+        deepDive: deepDive.optional(),
+        video: video.optional(),
+      })
+      .optional(),
 
     sfide: z.object({
       heading: z.string(),

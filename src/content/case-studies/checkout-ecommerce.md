@@ -3,7 +3,7 @@
 title: "Checkout ricostruito da zero: carrelli abbandonati dimezzati in un mese."
 excerpt: "Il 70% del traffico arrivava da mobile, ma il checkout era pensato per desktop e impiegava 6 secondi ad arrivare al pagamento. L'abbiamo riscritto mobile-first: -48% di abbandoni."
 tags: ["Real shipped code", "E-commerce", "Piano mensile"]
-order: 2
+order: 3
 
 home:
   tag: "E-commerce"

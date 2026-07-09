@@ -1,110 +1,129 @@
 ---
-# ⚠️ Contenuto placeholder — sostituire con dati e cliente reali.
-title: "Come un SaaS B2B ha quasi triplicato l'attivazione ripensando l'onboarding."
-excerpt: "Gli utenti si registravano ma non arrivavano mai al primo valore. In 3 settimane abbiamo portato la conversione al primo progetto dal 12% al 34%, senza aggiungere una sola feature."
-tags: ["Real shipped code", "SaaS · B2B", "Piano trimestrale"]
+title: "L'onboarding che si compila da solo: dal 12,5% all'80% di completamento."
+excerpt: "Un flusso di 11 step manuali che solo il 12,5% degli utenti portava a termine. L'abbiamo sostituito con la sincronizzazione del profilo LinkedIn: Apify estrae i dati, l'utente rivede e conferma, e ora l'80% completa l'onboarding in meno di 37 secondi."
+tags: ["Real shipped code", "Talent platform · SaaS", "Onboarding & attivazione"]
 order: 1
 
 home:
-  tag: "SaaS · B2B"
-  title: "Onboarding che convertiva il 12%. Ora il 34%."
-  problem: "Gli utenti si registravano ma non arrivavano mai al primo valore: flusso a 9 step, drop-off massiccio."
-  solution: "Onboarding progressivo a 3 step con setup differito, misurato evento per evento."
+  tag: "Talent platform"
+  title: "Onboarding completato dal 12,5%. Ora dall'80%."
+  problem: "11 step manuali e ~15 minuti di form: su 500 utenti registrati, solo il 12,5% completava il profilo."
+  solution: "Il profilo si sincronizza da LinkedIn: uno scraper Apify estrae i dati e precompila i campi, l'utente rivede e conferma."
   metrics:
-    - value: "+183%"
-      label: "attivazione"
-    - value: "3 sett."
-      label: "alla release"
+    - value: "6,4×"
+      label: "tasso di completamento"
+    - value: "−84%"
+      label: "costo per profilo attivo"
 
 meta:
-  cliente: "SaaS B2B (~40 dipendenti)"
+  cliente: "SeVedemo · Talent platform"
   ruolo: "Product Engineer"
   durata: "3 settimane"
-  stack: "React · Node · PostgreSQL"
+  stack: "React · TanStack · Express · Apify · PostHog"
 
 contesto:
-  heading: "Un prodotto solido con un problema invisibile."
+  heading: "Una piattaforma dove il profilo è il prodotto."
   paragraphs:
-    - "Il cliente è una piattaforma SaaS per la gestione di progetti in ambito manifatturiero: prodotto maturo, clienti fidelizzati, churn basso. Il marketing funzionava: il traffico e le registrazioni crescevano mese su mese."
-    - "Eppure il fatturato non seguiva. <strong>Le registrazioni raddoppiavano, i clienti paganti no.</strong> Da qualche parte, tra la registrazione e l'upgrade, gli utenti sparivano."
+    - "SeVedemo mette in contatto professionisti digitali e aziende. Tutto il valore per chi si iscrive passa da una cosa sola: un profilo completo, credibile, trovabile. Un profilo a metà è un profilo invisibile."
+    - "Le registrazioni crescevano, spinte dalle campagne di acquisizione: circa 3,50 € per utente registrato. Ma i profili completi no. <strong>Su 500 utenti registrati, solo il 12,5% arrivava in fondo all'onboarding:</strong> ogni profilo attivo, l'unica cosa che genera valore, costava in realtà ~28 € di advertising. L'87,5% del budget moriva dentro un form."
 
 problema:
-  heading: "Il 88% degli utenti non vedeva mai il valore del prodotto."
-  intro: "Prima di scrivere codice, ho instrumentato il funnel di onboarding evento per evento. I dati hanno raccontato una storia precisa:"
+  heading: "11 step manuali, 15 minuti di form, 87,5% di abbandono."
+  intro: "Prima di toccare il codice ho instrumentato il funnel con PostHog, evento per evento, sulla coorte dei 500 utenti registrati. Il problema non era il prodotto: era il prezzo d'ingresso."
   items:
-    - title: "9 step obbligatori prima del primo valore."
-      text: "Configurazione team, ruoli, integrazioni, notifiche: tutto richiesto <em>prima</em> di poter creare il primo progetto."
-    - title: "Drop-off del 61% allo step \"invita il tuo team\"."
-      text: "Gli utenti in valutazione non volevano coinvolgere colleghi prima di aver capito se il prodotto valesse la pena."
-    - title: "Solo il 12% arrivava a creare un progetto."
-      text: "Il momento in cui il prodotto dimostra il suo valore era sepolto in fondo a un percorso a ostacoli."
+    - title: "11 step obbligatori, tutti da compilare a mano."
+      text: "Competenze, ruolo, esperienze, formazione, bio, tariffa, lingue, foto, contatti: ogni schermata un form, ogni campo digitato da zero."
+    - title: "~15 minuti di tempo medio di completamento."
+      text: "Informazioni che l'utente aveva <em>già scritto</em> altrove, su LinkedIn o nel CV, e che gli chiedevamo di ricopiare a mano, campo per campo."
+    - title: "Solo il 12,5% arrivava in fondo."
+      text: "Gli altri restavano con un profilo a metà: invisibili alle aziende, nessun valore ricevuto, nessun motivo per tornare."
   funnel:
     title: "Funnel di onboarding prima dell'intervento"
     rows:
       - { label: "Registrazione", width: "100%", value: "100%" }
-      - { label: "Setup iniziale completato", width: "74%", value: "74%" }
-      - { label: "\"Invita il tuo team\"", width: "29%", value: "29%" }
-      - { label: "Primo progetto creato", width: "12%", value: "12%", drop: true }
-    note: "Dati dal tracking evento per evento instrumentato prima dell'intervento. <em>(Numeri placeholder, da sostituire con i dati reali.)</em>"
+      - { label: "Competenze e ruolo", width: "54%", value: "54%" }
+      - { label: "Esperienze e formazione", width: "28%", value: "28%" }
+      - { label: "Onboarding completato", width: "12.5%", value: "12,5%", drop: true }
+    note: "Coorte di 500 utenti registrati, funnel instrumentato con PostHog prima dell'intervento."
+  gallery:
+    caption: "Il vecchio flusso: 9 delle 11 schermate di inserimento manuale che ogni utente doveva attraversare."
+    shots:
+      - { src: "/case-studies/onboarding/old-flow/1-skills.png", alt: "Vecchio flusso: inserimento manuale delle competenze" }
+      - { src: "/case-studies/onboarding/old-flow/2-role.png", alt: "Vecchio flusso: selezione del ruolo" }
+      - { src: "/case-studies/onboarding/old-flow/3-experience.png", alt: "Vecchio flusso: inserimento delle esperienze lavorative" }
+      - { src: "/case-studies/onboarding/old-flow/4-edu.png", alt: "Vecchio flusso: inserimento della formazione" }
+      - { src: "/case-studies/onboarding/old-flow/5-bio.png", alt: "Vecchio flusso: scrittura della bio" }
+      - { src: "/case-studies/onboarding/old-flow/6-price.png", alt: "Vecchio flusso: impostazione della tariffa" }
+      - { src: "/case-studies/onboarding/old-flow/7-lingue.png", alt: "Vecchio flusso: inserimento delle lingue" }
+      - { src: "/case-studies/onboarding/old-flow/8-profile.png", alt: "Vecchio flusso: completamento del profilo" }
+      - { src: "/case-studies/onboarding/old-flow/9-contact.png", alt: "Vecchio flusso: inserimento dei contatti" }
 
 risultati:
   heading: "I numeri, prima di tutto."
   cards:
-    - { pre: "12% → ", from: 12, to: 34, post: "%", label: "conversione registrazione → primo progetto" }
-    - { pre: "+", from: 0, to: 27, post: "%", label: "trial → piano a pagamento" }
-    - { pre: "", from: 0, to: 3, post: " settimane", label: "dalla diagnosi alla release in produzione" }
+    - { pre: "12,5% → ", from: 12, to: 80, post: "%", label: "utenti che completano l'onboarding" }
+    - { pre: "−", from: 0, to: 84, post: "%", label: "costo di acquisizione per profilo attivo, a parità di spesa ads" }
+    - { pre: "+", from: 0, to: 38, post: "%", label: "iscrizioni organiche nei 60 giorni dopo il rilascio" }
   chart:
     title: "Prima / dopo l'intervento"
     rows:
-      - { label: "Attivazione · prima", width: "35%", value: "12%" }
-      - { label: "Attivazione · dopo", width: "100%", value: "34%", after: true }
-      - { label: "Step obbligatori · prima", width: "100%", value: "9", gap: true }
-      - { label: "Step obbligatori · dopo", width: "33%", value: "3", after: true }
+      - { label: "Completamento · prima", width: "16%", value: "12,5%" }
+      - { label: "Completamento · dopo", width: "100%", value: "80%", after: true }
+      - { label: "Costo ads per profilo attivo · prima", width: "100%", value: "~28 €", gap: true }
+      - { label: "Costo ads per profilo attivo · dopo", width: "16%", value: "4,40 €", after: true }
+      - { label: "Tempo di completamento · prima", width: "100%", value: "~15 min", gap: true }
+      - { label: "Tempo di completamento · dopo", width: "5%", value: "37 s", after: true }
+  note: "Il dato che non avevamo messo a budget: <strong>le iscrizioni organiche.</strong> Con l'80% dei nuovi utenti che arriva a un profilo completo e visibile, la piattaforma ha iniziato a portare utenti da sola. Nei 60 giorni dopo il rilascio PostHog ha registrato uno spike del +38% di iscrizioni non legate alle campagne: profili completi che vengono trovati e condivisi portano altri professionisti, a costo zero."
 
 soluzione:
-  heading: "Meno onboarding, non più onboarding."
-  intro: "La tentazione era aggiungere: tooltip, video tutorial, una checklist gamificata. Ho proposto l'opposto: <strong>togliere tutto ciò che si frappone tra l'utente e il primo progetto.</strong>"
+  heading: "Il profilo si sincronizza da LinkedIn."
+  intro: "La strada ovvia era ottimizzare gli 11 step: meno campi, copy migliore, una progress bar più incoraggiante. Ho proposto di eliminarli. <strong>Tutto quello che chiedevamo esisteva già sul profilo LinkedIn dell'utente:</strong> bastava sincronizzarlo."
   items:
-    - title: "Da 9 step a 3."
-      text: "Nome, primo progetto, fatto. Tutto il resto (team, integrazioni, notifiche) è diventato configurazione differita, proposta nel momento in cui serve davvero."
-    - title: "Progetto d'esempio precaricato."
-      text: "L'utente atterra in un prodotto già vivo, non in una dashboard vuota. Il \"wow\" arriva al secondo 10, non al giorno 3."
-    - title: "Ogni step misurato."
-      text: "Eventi analytics su ogni transizione del funnel, così il team può vedere l'impatto di ogni futura modifica senza tirare a indovinare."
-  figure: "🖥️ Screenshot del nuovo flusso a 3 step, da sostituire con immagine reale"
+    - title: "Apify legge il profilo, Express lo traduce."
+      text: "Uno scraper Apify estrae dal profilo pubblico LinkedIn esperienze, formazione, competenze, lingue e bio; un servizio Express orchestra l'estrazione e mappa ogni sezione sul modello dati della piattaforma."
+    - title: "Parsing asincrono, mai un'attesa muta."
+      text: "TanStack Query gestisce il polling dello stato di estrazione: l'utente segue in tempo reale ogni fase (analisi, mappatura, preparazione) invece di fissare uno spinner infinito."
+    - title: "Revisione, non compilazione."
+      text: "I dati estratti atterrano in un form TanStack Form già precompilato e validato: l'utente corregge quello che vuole e conferma. Digitare è l'eccezione, non la regola."
+  video:
+    src: "/case-studies/onboarding/onboarding.mp4"
+    caption: "Il nuovo flusso registrato in tempo reale: dalla sincronizzazione con LinkedIn all'onboarding completato in meno di 37 secondi."
+
+chicca:
+  heading: "Il profilo si aggiorna con un click."
+  intro: "Il problema gemello dell'onboarding è il profilo che invecchia: nel vecchio flusso nessuno tornava ad aggiornare 11 schermate. Ora c'è un solo bottone, <strong>Aggiorna</strong>: ripete la sincronizzazione con LinkedIn e propone le differenze da confermare. Meno di 15 secondi, e il profilo torna allineato alla realtà."
+  video:
+    src: "/case-studies/onboarding/resync.mp4"
+    caption: "Un click su Aggiorna: il profilo esistente si riallinea a LinkedIn in meno di 15 secondi."
 
 sfide:
   heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
   paragraphs:
-    - "<strong>Il vincolo vero era il codice legacy:</strong> l'onboarding esistente era intrecciato con il sistema di permessi. Riscriverlo tutto avrebbe richiesto mesi. La soluzione è stata un nuovo flusso parallelo dietro feature flag, rilasciato al 10% degli utenti, poi al 50%, poi a tutti, con la possibilità di tornare indietro in un click."
-    - "Il rollout graduale ha anche risolto la seconda paura del team: <strong>che i numeri fossero un caso.</strong> Con l'A/B test attivo per due settimane, il confronto vecchio-vs-nuovo era statisticamente solido prima della release completa."
+    - "<strong>I profili reali sono disordinati:</strong> sezioni mancanti, lingue miste, formati imprevedibili. Lo scraping non poteva essere un tutto-o-niente. Ogni campo estratto è indipendente: se qualcosa non si riesce a mappare, il campo resta vuoto ed editabile e il flusso va avanti. Il caso peggiore è un form precompilato a metà, mai un vicolo cieco."
+    - "<strong>E chi un profilo online non ce l'ha?</strong> Il percorso manuale non è sparito: è diventato il fallback, insieme all'import da CV. Il rollout è avvenuto dietro feature flag, con il funnel instrumentato su PostHog step per step: il confronto vecchio-vs-nuovo era misurato, non raccontato, prima della release a tutti gli utenti."
 
 primaDopo:
-  statLabel: "Attivazione al primo progetto"
+  statLabel: "Onboarding completato"
   before:
-    stat: "12%"
-    width: "35%"
+    stat: "12,5%"
+    width: "16%"
     items:
-      - "9 step obbligatori prima del primo valore"
-      - "12% di utenti arrivava al primo progetto"
-      - "Dashboard vuota al primo accesso"
-      - "Zero visibilità sul funnel: si tirava a indovinare"
+      - "11 step obbligatori, ~15 minuti di form"
+      - "Ogni campo ricopiato a mano da LinkedIn o dal CV"
+      - "12,5% di completamento su 500 utenti"
+      - "~28 € di spesa ads per ogni profilo attivo"
+      - "Profili a metà, invisibili alle aziende"
   after:
-    stat: "34%"
+    stat: "80%"
     width: "100%"
     items:
-      - "3 step, il resto è configurazione differita"
-      - "34% di utenti crea il primo progetto"
-      - "Prodotto già vivo con progetto d'esempio"
-      - "Ogni step misurato: le decisioni si prendono sui dati"
-
-quote:
-  text: "Omar non ci ha chiesto \"cosa devo costruire\". Ci ha chiesto \"qual è il problema\", e poi ci ha mostrato coi numeri che la soluzione era togliere, non aggiungere. Testimonial placeholder, da sostituire con quote reale."
-  initials: "MP"
-  name: "Nome Cognome"
-  role: "CEO, Nome Azienda"
+      - "Profilo sincronizzato da LinkedIn in meno di 37 secondi"
+      - "Campi precompilati dallo scraper: si rivede, non si digita"
+      - "80% di completamento"
+      - "4,40 € per profilo attivo, a parità di campagne"
+      - "Profilo aggiornabile con un click, in meno di 15 secondi"
 
 cta:
-  heading: "Hai un funnel che perde utenti?"
-  text: "Parliamone: 30 minuti per capire il problema e dirti onestamente se posso aiutarti."
+  heading: "Il tuo onboarding perde utenti?"
+  text: "Parliamone: 30 minuti per capire dove si rompe il funnel e dirti onestamente se posso aiutarti."
 ---
