@@ -1,0 +1,652 @@
+---
+/*
+ * Demo di motion interattive per i case study (sezione `motion` dello schema).
+ * Ogni item è un confronto prima/dopo; se `demo` è valorizzato, sotto compare
+ * una demo live con gli scenari separati: il visitatore clicca "prima" e poi
+ * "dopo" e sente la differenza. Curve e durate replicano i valori di produzione.
+ */
+type DemoKind = 'press' | 'origin' | 'easing' | 'exit' | 'sidebar';
+
+interface Props {
+  motion: {
+    curve?: { value: string; caption: string };
+    items: {
+      eyebrow: string;
+      title: string;
+      before: string;
+      after: string;
+      demo?: DemoKind;
+      demoLabel?: string;
+      demoNote?: string;
+    }[];
+    outro?: string;
+  };
+}
+
+const { motion } = Astro.props;
+---
+
+<div class="mdemos">
+  {
+    motion.curve && (
+      <div class="m-curve reveal">
+        <svg width="120" height="120" viewBox="0 0 120 120" aria-label="Curva di easing">
+          <g transform="translate(10,10)">
+            <rect x="0" y="0" width="100" height="100" fill="none" class="frame" />
+            <line class="grid-line" x1="25" y1="0" x2="25" y2="100" />
+            <line class="grid-line" x1="50" y1="0" x2="50" y2="100" />
+            <line class="grid-line" x1="75" y1="0" x2="75" y2="100" />
+            <line class="grid-line" x1="0" y1="25" x2="100" y2="25" />
+            <line class="grid-line" x1="0" y1="50" x2="100" y2="50" />
+            <line class="grid-line" x1="0" y1="75" x2="100" y2="75" />
+            <line class="diag" x1="0" y1="100" x2="100" y2="0" />
+            <path class="curve-path" d="M 0,100 C 32,28 0,0 100,0" />
+            <circle class="curve-dot" cx="0" cy="100" r="4.5" />
+          </g>
+        </svg>
+        <div class="m-curve-meta">
+          <span class="k">{motion.curve.value}</span>
+          <span class="v">{motion.curve.caption}</span>
+          <button class="m-replay" type="button">▶ rivedi la curva</button>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="m-cards">
+    {
+      motion.items.map((item) => (
+        <article class="m-card reveal">
+          <span class="m-eyebrow">{item.eyebrow}</span>
+          <h3>{item.title}</h3>
+          <div class="m-ba">
+            <div class="m-side is-before">
+              <span class="m-tag">Prima</span>
+              <p set:html={item.before} />
+            </div>
+            <div class="m-side is-after">
+              <span class="m-tag">Dopo</span>
+              <p set:html={item.after} />
+            </div>
+          </div>
+
+          {item.demo && (
+            <div class="m-demo" data-demo={item.demo}>
+              <div class="m-demo-head">
+                {item.demoLabel && <span class="m-label">{item.demoLabel}</span>}
+                {item.demoNote && <span class="m-note">{item.demoNote}</span>}
+              </div>
+
+              {item.demo === 'press' && (
+                <div class="m-pair">
+                  <div class="m-press-stage">
+                    <span class="m-cap">Prima · nessuna reazione</span>
+                    <button class="m-cta flat" type="button">
+                      Invia candidatura
+                    </button>
+                    <span class="m-static-hint">tieni premuto</span>
+                  </div>
+                  <div class="m-press-stage is-after-stage">
+                    <span class="m-cap">Dopo · scale 0.97</span>
+                    <button class="m-cta pressy" type="button">
+                      Invia candidatura
+                    </button>
+                    <span class="m-static-hint">tieni premuto</span>
+                  </div>
+                </div>
+              )}
+
+              {item.demo === 'origin' && (
+                <div class="m-pair">
+                  <button class="m-scen m-screen" type="button">
+                    <span class="m-cap">Prima · dal centro</span>
+                    <span class="m-dot dot-center" />
+                    <span class="m-pop pop-center">
+                      <span class="ln" style="top:14px;width:60px" />
+                      <span class="ln" style="top:28px;width:44px" />
+                      <span class="ln" style="top:42px;width:52px" />
+                    </span>
+                    <span class="m-hint">clicca per riprodurre</span>
+                  </button>
+                  <button class="m-scen m-screen is-after-scen" type="button">
+                    <span class="m-cap">Dopo · dal trigger</span>
+                    <span class="m-dot dot-origin" />
+                    <span class="m-pop pop-origin">
+                      <span class="ln" style="top:14px;width:60px" />
+                      <span class="ln" style="top:28px;width:44px" />
+                      <span class="ln" style="top:42px;width:52px" />
+                    </span>
+                    <span class="m-hint">clicca per riprodurre</span>
+                  </button>
+                </div>
+              )}
+
+              {item.demo === 'easing' && (
+                <div class="m-pair">
+                  <button class="m-scen m-stage" type="button">
+                    <span class="m-cap">Prima · ease-in-out</span>
+                    <span class="m-panel ease-default">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span class="m-hint">clicca per aprire</span>
+                  </button>
+                  <button class="m-scen m-stage is-after-scen" type="button">
+                    <span class="m-cap">Dopo · ease-drawer</span>
+                    <span class="m-panel ease-drawer">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span class="m-hint">clicca per aprire</span>
+                  </button>
+                </div>
+              )}
+
+              {item.demo === 'exit' && (
+                <div class="m-pair">
+                  <button class="m-scen m-stage" type="button" data-instant>
+                    <span class="m-cap">Prima · sparisce</span>
+                    <span class="m-panel speed-real">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span class="m-hint">clicca per aprire</span>
+                  </button>
+                  <button class="m-scen m-stage is-after-scen" type="button">
+                    <span class="m-cap">Dopo · scivola via</span>
+                    <span class="m-panel speed-real">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span class="m-hint">clicca per aprire</span>
+                  </button>
+                </div>
+              )}
+
+              {item.demo === 'sidebar' && (
+                <div class="m-sidedemo">
+                  <button class="m-sidebar" type="button">
+                    <span class="m-stitle">Area di lavoro</span>
+                    <span class="m-sitem">
+                      <span class="ico" />
+                      <span class="lbl">Dashboard</span>
+                    </span>
+                    <span class="m-sitem">
+                      <span class="ico" />
+                      <span class="lbl">Candidature</span>
+                    </span>
+                    <span class="m-sitem">
+                      <span class="ico" />
+                      <span class="lbl">Talent pool</span>
+                    </span>
+                  </button>
+                  <div class="m-sbody">Il contenuto segue il bordo della barra, senza varchi né sovrapposizioni.</div>
+                </div>
+              )}
+            </div>
+          )}
+        </article>
+      ))
+    }
+  </div>
+
+  {motion.outro && <p class="m-outro reveal" set:html={motion.outro} />}
+</div>
+
+<style>
+  .mdemos {
+    --m-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --m-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --m-accent-2: #7086ff;
+    --m-grid: rgba(15, 22, 38, 0.05);
+  }
+  .mdemos :global(code),
+  .mdemos .k,
+  .m-cap,
+  .m-hint,
+  .m-label,
+  .m-stitle,
+  .m-static-hint {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  /* ---------- curva filo conduttore ---------- */
+  .m-curve {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .m-curve svg { flex: 0 0 auto; }
+  .m-curve .frame { stroke: var(--line); stroke-width: 1; }
+  .m-curve .grid-line { stroke: var(--m-grid); stroke-width: 1; }
+  .m-curve .diag { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+  .m-curve .curve-path { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+  .m-curve .curve-dot { fill: var(--accent); }
+  .m-curve-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 260px; }
+  .m-curve-meta .k { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em; }
+  .m-curve-meta .v { font-size: 0.9rem; color: var(--muted); max-width: 52ch; }
+  .m-replay {
+    align-self: flex-start;
+    margin-top: 10px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: background-color 0.2s var(--m-ease-drawer);
+  }
+  .m-replay:hover { background: color-mix(in srgb, var(--accent) 16%, #fff); }
+
+  /* ---------- card degli interventi ---------- */
+  .m-cards { display: flex; flex-direction: column; gap: 20px; margin-top: 24px; }
+  .m-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(22px, 3.5vw, 32px);
+  }
+  .m-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .m-card h3 {
+    font-size: clamp(1.2rem, 2.4vw, 1.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 18px;
+    text-wrap: balance;
+  }
+
+  .m-ba { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .m-side { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: var(--bg); }
+  .m-side.is-after {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+    background: var(--accent-soft);
+  }
+  .m-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--muted);
+  }
+  .m-side.is-after .m-tag { color: var(--accent); }
+  .m-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .m-side p { margin: 0; font-size: 0.92rem; color: var(--muted); }
+  .m-side.is-after p { color: var(--ink); }
+  .m-side p :global(code) {
+    font-size: 0.86em;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: rgba(15, 22, 38, 0.06);
+  }
+  .m-side.is-after p :global(code) {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, #fff);
+  }
+
+  /* ---------- guscio demo ---------- */
+  .m-demo {
+    margin-top: 16px;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 9px, var(--m-grid) 9px, var(--m-grid) 10px);
+  }
+  .m-demo-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .m-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .m-note { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+  .m-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* ogni scenario è un controllo a sé */
+  .m-scen {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: border-color 0.18s var(--m-ease-drawer), box-shadow 0.18s var(--m-ease-drawer);
+  }
+  .m-scen:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .m-scen.is-after-scen:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .m-cap {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    z-index: 2;
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .m-hint {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    z-index: 3;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .m-hint::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: background-color 0.18s var(--m-ease-drawer);
+  }
+  .m-scen:hover .m-hint::before { background: var(--accent); }
+
+  /* ---------- demo 1 · press feedback ---------- */
+  .m-press-stage {
+    height: 118px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .m-press-stage.is-after-stage { border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }
+  .m-press-stage .m-cap { position: absolute; top: 8px; left: 10px; }
+  .m-static-hint {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    font-size: 0.62rem;
+    color: var(--muted);
+  }
+  .m-cta {
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  /* prima: solo colore, nessuno stato di pressione */
+  .m-cta.flat { transition: background-color 160ms var(--m-ease-out); }
+  .m-cta.flat:hover { background: var(--m-accent-2); }
+  /* dopo: esattamente ciò che è andato in produzione — scale 0.97, 160ms */
+  .m-cta.pressy { transition: background-color 160ms var(--m-ease-out), scale 160ms var(--m-ease-out); }
+  .m-cta.pressy:hover { background: var(--m-accent-2); }
+  .m-cta.pressy:active { scale: 0.97; }
+
+  /* ---------- demo 2 · origin-aware ---------- */
+  .m-screen { height: 154px; }
+  .m-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .m-pop {
+    position: absolute;
+    display: block;
+    width: 96px;
+    height: 64px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--m-accent-2), var(--accent));
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  .m-pop .ln { position: absolute; left: 10px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.75); }
+  .m-pop.play { animation: m-pop-in 0.42s var(--m-ease-drawer) forwards; }
+  @keyframes m-pop-in {
+    to { opacity: 1; transform: scale(1); }
+  }
+  /* A scala dal proprio centro; B dall'angolo più vicino al trigger */
+  .pop-center { bottom: 50px; left: 50%; margin-left: -48px; transform-origin: center center; }
+  .pop-origin { bottom: 50px; left: 16px; transform-origin: bottom left; }
+  .dot-center { bottom: 30px; left: 50%; margin-left: -6px; }
+  .dot-origin { bottom: 30px; left: 18px; }
+
+  /* ---------- demo 3-4 · tendine ---------- */
+  .m-stage { height: 124px; }
+  .m-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 66%;
+    background: linear-gradient(135deg, var(--m-accent-2), var(--accent));
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    transform: translateX(105%);
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+    gap: 5px;
+  }
+  .m-panel span { width: 26px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.7); }
+  .m-panel.ease-default { transition: transform 0.46s ease-in-out; }
+  .m-panel.ease-drawer { transition: transform 0.46s var(--m-ease-drawer); }
+  /* il timing reale di produzione per la demo sull'uscita */
+  .m-panel.speed-real { transition: transform 0.2s var(--m-ease-drawer); }
+  .m-panel.open { transform: translateX(0); }
+  /* "prima": il nodo veniva distrutto nell'istante della chiusura */
+  .m-panel.gone { display: none; }
+
+  /* ---------- demo 5 · sidebar ---------- */
+  .m-sidedemo { display: flex; gap: 12px; align-items: stretch; }
+  .m-sidebar {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    width: 172px;
+    flex: 0 0 auto;
+    padding: 12px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: width 0.3s var(--m-ease-drawer), border-color 0.18s var(--m-ease-drawer);
+  }
+  .m-sidebar:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .m-sidebar.collapsed { width: 58px; }
+  .m-stitle {
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 22px;
+    opacity: 1;
+    transition: height 0.3s var(--m-ease-drawer), opacity 0.3s var(--m-ease-drawer);
+  }
+  .m-sidebar.collapsed .m-stitle { height: 0; opacity: 0; }
+  .m-sitem {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+  .m-sidebar:hover .m-sitem { background: var(--accent-soft); }
+  .m-sitem .ico {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--accent) 35%, #fff);
+  }
+  .m-sitem .lbl { overflow: hidden; opacity: 1; transition: opacity 0.22s var(--m-ease-drawer); }
+  .m-sidebar.collapsed .m-sitem .lbl { opacity: 0; }
+  .m-sbody {
+    flex: 1 1 auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .m-outro { margin-top: 28px; font-size: 0.92rem; color: var(--muted); max-width: 680px; }
+
+  @media (max-width: 560px) {
+    .m-ba,
+    .m-pair { grid-template-columns: 1fr; }
+  }
+
+  /* le demo predicano il reduced motion: quindi lo rispettano */
+  @media (prefers-reduced-motion: reduce) {
+    .mdemos *,
+    .m-cta.pressy { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+    .m-pop { opacity: 1; transform: none; }
+    .m-pop.play { animation: m-reduced-fade 0.2s linear forwards; }
+    @keyframes m-reduced-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .m-panel { transform: none; opacity: 0; transition: opacity 0.2s linear !important; }
+    .m-panel.open { opacity: 1; }
+  }
+</style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ----- curva: il punto la percorre, in autoplay quando entra in vista ----- */
+  document.querySelectorAll<HTMLElement>('.m-curve').forEach((box) => {
+    const path = box.querySelector<SVGPathElement>('.curve-path');
+    const dot = box.querySelector<SVGCircleElement>('.curve-dot');
+    if (!path || !dot) return;
+    const play = () => {
+      if (reduce) return;
+      const len = path.getTotalLength();
+      const dur = 1400;
+      let start: number | null = null;
+      const frame = (ts: number) => {
+        if (start === null) start = ts;
+        const t = Math.min((ts - start) / dur, 1);
+        const p = path.getPointAtLength(t * len);
+        dot.setAttribute('cx', String(p.x));
+        dot.setAttribute('cy', String(p.y));
+        if (t < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    };
+    box.querySelector('.m-replay')?.addEventListener('click', play);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setTimeout(play, 350);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(box);
+  });
+
+  const setHint = (scen: Element, txt: string) => {
+    const hint = scen.querySelector('.m-hint');
+    if (hint) hint.textContent = txt;
+  };
+
+  /* ----- origin-aware: ogni scenario riproduce solo il proprio popover ----- */
+  document.querySelectorAll('[data-demo="origin"] .m-scen').forEach((scen) => {
+    const pop = scen.querySelector('.m-pop');
+    if (!pop) return;
+    scen.addEventListener('click', () => {
+      pop.classList.remove('play');
+      void (pop as HTMLElement).offsetWidth;
+      pop.classList.add('play');
+      setHint(scen, 'clicca per rivedere');
+    });
+  });
+
+  /* ----- tendine (easing + uscita): ogni scenario apre/chiude il suo pannello.
+     data-instant replica il "prima": nodo distrutto nell'istante della chiusura ----- */
+  document.querySelectorAll('[data-demo="easing"] .m-scen, [data-demo="exit"] .m-scen').forEach((scen) => {
+    const panel = scen.querySelector('.m-panel');
+    if (!panel) return;
+    const instant = scen.hasAttribute('data-instant');
+    scen.addEventListener('click', () => {
+      if (panel.classList.contains('open')) {
+        panel.classList.remove('open');
+        if (instant) panel.classList.add('gone');
+        setHint(scen, 'clicca per aprire');
+      } else {
+        panel.classList.remove('gone');
+        void (panel as HTMLElement).offsetWidth;
+        panel.classList.add('open');
+        setHint(scen, 'clicca per chiudere');
+      }
+    });
+  });
+
+  /* ----- sidebar: la barra stessa è il controllo ----- */
+  document.querySelectorAll('[data-demo="sidebar"] .m-sidebar').forEach((sb) => {
+    sb.addEventListener('click', () => sb.classList.toggle('collapsed'));
+  });
+</script>

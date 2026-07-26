@@ -1,6 +1,7 @@
 ---
 import { Code } from 'astro:components';
 import { getCollection } from 'astro:content';
+import MotionDemos from '../../components/MotionDemos.astro';
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config';
 
@@ -169,6 +170,20 @@ const num = () => String(++sectionNum).padStart(2, '0');
       }
     </div>
   </section>
+
+  <!-- ============ MOTION LAB (demo interattive) ============ -->
+  {
+    d.motion && (
+      <section id="demo">
+        <div class="wrap">
+          <span class="eyebrow">{num()} · Prova tu stesso</span>
+          <h2>{d.motion.heading}</h2>
+          <p set:html={d.motion.intro} />
+          <MotionDemos motion={d.motion} />
+        </div>
+      </section>
+    )
+  }
 
   <!-- ============ PARTE TECNICA ============ -->
   {

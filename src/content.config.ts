@@ -33,6 +33,30 @@ const deepDive = z.object({
     .min(1),
 });
 
+// Sezione "prova tu stesso": confronti prima/dopo sul motion con demo live
+// cliccabili, renderizzate da src/components/MotionDemos.astro. `demo` sceglie
+// quale demo interattiva accompagna l'item; senza, resta il solo confronto.
+const motion = z.object({
+  heading: z.string(),
+  intro: z.string(),
+  // Curva di easing "filo conduttore", disegnata con un punto che la percorre
+  curve: z.object({ value: z.string(), caption: z.string() }).optional(),
+  items: z
+    .array(
+      z.object({
+        eyebrow: z.string(),
+        title: z.string(),
+        before: z.string(),
+        after: z.string(),
+        demo: z.enum(['press', 'origin', 'easing', 'exit', 'sidebar']).optional(),
+        demoLabel: z.string().optional(),
+        demoNote: z.string().optional(),
+      })
+    )
+    .min(1),
+  outro: z.string().optional(),
+});
+
 const caseStudies = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/case-studies' }),
   schema: z.object({
@@ -124,6 +148,9 @@ const caseStudies = defineCollection({
       gallery: gallery.optional(),
       video: video.optional(),
     }),
+
+    // Sezione opzionale con demo di motion interattive (stile "clicca e senti")
+    motion: motion.optional(),
 
     // Sezione opzionale di approfondimento tecnico (es. architettura dell'integrazione)
     tech: z
