@@ -48,20 +48,12 @@ const slotsLabel =
       </div>
 
       <div class="who-chips reveal d1" role="tablist">
-        <button class="active" data-pane="0" role="tab" aria-selected="true">Startup<span class="chip-progress"></span></button>
-        <button data-pane="1" role="tab" aria-selected="false">Scale-up<span class="chip-progress"></span></button>
-        <button data-pane="2" role="tab" aria-selected="false">Agency<span class="chip-progress"></span></button>
+        <button class="active" data-pane="0" role="tab" aria-selected="true">Scale-up<span class="chip-progress"></span></button>
+        <button data-pane="1" role="tab" aria-selected="false">Agency<span class="chip-progress"></span></button>
+        <button data-pane="2" role="tab" aria-selected="false">Startup<span class="chip-progress"></span></button>
       </div>
 
       <div class="who-pane active">
-        <p class="big">Hai un runway contato e investitori in attesa?<br />Ti porto <em>dal deck alla demo</em> in settimane, non trimestri.</p>
-        <div class="who-proof">
-          <span><b>MVP in 8 settimane</b> · scope brutale</span>
-          <span><b>Analytics incluse</b> · misuri la validazione</span>
-          <span><b>Zero hiring</b> · si parte in 24h</span>
-        </div>
-      </div>
-      <div class="who-pane">
         <p class="big">Il backlog è più veloce dell'hiring?<br /><em>Sblocco le feature</em> mentre il recruiting fa il suo corso.</p>
         <div class="who-proof">
           <span><b>Seniority garantita</b> · 10 anni di produzione</span>
@@ -75,6 +67,14 @@ const slotsLabel =
           <span><b>White-label</b> · il cliente resta tuo</span>
           <span><b>I tuoi standard</b> · mi adatto al tuo stack</span>
           <span><b>Capacity elastica</b> · attivi solo nei picchi</span>
+        </div>
+      </div>
+      <div class="who-pane">
+        <p class="big">Hai validato con l'MVP e ora serve il prodotto vero?<br />Ti porto <em>dal prototipo al prodotto</em> mentre il go-to-market accelera.</p>
+        <div class="who-proof">
+          <span><b>Fondamenta che reggono</b> · l'MVP smette di essere un prototipo</span>
+          <span><b>Go-to-market incluso</b> · onboarding, pricing, analytics</span>
+          <span><b>Zero hiring</b> · si parte in 24h</span>
         </div>
       </div>
     </div>
@@ -356,7 +356,7 @@ const slotsLabel =
         <div class="seg" role="tablist">
           <button class="seg-btn active" data-group="partner" role="tab" aria-selected="true">
             <span class="seg-name">Partner</span>
-            <span class="seg-sub">Il founder dedicato · da 2.200€/mese</span>
+            <span class="seg-sub">Un product engineer dedicato · da 2.200€/mese</span>
           </button>
           <button class="seg-btn" data-group="team" role="tab" aria-selected="false">
             <span class="seg-name">Team</span>
@@ -367,7 +367,7 @@ const slotsLabel =
         <!-- PARTNER -->
         <div class="price-group active" id="group-partner">
           <p class="group-desc">
-            Il founder come tuo product engineer dedicato. Per chi ha una direzione chiara e vuole eseguirla in
+            Un product engineer dedicato. Per chi ha una direzione chiara e vuole eseguirla in
             fretta.
           </p>
           <p class:list={['slot-note', { full: slotsFree === 0 }]}>
@@ -386,10 +386,10 @@ const slotsLabel =
               <div class="plan-price">2.200€<small>/mese</small></div>
               <p class="plan-meta">Paghi mese per mese · risparmi 600€ rispetto al mensile</p>
               <p class="plan-desc">
-                Blocca il tuo slot Partner per 3 mesi. Il founder dedicato al tuo prodotto, in continuità.
+                Blocca il tuo slot Partner per 3 mesi. Un product engineer dedicato al tuo prodotto, in continuità.
               </p>
               <ul class="plan-checks">
-                <li>Founder dedicato, referente unico</li>
+                <li>Product engineer dedicato, referente unico</li>
                 <li>Slot garantito per 3 mesi</li>
                 <li>Priorità sulla roadmap</li>
                 <li>Board condivisa e update async su Slack</li>
@@ -400,7 +400,7 @@ const slotsLabel =
               <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
                 <span class="plan-kicker">Mensile</span>
                 <div class="plan-mini-price">2.400€<small>/mese</small></div>
-                <p>Il founder sul tuo prodotto, mese per mese. Cancella quando vuoi.</p>
+                <p>Un product engineer sul tuo prodotto, mese per mese. Cancella quando vuoi.</p>
                 <span class="plan-mini-link">Scegli Mensile →</span>
               </a>
               <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">

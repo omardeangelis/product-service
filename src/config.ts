@@ -3,7 +3,7 @@ export const SITE = {
   name: 'Spatalo',
   founder: 'Omar De Angelis',
   role: 'Studio di product engineering',
-  title: 'Spatalo — Studio di product engineering',
+  title: 'Spatalo — Product engineering in abbonamento',
   description:
     'Product engineering in abbonamento: un senior nel team che pensa al prodotto, non solo al codice. Prezzo fisso mensile, pause libere, codice in produzione.',
   calUrl: 'https://cal.eu/omar-de-angelis-vqhwjv/30min',
