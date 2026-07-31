@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { SITE, SLOTS } from '../config';
+import { GUARANTEE, SITE, SLOTS } from '../config';
 
 const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
@@ -228,7 +228,7 @@ const slotsLabel =
             <div class="cell">Seniority garantita</div>
             <div class="cell">Pause &amp; disdetta libere</div>
             <div class="cell">Impatto misurato</div>
-            <div class="cell">Garanzia primo mese</div>
+            <div class="cell">{GUARANTEE.label}</div>
           </div>
           <div class="col featured">
             <div class="cell head">Product Engineer<br />in abbonamento</div>
@@ -239,7 +239,7 @@ const slotsLabel =
             <div class="cell"><span class="mark-yes">✓</span></div>
             <div class="cell"><span class="mark-yes">✓</span></div>
             <div class="cell"><span class="mark-yes">✓</span></div>
-            <div class="cell">Deploy in 5 giorni o mese gratis</div>
+            <div class="cell">{GUARANTEE.short}</div>
           </div>
           <div class="col">
             <div class="cell head">Freelancer<br />classico</div>
@@ -453,8 +453,7 @@ const slotsLabel =
       </div>
 
       <p class="pricing-guarantee">
-        🛡️ <strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi dal kickoff, o
-        il primo mese è gratis.
+        🛡️ <strong>{GUARANTEE.label}:</strong> {GUARANTEE.claim}.
       </p>
       <p class="pricing-footnote">
         Tutti i prezzi sono IVA esclusa. Non sei sicuro di quale formula faccia per te?

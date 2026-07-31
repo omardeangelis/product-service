@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, SLOTS } from '../config';
+import { GUARANTEE, SITE, SLOTS } from '../config';
 
 const slotsFree = SLOTS.total - SLOTS.taken;
 ---
@@ -58,7 +58,7 @@ const slotsFree = SLOTS.total - SLOTS.taken;
 
         <div class="cta-row">
           <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Inizia con una call conoscitiva</a>
-          <p class="guarantee">🛡️<span><strong>Garanzia primo mese:</strong> primo deploy in produzione entro 5 giorni lavorativi, o il primo mese è gratis.</span></p>
+          <p class="guarantee">🛡️<span><strong>{GUARANTEE.label}:</strong> {GUARANTEE.claim}.</span></p>
         </div>
       </article>
 
@@ -163,7 +163,7 @@ const slotsFree = SLOTS.total - SLOTS.taken;
       </details>
       <details>
         <summary>Come funziona la garanzia sul primo mese?</summary>
-        <p>Se sei un nuovo cliente sul piano Partner, mi impegno a portare il primo deploy in produzione entro 5 giorni lavorativi dal kickoff. Se non succede, il primo mese non lo paghi. È una garanzia oggettiva: o il codice è in produzione, o non lo è, senza valutazioni soggettive. E il primo deploy non è un fix di facciata: è la prima priorità vera, scelta insieme al kickoff. Dopo il primo mese ti proteggono le pause e la disdetta libere: non resti mai vincolato a un servizio che non ti convince.</p>
+        <p>Se sei un nuovo cliente sul piano Partner, mi impegno a portare il primo deploy in produzione entro {GUARANTEE.days} giorni lavorativi dal kickoff. Se non succede, il primo mese non lo paghi. È una garanzia oggettiva: o il codice è in produzione, o non lo è, senza valutazioni soggettive. E il primo deploy non è un fix di facciata: è la prima priorità vera, scelta insieme al kickoff. Dopo il primo mese ti proteggono le pause e la disdetta libere: non resti mai vincolato a un servizio che non ti convince.</p>
       </details>
       <details>
         <summary>Chi possiede il codice e i design?</summary>

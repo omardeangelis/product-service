@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../config';
+import { GUARANTEE, SITE } from '../config';
 ---
 
 <Base
@@ -38,7 +38,7 @@ import { SITE } from '../config';
           <p>
             Una call operativa, non cerimoniale: mi dai il contesto, sistemiamo gli accessi (repository, staging,
             analytics) e scegliamo insieme la <strong>prima priorità</strong>. Da qui parte il conto della garanzia:
-            primo deploy in produzione entro 5 giorni lavorativi.
+            primo deploy in produzione entro {GUARANTEE.days} giorni lavorativi.
           </p>
         </div>
       </li>
