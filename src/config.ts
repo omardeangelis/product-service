@@ -5,7 +5,7 @@ export const SITE = {
   role: 'Studio di product engineering',
   title: 'Spatalo — Product engineering in abbonamento',
   description:
-    'Product engineering in abbonamento: un senior nel team che pensa al prodotto, non solo al codice. Prezzo fisso mensile, pause libere, codice in produzione.',
+    'Un product engineer senior nel tuo team, a prezzo fisso mensile. Primo deploy in produzione entro 5 giorni o il primo mese è gratis. Pause libere.',
   calUrl: 'https://cal.eu/omar-de-angelis-vqhwjv/30min',
   email: 'omardeangelis.business@gmail.com',
   linkedin: 'https://www.linkedin.com/in/omar-de-angelis-879b5614b/',
