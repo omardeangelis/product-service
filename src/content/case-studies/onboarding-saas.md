@@ -6,9 +6,9 @@ order: 1
 
 home:
   tag: "Talent platform"
-  title: "Onboarding completato dal 12,5%. Ora dall'80%."
-  problem: "11 step manuali e ~15 minuti di form: su 500 utenti registrati, solo il 12,5% completava il profilo."
-  solution: "Il profilo si sincronizza da LinkedIn: uno scraper Apify estrae i dati e precompila i campi, l'utente rivede e conferma."
+  title: "Incremento del tasso di completamento dell'onboarding dal 12,5% all'80%."
+  problem: "11 step manuali e richiedevano ~15 minuti: su 500 utenti registrati, solo il 12,5% completava il profilo."
+  solution: "Importare e sincronizzare il profilo con LinkedIn usando uno scraper Apify con cui precompilare i campi, lasciando all'utente il compito di rivedere e confermare."
   metrics:
     - value: "6,4×"
       label: "tasso di completamento"
@@ -18,23 +18,23 @@ home:
 meta:
   cliente: "SeVedemo · Talent platform"
   ruolo: "Product Engineer"
-  durata: "3 settimane"
+  durata: "4 settimane"
   stack: "React · TanStack · Express · Apify · PostHog"
 
 contesto:
   heading: "Una piattaforma dove il profilo è il prodotto."
   paragraphs:
-    - "SeVedemo mette in contatto professionisti digitali e aziende. Tutto il valore per chi si iscrive passa da una cosa sola: un profilo completo, credibile, trovabile. Un profilo a metà è un profilo invisibile."
-    - "Le registrazioni crescevano, spinte dalle campagne di acquisizione: circa 3,50 € per utente registrato. Ma i profili completi no. <strong>Su 500 utenti registrati, solo il 12,5% arrivava in fondo all'onboarding:</strong> ogni profilo attivo, l'unica cosa che genera valore, costava in realtà ~28 € di advertising. L'87,5% del budget moriva dentro un form."
+    - "SeVedemo mette in contatto freelance digitali e aziende. Per semplificare iscrizione e manutenzione del profilo, abbiamo implementato una soluzione di sincronizzazione con LinkedIn."
+    - "Le registrazioni crescevano ed erano accompagnate dalle campagne di acquisizione: circa 3,50 € per utente registrato. Ma i profili completi no. <strong>Su 500 utenti registrati, solo il 12,5% arrivava in fondo all'onboarding:</strong> attivare e mostrare un profilo aveva un costo nascosto, di ~28 €. L'87,5% del budget rimaneva bloccato dentro un form."
 
 problema:
   heading: "11 step manuali, 15 minuti di form, 87,5% di abbandono."
-  intro: "Prima di toccare il codice ho instrumentato il funnel con PostHog, evento per evento, sulla coorte dei 500 utenti registrati. Il problema non era il prodotto: era il prezzo d'ingresso."
+  intro: "Il primo passo era ricostruire il fannuel e individuare eventuali frizioni. Implementando posthog ed tracciando ogni evento per evento, sulla coorte dei 500 utenti registrati. Il problema non era il prodotto: era la barrira di ingresso."
   items:
-    - title: "11 step obbligatori, tutti da compilare a mano."
+    - title: "11 step obbligatori da compilare manualmente e obbligatori."
       text: "Competenze, ruolo, esperienze, formazione, bio, tariffa, lingue, foto, contatti: ogni schermata un form, ogni campo digitato da zero."
     - title: "~15 minuti di tempo medio di completamento."
-      text: "Informazioni che l'utente aveva <em>già scritto</em> altrove, su LinkedIn o nel CV, e che gli chiedevamo di ricopiare a mano, campo per campo."
+      text: "Informazioni che l'utente aveva <em>già scritto</em> altrove, su LinkedIn o nel CV, che gli chieste di ricopiare a mano, senza alcun valore ricevuto in cambio."
     - title: "Solo il 12,5% arrivava in fondo."
       text: "Gli altri restavano con un profilo a metà: invisibili alle aziende, nessun valore ricevuto, nessun motivo per tornare."
   funnel:
@@ -73,34 +73,34 @@ risultati:
       - { label: "Costo ads per profilo attivo · dopo", width: "16%", value: "4,40 €", after: true }
       - { label: "Tempo di completamento · prima", width: "100%", value: "~15 min", gap: true }
       - { label: "Tempo di completamento · dopo", width: "5%", value: "37 s", after: true }
-  note: "Il dato che non avevamo messo a budget: <strong>le iscrizioni organiche.</strong> Con l'80% dei nuovi utenti che arriva a un profilo completo e visibile, la piattaforma ha iniziato a portare utenti da sola. Nei 60 giorni dopo il rilascio PostHog ha registrato uno spike del +38% di iscrizioni non legate alle campagne: profili completi che vengono trovati e condivisi portano altri professionisti, a costo zero."
+  note: "Uno dei risultati più interessanti dell'analisi post implementazione <strong>le iscrizioni organiche:</strong> la piattaforma ha iniziato a portare utenti a cascata. Nei 60 giorni dopo il rilascio PostHog ha registrato uno spike del +38% di iscrizioni non legate alle campagne: profili completi che vengono trovati e condivisi portano altri professionisti, a costo zero."
 
 soluzione:
   heading: "Il profilo si sincronizza da LinkedIn."
-  intro: "La strada ovvia era ottimizzare gli 11 step: meno campi, copy migliore, una progress bar più incoraggiante. Ho proposto di eliminarli. <strong>Tutto quello che chiedevamo esisteva già sul profilo LinkedIn dell'utente:</strong> bastava sincronizzarlo."
+  intro: "L'idea è stata di ereditare il lavoro e il valore già creato dall'utente su LinkedIn: semplificando anche la manutenzione del profilo nel futuro. Come ?"
   items:
-    - title: "Apify legge il profilo, Express lo traduce."
-      text: "Uno scraper Apify estrae dal profilo pubblico LinkedIn esperienze, formazione, competenze, lingue e bio; un servizio Express orchestra l'estrazione e mappa ogni sezione sul modello dati della piattaforma."
-    - title: "Parsing asincrono, mai un'attesa muta."
-      text: "TanStack Query gestisce il polling dello stato di estrazione: l'utente segue in tempo reale ogni fase (analisi, mappatura, preparazione) invece di fissare uno spinner infinito."
+    - title: "Apify scraper, il lavoro sporco lo fa lui. Anzi loro."
+      text: "Uno scraper Apify più uno di fallback estraggono dal profilo pubblico LinkedIn esperienze, formazione, competenze, lingue e bio orchestrati da un service in cui dopo estrazione, un LLM mappa e categorizza il freelance, estrendone skills, esperienze e ricostruiendo il profilo in un formato coerente con la piattaforma. Il tutto in meno di 37 secondi."
+    - title: "Parsing, estrazione e mappatura in tempo reale."
+      text: "TanStack Query gestisce il polling estrazione ottimistico. Appena la skill sono pronte, l'utente vede il form precompilato, nel frattempo vengono estratte altre informazioni. Il flusso è asincrono e ottimizzato per la velocità: l'utente non aspetta mai."
     - title: "Revisione, non compilazione."
-      text: "I dati estratti atterrano in un form TanStack Form già precompilato e validato: l'utente corregge quello che vuole e conferma. Digitare è l'eccezione, non la regola."
+      text: "Il carico cognitivo dell'utente è ridotto al minimo: deve inserire solo le informazioni mancanti come tariffa oraria, il CV ed eventuali contatti e portfolio."
   video:
     src: "/case-studies/onboarding/onboarding.mp4"
     caption: "Il nuovo flusso registrato in tempo reale: dalla sincronizzazione con LinkedIn all'onboarding completato in meno di 37 secondi."
 
 chicca:
-  heading: "Il profilo si aggiorna con un click."
-  intro: "Il problema gemello dell'onboarding è il profilo che invecchia: nel vecchio flusso nessuno tornava ad aggiornare 11 schermate. Ora c'è un solo bottone, <strong>Aggiorna</strong>: ripete la sincronizzazione con LinkedIn e propone le differenze da confermare. Meno di 15 secondi, e il profilo torna allineato alla realtà."
+  heading: "Il profilo rimane sincronizzato con LinkedIn."
+  intro: "Mantenere il proprio profilo LinkedIn vuol dire mantener il profilo su SeVedemo. Un bottone, <strong>Aggiorna</strong>: ripete la sincronizzazione e propone le differenze da confermare ed in meno di 15 secondi e il profilo torna allineato alla realtà."
   video:
     src: "/case-studies/onboarding/resync.mp4"
-    caption: "Un click su Aggiorna: il profilo esistente si riallinea a LinkedIn in meno di 15 secondi."
+    caption: "Un click e il profilo si riallinea a LinkedIn in meno di 15 secondi."
 
 sfide:
   heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
   paragraphs:
-    - "<strong>I profili reali sono disordinati:</strong> sezioni mancanti, lingue miste, formati imprevedibili. Lo scraping non poteva essere un tutto-o-niente. Ogni campo estratto è indipendente: se qualcosa non si riesce a mappare, il campo resta vuoto ed editabile e il flusso va avanti. Il caso peggiore è un form precompilato a metà, mai un vicolo cieco."
-    - "<strong>E chi un profilo online non ce l'ha?</strong> Il percorso manuale non è sparito: è diventato il fallback, insieme all'import da CV. Il rollout è avvenuto dietro feature flag, con il funnel instrumentato su PostHog step per step: il confronto vecchio-vs-nuovo era misurato, non raccontato, prima della release a tutti gli utenti."
+    - "<strong>I profili sono disordinati:</strong> sezioni mancanti, formati imprevedibili, simpaticoni e artisti dei job title. La validazione andava ammorbidita: se qualcosa non si riesce a mappare, il campo resta vuoto ed viene ricostruito dal contesto generale dal LLM."
+    - "<strong>Il percorso manuale non è sparito: </strong> è diventato il fallback accompagnato dall'import dal CV."
 
 primaDopo:
   statLabel: "Onboarding completato"
@@ -110,20 +110,20 @@ primaDopo:
     items:
       - "11 step obbligatori, ~15 minuti di form"
       - "Ogni campo ricopiato a mano da LinkedIn o dal CV"
-      - "12,5% di completamento su 500 utenti"
-      - "~28 € di spesa ads per ogni profilo attivo"
-      - "Profili a metà, invisibili alle aziende"
+      - "12,5% tasso di completamento su 500 utenti"
+      - "~28 € di spesa media per un profilo attivo"
+      - "Profili incompleti e invisibili alle aziende"
   after:
     stat: "80%"
     width: "100%"
     items:
-      - "Profilo sincronizzato da LinkedIn in meno di 37 secondi"
+      - "Profilo creato e sincronizzato con LinkedIn in meno di 37 secondi"
       - "Campi precompilati dallo scraper: si rivede, non si digita"
       - "80% di completamento"
-      - "4,40 € per profilo attivo, a parità di campagne"
-      - "Profilo aggiornabile con un click, in meno di 15 secondi"
+      - "4,40 € per profilo attivo a parità di spesa"
+      - "Facilita di manutenzione del profilo nel tempo, con un click"
 
 cta:
-  heading: "Il tuo onboarding perde utenti?"
-  text: "Parliamone: 30 minuti per capire dove si rompe il funnel e dirti onestamente se posso aiutarti."
+  heading: "Vuoi migliorare il tasso di completamento del tuo onboarding?"
+  text: "Parliamone: 30 minuti per analizzare il funnel e capire se possiamo aiutarti."
 ---
