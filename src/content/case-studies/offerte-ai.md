@@ -1,17 +1,17 @@
 ---
-title: "L'offerta di lavoro si scrive in chat: un'AI che intervista come un recruiter."
-excerpt: "Un wizard a 5 step che accettava descrizioni di una riga: offerte vaghe, tariffe fuori mercato, candidature a caso. L'abbiamo sostituito con una conversazione: alleghi un PDF, l'AI ti intervista, propone la tariffa di mercato e in 3 domande l'annuncio completo è in anteprima, pronto da pubblicare."
+title: "Automatizzare la creazione di un brief di progetto in 3 domande"
+excerpt: "Una chat interattiva dove l'AI ti intervista, interpreta e legge PDF, immagini, TXT e ti accompagna nella creazione dell'offerta: propone la tariffa di mercato e in 3 domande l'annuncio completo e pronto da pubblicare."
 tags: ["Real shipped code", "Talent platform · SaaS", "AI integration"]
 order: 2
 
 home:
   tag: "Talent platform · AI"
-  title: "Da form a conversazione: l'offerta si crea in 3 domande."
+  title: "Da form  chat interattiva: il brief si crea in 3 domande."
   problem: "Il wizard manuale accettava descrizioni di una riga: offerte vaghe, tariffe fuori mercato, candidature poco pertinenti."
-  solution: "Una chat AI che intervista come un recruiter: legge PDF e brief, propone tariffe di mercato e genera l'annuncio completo con anteprima live."
+  solution: "Una chat AI che intervista e ti guida lungo la creazione dell'offerta: legge PDF, immagini, TXT generando un output completo e revisionabile."
   metrics:
     - value: "3"
-      label: "domande per pubblicare"
+      label: "domande per la prima versione"
     - value: "+64%"
       label: "candidature per offerta"
 
@@ -22,21 +22,21 @@ meta:
   stack: "Express · Effect · OpenAI · Sharp · GCS"
 
 contesto:
-  heading: "Il collo di bottiglia si era spostato dall'altra parte del marketplace."
+  heading: "Ottimizzare il flusso di creazione delle offerte."
   paragraphs:
-    - "Il lato professionisti l'avevamo già sistemato: profili completi in meno di 37 secondi grazie alla sincronizzazione con LinkedIn. Ma un marketplace vive di entrambi i lati, e le aziende che pubblicavano offerte avevano lo stesso identico problema in forma diversa."
-    - "Chi pubblica un'offerta su SeVedemo spesso non è un recruiter di professione: è un founder, un PM, qualcuno dell'HR abituato ad assumere dipendenti, non freelance. <strong>Il risultato erano offerte vaghe, con descrizioni di una riga e tariffe scollegate dal mercato:</strong> i freelance non capivano cosa avrebbero fatto davvero, e le candidature arrivavano poche e poco pertinenti."
+    - "Dopo aver ottimizzato il flusso di creazione dei profili riducendo il tempo di creazione < 37 secondi e migliorando l'accuratezza grazie alla <a href='/case-study/onboarding-saas'>sincronizzazione con LinkedIn</a>, rimaneva un problema simile dall'altra parte del marketplace dove le aziende pubblicavano offerte passando da wizard a 5 step che non facilitavano la creazione di un annuncio completo e standardizzati"
+    - "Chi ricerca un professionista non sempre è un recruiter o ha esperienza nella creazione di offerte, né ha una conoscenza approfondita del mercato. <strong>Il risultato erano offerte vaghe, con descrizioni di una riga e tariffe scollegate dal mercato;</strong> portando a poche candidature e soprattutto disallineate dal profilo desiderato."
 
 problema:
-  heading: "Cinque step di form, descrizioni di una riga."
-  intro: "Il flusso di creazione era un wizard classico: Progetto, Offerta, Contratto, ATS, Preview. Tecnicamente corretto, praticamente inutile per chi non sa già cosa scrivere. Il form validava i campi, non la qualità."
+  heading: "Un form lungo che richiedeva all'utente di recepire troppe informazioni prima di iniziare."
+  intro: "Il flusso di creazione era un wizard classico: Progetto & Ruolo, Tariffa, Contratto, Link per il colloquio & anteprima pre pubblicazione. Tecnicamente impeccabile, praticamente inutile per chi non sa già cosa scrivere. Il form validava i campi, non la qualità."
   items:
     - title: "Nessuna guida sul contenuto."
-      text: "Il wizard chiedeva titolo, categoria, tag e descrizione, ma non aiutava a scriverli: una descrizione come <em>\"Costruire prodotti che risolvano davvero soluzioni\"</em> passava la validazione e finiva pubblicata così."
-    - title: "Tariffe decise a sentimento."
-      text: "Chi arriva dal recruiting tradizionale ragiona in RAL, non in tariffa giornaliera freelance. Il form chiedeva un minimo e un massimo senza alcun riferimento di mercato: offerte fuori range in entrambe le direzioni."
-    - title: "Offerte vaghe, candidature a caso."
-      text: "Un annuncio senza responsabilità concrete e requisiti chiari attira candidature generiche. Le aziende ricevevano poco e male, e la colpa ricadeva sulla piattaforma."
+      text: "Il wizard chiedeva titolo, categoria, tag e descrizione, ma non aiutava a scriverli né a fornire dati a supporto."
+    - title: "Tariffe senza riferimenti di mercato."
+      text: "E' una scelta che non paga dare per scontato che chiunque cerchi un freelance conosca le tariffe di mercato."
+    - title: "Descrizioni approssimative producono candidature disallineate."
+      text: "Nessuna garanzia di coerenza tra descrizione, responsabilità, aspettative con le competenze richieste e utili a realzzare il progetto."
   gallery:
     caption: "Il vecchio flusso: il wizard a 5 step che validava i campi ma non aiutava a compilarli."
     shots:
@@ -47,9 +47,9 @@ problema:
       - { src: "/case-studies/offerte-ai/old-flow/5-preview.png", alt: "Vecchio flusso: anteprima di un'offerta con descrizione di una riga" }
 
 risultati:
-  heading: "Offerte più ricche, candidature più pertinenti."
+  heading: "Offerte coerenti, candidature più pertinenti."
   cards:
-    - { pre: "", from: 0, to: 3, post: "", label: "domande in media per arrivare all'annuncio completo in anteprima" }
+    - { pre: "", from: 0, to: 3, post: "", label: "domande in media per produrre un brief di progetto" }
     - { pre: "22% → ", from: 22, to: 96, post: "%", label: "offerte pubblicate con descrizione completa (ruolo, responsabilità, requisiti)" }
     - { pre: "+", from: 0, to: 64, post: "%", label: "candidature per offerta nei 30 giorni dopo il rilascio" }
   chart:
@@ -61,20 +61,19 @@ risultati:
       - { label: "Tempo di creazione · dopo", width: "22%", value: "~4 min", after: true }
       - { label: "Candidature per offerta · prima", width: "38%", value: "5", gap: true }
       - { label: "Candidature per offerta · dopo", width: "62%", value: "8,2", after: true }
-  note: "Il dato più interessante è arrivato dal funnel su PostHog: <strong>le offerte create in chat convertono meglio anche lato freelance.</strong> Una descrizione con responsabilità e requisiti concreti fa autoselezionare i candidati giusti: più candidature, e soprattutto candidature che l'azienda risponde invece di ignorare."
 
 soluzione:
   heading: "Un'intervista, non un form."
-  intro: "La strada ovvia era migliorare il wizard: più suggerimenti, più esempi, più validazioni. Ho proposto di cambiarne la natura. <strong>Un recruiter esperto non ti dà un form da compilare: ti fa le domande giuste e scrive lui l'annuncio.</strong> Così si comporta la chat."
+  intro: "<strong>Un recruiter non ti dà un form da compilare</strong> ma fa le domande, legge documenti, immagini e curriculum e se qualcosa non è chiaro ti aiuta a risolvere il problema."
   items:
     - title: "L'AI intervista come un recruiter."
-      text: "Dal primo messaggio deduce da sola titolo, categoria, seniority e competenze, senza chiedere conferme inutili. La strategia è esplicita nel prompt: chiudere entro 3 scambi, poi ogni informazione mancante viene dedotta dal contesto e dalle tariffe di mercato."
-    - title: "Alleghi un PDF, la chat lo legge."
-      text: "CV, brief o capitolato: PDF e immagini si allegano direttamente in chat, vengono compressi e processati lato server ed entrano nel contesto della conversazione. L'utente non ricopia niente."
-    - title: "Tariffe agganciate al mercato."
-      text: "Tool dedicati estraggono le competenze richieste e la tariffa media di mercato per profili simili: la chat propone sempre un range realistico in EUR al giorno e chiede conferma esplicita solo sul budget, l'unico campo dove non si improvvisa."
-    - title: "Anteprima live, pubblicazione in un click."
-      text: "A ogni scambio un secondo modello estrae dalla conversazione il payload strutturato dell'offerta e aggiorna l'anteprima accanto alla chat. Alla chiusura, l'annuncio completo (ruolo, responsabilità, requisiti) passa alla revisione finale e si pubblica."
+      text: "Deduce ed estrae titolo, categoria, seniority e competenze. La strategia è esplicita nel prompt: fornire una priva versione entro 3 scambi, poi recuperare informazioni mancanti ed infine suggerire la tariffa."
+    - title: "Supporta fino a 10 file: PDF, immagini e TXT."
+      text: "Curriculum, requisiti, descrizioni di progetto: che siano PDF o immagini si allegano direttamente in chat, vengono compressi, processati ed entrano nel contesto della conversazione."
+    - title: "Tariffe coerenti con il mercato."
+      text: "Le tariffe vengono confrontate con quelle dei freelance presenti in piattaforma. Nessun dati è casuale: l'AI propone un range di mercato coerente con il ruolo, la seniority e le competenze richieste."
+    - title: "Human in the loop."
+      text: "U secondo modello estrae dalla conversazione il payload strutturato dell'offerta e aggiorna l'anteprima accanto alla chat. Rendendo ogni passaggio revisionabile prima della pubblicazione."
   gallery:
     caption: "Il nuovo flusso: dal brief allegato in chat all'annuncio completo in anteprima, fino alla revisione prima della pubblicazione."
     shots:
@@ -86,15 +85,15 @@ soluzione:
       - { src: "/case-studies/offerte-ai/new-flow/6-revisione.png", alt: "Nuovo flusso: revisione e perfezionamento dell'offerta generata prima di pubblicarla" }
 
 tech:
-  heading: "L'integrazione AI, senza magia."
-  intro: "La parte visibile è una chat. La parte che la tiene in piedi in produzione è un servizio Express costruito con Effect: errori tipizzati, retry con backoff esponenziale e ogni chiamata AI tracciata con il suo costo."
+  heading: "Come funziona il nostro AI recruiter."
+  intro: "L'interfaccia è una chat in Solid.js e sul BE un servizio Express costruito con Effect: errori tipizzati, retry con backoff esponenziale e ogni chiamata AI tracciata con il suo costo."
   items:
     - title: "Due modelli, due lavori."
-      text: "La conversazione è gestita in streaming da un modello grande con la persona del recruiter. L'estrazione del payload usa un modello mini con structured output in JSON Schema strict: mai parsing fragile, mai campi inventati. Le etichette in italiano che l'utente legge vengono mappate sugli enum interni della piattaforma."
+      text: "Un modello si occupa di conversare con l'utente, il secondo riassume, estrae informazioni e indica che cosa manca per porre le domande corrette. L'estrazione del payload usa un modello mini con structured output: mai parsing fragile, mai campi inventati."
       deepDive:
         label: "DeepDive · il service dei due modelli"
         blocks:
-          - title: "Il modello grande conversa in streaming"
+          - title: "Un modello supporta la conversazione"
             code: |
               export const createChatStream = (
                 messages: ChatMessage[],
@@ -156,8 +155,8 @@ tech:
 
                 return { ...raw, payment_type: "daily", rate_unit: "daily" };
               };
-    - title: "File processing difensivo."
-      text: "Il tipo di file si decide dai magic bytes, non dall'estensione. Le immagini vengono compresse con Sharp a qualità decrescente fino a rientrare nel budget; i PDF diventano immagini pagina per pagina via Poppler. Tutto passa da uno storage temporaneo su GCS e viene eliminato dopo il processing."
+    - title: "File allegati: compressione, parsing e storage temporaneo."
+      text: "Il tipo di file si decide dai magic bytes non dall'estensione e le immagini vengono compresse con Sharp a qualità decrescente fino a rientrare nel budget; i PDF diventano immagini pagina per pagina via Poppler. Tutto passa da uno storage temporaneo su GCS e viene eliminato alla fine o all'interruzione del processo."
       deepDive:
         label: "DeepDive · la pipeline dei file"
         blocks:
@@ -217,7 +216,7 @@ tech:
               export const downloadFiles = (fileIds: string[], userId: string) =>
                 Effect.all(fileIds.map((id) => downloadFile(id, userId)), { concurrency: 3 });
     - title: "Auto-compaction del contesto."
-      text: "Ogni conversazione ha un budget di token stimato. Superata la soglia, la storia si comprime: restano i primi messaggi e gli ultimi, con un messaggio ponte al posto del resto, e gli allegati vecchi vengono strippati. Il context bloat è il modo più rapido per far degradare qualità e costi di una chat AI."
+      text: "Ogni conversazione ha un budget di token stimato. Superata la soglia, la storia si comprime: restano i primi messaggi e gli ultimi, con un riassunto al posto del resto, rimuovendo gli allegati vecchi. Il context bloat è il modo più rapido per far degradare qualità e costi."
       deepDive:
         label: "DeepDive · la compaction"
         blocks:
@@ -265,7 +264,7 @@ tech:
                   return msg;
                 });
     - title: "Guardrail espliciti."
-      text: "Il modello fa solo recruiting: le richieste fuori tema vengono reindirizzate con una escalation a tre livelli, le istruzioni nascoste nei file allegati vengono ignorate per design, e limiti duri su messaggi e dimensioni proteggono da abusi e costi fuori controllo."
+      text: "Le richieste fuori tema vengono reindirizzate con una escalation a tre livelli, le istruzioni nascoste nei file allegati vengono ignorate per design e hard limit su messaggi e dimensioni mitigano file enormi e costi eccessivi."
       deepDive:
         label: "DeepDive · limiti e retry"
         blocks:
@@ -303,8 +302,8 @@ tech:
               );
 
 chicca:
-  heading: "Il prompt ha una pipeline di test."
-  intro: "Il rischio delle feature AI è che il primo che tocca il prompt dopo di te rompa tutto senza accorgersene. Per questo ho lasciato al team una <strong>pipeline di evaluation</strong>: un generatore crea decine di scenari realistici e diversi tra loro, il flusso gira su ciascuno e un modello giudice valuta ogni risposta su criteri espliciti, alcuni bloccanti. Il report HTML mostra punteggi, violazioni e pass rate: si modifica il prompt, si rilancia la pipeline, e la regressione si vede prima del deploy invece che dalle lamentele degli utenti."
+  heading: "Evaluation pipeline come se piovesse!"
+  intro: "Ogni modello è dotato di prompt univoco e si appoggia su tools condivisi in altre parti del prodotto. Per evitare regressioni, ogni modifica al prompt o ai tool passa da una pipeline di evaluation che genera 30 scenari diversi li itera ed un Model Grader li valuta, confronta con il valore precedente e se è diminuito oltre la soglia di passaggio blocca il rilascio. Tutto automatico, tutto in CI/CD."
   deepDive:
     label: "DeepDive · la pipeline di evaluation"
     blocks:
@@ -342,10 +341,9 @@ chicca:
           ).length;
 
 sfide:
-  heading: "Cosa poteva andare storto (e come l'abbiamo evitato)."
+  heading: "Gestire formati e contenuti diversi, senza perdere la conversazione."
   paragraphs:
-    - "<strong>Le immagini divorano il contesto.</strong> Un PDF di dieci pagine diventa dieci immagini nella conversazione, e dopo tre allegati la chat scoppia o costa dieci volte tanto. La risposta è la compaction: budget di token, allegati vecchi rimossi dal contesto, compressione aggressiva prima ancora di arrivare al modello. Il caso peggiore è un'immagine meno nitida, mai una conversazione persa."
-    - "<strong>Il tono doveva restare da consulente, non da form parlante.</strong> Un LLM lasciato a se stesso riformula, ricapitola e chiede conferme su tutto. Il prompt vieta esplicitamente questi pattern e la pipeline di evaluation li tratta come violazioni bloccanti: se una modifica fa tornare il modello burocratico, il punteggio crolla prima che arrivi in produzione."
+    - "Tutto diventa un'immagine: sembra controintuitivo ma abbiamo scelto di convertire file e PDF in immagini e farle passare attraverso una flusso di compressione incrementale. In questo modo il modello non deve fare parsing di PDF o DOCX, ma legge le immagini come se fossero screenshot e non perde mai il contesto della conversazione."
 
 primaDopo:
   statLabel: "Offerte con descrizione completa"
@@ -367,6 +365,6 @@ primaDopo:
       - "PDF e brief allegati in chat, anteprima live e pubblicazione in un click"
 
 cta:
-  heading: "Vuoi portare l'AI dentro il tuo prodotto?"
-  text: "Parliamone: 30 minuti per capire se un'integrazione del genere ha senso nel tuo caso e dirtelo onestamente."
+  heading: "Vuoi integrare l'AI dentro il tuo prodotto?"
+  text: "Parliamone: 30 minuti per capire se un'integrazione abbia senso nel tuo caso."
 ---
