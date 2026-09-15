@@ -1,20 +1,20 @@
 ---
 title: "Ripensare l'inserimento dei dati di un'intera app"
-excerpt: "Le tabelle di un financial model si compilavano a mano, cella per cella, mentre i numeri erano già in un foglio Excel. Abbiamo reso possibile copiare una riga da Excel, Google Sheets o un CSV e incollarla direttamente in tabella: un solo parser per qualunque foglio, numeri normalizzati in ogni lingua e valuta, e un motore riusato in 31 tabelle senza codice dedicato."
+excerpt: "Abilitare gli operatori dell'app a copiare una riga da Excel, Google Sheets o un CSV e incollarla e ottenere numeri normalizzati in ogni lingua e valuta distribuendo la feature in 31 tabelle."
 tags: ["Real shipped code", "Financial modeling · SaaS", "Reusable architecture"]
 order: 3
 draft: false
 
 home:
   tag: "Financial modeling · SaaS"
-  title: "Copiare e incollare direttamente da Excel, Sheets e CSV i dati finanziari"
-  problem: "Le tabelle di un financial model si compilavano cella per cella, mentre i numeri erano già pronti in un foglio Excel con formati, valute e separatori diversi ad ogni cliente."
-  solution: "Copi una riga da Excel, Sheets o CSV e la incolli in tabella. Un solo parser normalizza i numeri in ogni lingua e valuta; un provider generico porta il paste in 31 tabelle senza codice dedicato."
+  title: "Copiare righe direttamente in app da Excel, Sheets e CSV"
+  problem: "Compilare una tabella di dati finanziari richiedeva ore di input manuale, con centinaia di celle per ogni tabella."
+  solution: "Abilitare gli operatori dell'app a copiare una riga da Excel, Google Sheets o un CSV e incollarla e ottenere numeri normalizzati in ogni lingua e valuta distribuendo la feature in 31 tabelle"
   metrics:
     - value: "~30s"
       label: "per riempire una tabella (prima ~15 min a mano)"
     - value: "31"
-      label: "tabelle, un solo motore di paste"
+      label: "tabelle che usano lo stesso motore di paste, senza codice ad-hoc"
 
 meta:
   cliente: "Valueize · Piattaforma di financial modeling"
@@ -23,10 +23,10 @@ meta:
   stack: "React 19 · TanStack Table · TanStack Query · Zod · Vitest"
 
 contesto:
-  heading: "Le tabelle rendono il prodotto ordinato. Ma poi bisogna riempirle."
+  heading: "Le tabelle rendono il prodotto ordinato. Poi perà bisogna riempirle."
   paragraphs:
-    - "Valueize è una piattaforma di financial modeling: personale, ricavi, COGS, opex, capitale circolante, struttura finanziaria. Ognuno di questi moduli è una o più tabelle a griglia — righe di voci, colonne di periodi — che l'utente deve compilare per costruire il modello. Un modello copre in genere 3-4 anni per volta, e ogni anno si può dettagliare mese per mese: le celle da riempire si moltiplicano in fretta."
-    - "Il punto è che quei numeri quasi sempre <strong>esistono già</strong>: sono in un foglio Excel, in un Google Sheet condiviso, in un CSV esportato dal gestionale. Un import da file c'era, ma dava per scontato un foglio pulito e completo — e i piani reali sono fatti a mano, parziali e tutti diversi tra loro. Così, nella pratica, restava l'input manuale: leggere un valore dal proprio foglio e ridigitarlo nella griglia, cella per cella, per ogni tabella. Il lavoro non era 'modellare': era ricopiare."
+    - "Valueize è una piattaforma di financial modeling che esamina personale, ricavi, COGS, opex, capitale circolante e flussi di cassa. Ognuno di questi moduli contiene più tabelle a griglia che l'utente deve compilare per costruire il modello. Un modello descrive mediamente 3-4 anni fiscali di un business con una granularità mensile."
+    - "La funzione di import era presente, ma lo scenario più frequente erano utenti importavano file parziali o errati ritrovandosi ad inserire a mano centinaia di celle. "
 
 problema:
   heading: "Input manuale cella per cella, con i dati già pronti dall'altra parte dello schermo."
