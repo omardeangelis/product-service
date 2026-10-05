@@ -30,3 +30,28 @@ export const SLOTS = {
   total: 2,
   taken: 0,
 };
+
+// Prototipi da mandare ai clienti, serviti su /p/<slug>. Il codice di ognuno
+// vive in src/prototypes/<slug>/ (lo slug è anche il nome della cartella).
+// `visible: false` lo toglie dalla build di produzione, ma in locale
+// (npm run dev) resta raggiungibile. Per pubblicarlo: true e push.
+// `pages` elenca le pagine interne, una per rotta del router del prototipo:
+// '' è la prima pagina, 'dettaglio' diventa /p/<slug>/dettaglio.
+type Prototype = {
+  slug: string;
+  client: string;
+  title: string;
+  pages: string[];
+  visible: boolean;
+};
+
+export const PROTOTYPES: Prototype[] = [
+  {
+    // Modello da copiare per i prototipi veri, mai pubblicato.
+    slug: 'esempio-4k9x2',
+    client: 'Esempio',
+    title: 'Prototipo di esempio',
+    pages: ['', 'dettaglio'],
+    visible: false,
+  },
+];
