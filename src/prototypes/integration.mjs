@@ -48,6 +48,11 @@ const { proto } = Astro.props;
           );
           injectRoute({ pattern: `/p/${slug}/[...path]`, entrypoint: entry });
         }
+
+        // Elenco di tutti i prototipi su /p, solo in locale.
+        if (command === 'dev') {
+          injectRoute({ pattern: '/p', entrypoint: new URL('src/prototypes/Elenco.astro', config.root) });
+        }
       },
     },
   };

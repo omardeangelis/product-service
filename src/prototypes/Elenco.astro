@@ -1,0 +1,152 @@
+---
+// Elenco di tutti i prototipi su /p. Esiste solo in locale:
+// l'integrazione aggiunge la rotta solo con astro dev.
+import Prototype from '../layouts/Prototype.astro';
+import Pagine from './Pagine.astro';
+import { PROTOTYPES } from '../config';
+
+const prototipi = PROTOTYPES.map((p) => ({
+  ...p,
+  path: `/p/${p.slug}/`,
+  online: new URL(`/p/${p.slug}/`, Astro.site).href,
+}));
+---
+
+<Prototype title="Prototipi">
+  <main>
+    <p class="eyebrow">Solo in locale</p>
+    <h1>Prototipi</h1>
+
+    {prototipi.length === 0 && <p class="vuoto">Nessun prototipo in <code>src/config.ts</code>.</p>}
+
+    <ul>
+      {
+        prototipi.map((p) => (
+          <li>
+            <div class="riga">
+              <a class="titolo" href={p.path}>{p.title}</a>
+              <span class:list={['stato', { on: p.visible }]}>{p.visible ? 'Pubblicato' : 'Solo locale'}</span>
+            </div>
+            <p class="cliente">{p.client}</p>
+            <Pagine base={p.path} pages={p.pages} />
+            {p.visible ? (
+              <p class="online">
+                <code>{p.online}</code>
+                <button type="button" data-copy={p.online}>Copia link</button>
+              </p>
+            ) : (
+              <p class="online muted">Online dopo <code>visible: true</code> e push</p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Prototype>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        btn.textContent = 'Copiato';
+      } catch {
+        // Senza permesso sugli appunti seleziona il link: basta ⌘C.
+        const code = btn.previousElementSibling;
+        if (code) getSelection()?.selectAllChildren(code);
+        btn.textContent = 'Premi ⌘C';
+      }
+      setTimeout(() => (btn.textContent = 'Copia link'), 1500);
+    });
+  });
+</script>
+
+<style>
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 72px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+    color: #0f1626;
+    line-height: 1.5;
+  }
+  .eyebrow {
+    margin: 0 0 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5b6474;
+  }
+  h1 {
+    margin: 0 0 32px;
+    font-size: 2.2rem;
+    letter-spacing: -0.035em;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  li {
+    padding: 20px 24px;
+    border: 1px solid #e7e5e0;
+    border-radius: 16px;
+    background: #fff;
+  }
+  p {
+    margin: 0;
+  }
+  .riga {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .titolo {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: inherit;
+  }
+  .stato {
+    flex-shrink: 0;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fdecea;
+    color: #b42318;
+  }
+  .stato.on {
+    background: #e7f6ef;
+    color: #0a7d55;
+  }
+  .cliente,
+  .muted,
+  .vuoto {
+    color: #5b6474;
+  }
+  .online {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+  code {
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+  }
+  button {
+    padding: 4px 12px;
+    border: 1px solid #e7e5e0;
+    border-radius: 999px;
+    background: #fafaf9;
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+</style>

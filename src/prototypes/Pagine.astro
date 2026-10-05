@@ -1,0 +1,134 @@
+---
+// Le pagine interne di un prototipo nell'elenco su /p, una riga per rotta.
+interface Props {
+  /** Percorso del prototipo, con la barra finale: /p/<slug>/ */
+  base: string;
+  /** Come in config.ts: '' è la prima pagina */
+  pages: string[];
+}
+
+const { base, pages } = Astro.props;
+---
+
+<nav aria-label="Pagine del prototipo">
+  <div class="testa">
+    <span>Pagine</span>
+    <span class="conta">{pages.length}</span>
+  </div>
+  <ol>
+    {
+      pages.map((page) => (
+        <li>
+          <a href={base + page}>
+            <code>/{page}</code>
+            {page === '' && <span class="tag">iniziale</span>}
+            <svg class="freccia" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" />
+            </svg>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  nav {
+    margin-top: 16px;
+    border: 1px solid #e7e5e0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .testa {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #e7e5e0;
+    background: #fafaf9;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5b6474;
+  }
+  .conta {
+    min-width: 18px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #ecebe7;
+    text-align: center;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li + li {
+    border-top: 1px solid #f0efeb;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    color: #0f1626;
+    text-decoration: none;
+    transition: background-color 150ms ease-out;
+  }
+  a:focus-visible {
+    outline: 2px solid #2f4bff;
+    outline-offset: -2px;
+  }
+  code {
+    font: 500 0.875rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    overflow-wrap: anywhere;
+    transition: color 150ms ease-out;
+  }
+  .tag {
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: #eef0ff;
+    color: #2f4bff;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+  .freccia {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    fill: none;
+    stroke: #a3a8b3;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition:
+      transform 150ms ease-out,
+      stroke 150ms ease-out;
+  }
+  @media (hover: hover) {
+    a:hover {
+      background: #f6f7ff;
+    }
+    a:hover code {
+      color: #2f4bff;
+    }
+    a:hover .freccia {
+      stroke: #2f4bff;
+      transform: translateX(2px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a,
+    code,
+    .freccia {
+      transition: none;
+    }
+    a:hover .freccia {
+      transform: none;
+    }
+  }
+</style>
