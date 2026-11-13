@@ -20,7 +20,7 @@ Written by the design-engineering stack adaptation. Regenerate it when the stack
 | Motion / gestures | `motion` 14.0.0 — `motion/react` (`motion`, `AnimatePresence`, `MotionConfig`) in the prototypes; inline `<script>` + CSS transitions in `.astro` pages | `src/prototypes/esempio-4k9x2/*.tsx`, `src/components/MotionDemos.astro` |
 | UI primitives | none (no Radix/Base UI, Sonner, Vaul) | `package.json` |
 | Routing in prototypes | `wouter` 3.13.0 | `package.json` |
-| Motion tokens | no shared easing/duration tokens; inline curves `cubic-bezier(.2,.8,.2,1)` (`global.css:112`, `case-study/[slug].astro:477,506`) and `cubic-bezier(.65,0,.35,1)` (`index.astro:862`); reduced motion handled per page via `@media (prefers-reduced-motion: reduce)` and `matchMedia` | grep |
+| Motion tokens | `--ease-*`, `--dur-*`, `--stagger` in `src/styles/global.css` (`:root`); decisions in `brain/chore/motion.md`. Reduced motion handled per page via `@media (prefers-reduced-motion: reduce)` and `matchMedia` | `src/styles/global.css` |
 | Scope | whole repo (single frontend) | detected |
 
 ## How the references apply
@@ -44,5 +44,4 @@ Written by the design-engineering stack adaptation. Regenerate it when the stack
 
 ## Open decisions
 
-- **Shared motion tokens.** No `--ease-*`/`--dur-*` custom properties exist yet; the curves are inlined per file. Promoting them to `global.css` (and recording them in `chore/motion.md`) needs no dependency — the user decides when.
 - No toast/drawer/primitive library is installed; the references' Sonner/Vaul/Radix examples route to native `<dialog>`/`popover` + CSS until one is needed.

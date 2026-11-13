@@ -16,9 +16,25 @@
   --bad-soft:#fdecea;
   --radius:24px;
   --max:1120px;
+
+  /* ---------- motion tokens ----------
+     Decisioni e personalità in brain/chore/motion.md: cambiale lì prima che qui. */
+  --ease-out:cubic-bezier(0.23,1,0.32,1);         /* default: entrate/uscite, hover lift */
+  --ease-out-expo:cubic-bezier(0.19,1,0.22,1);    /* reveal, barre dati, momenti "wow": scatto + coda lunga */
+  --ease-press:cubic-bezier(0.25,0.46,0.45,0.94); /* feedback alla pressione */
+  --ease-in-out:cubic-bezier(0.645,0.045,0.355,1);/* morph sullo schermo, rotazioni, loop ambient */
+  --ease-pop:cubic-bezier(0.34,1.56,0.64,1);      /* overshoot di brand: solo momenti rari di delight */
+  --dur-press:150ms;    /* :active */
+  --dur-hover:150ms;    /* colore, piccolo lift */
+  --dur-ui:250ms;       /* stati di controlli: tab, segmented, accordion */
+  --dur-swap:400ms;     /* cambio contenuto in un pannello, CTA che entra */
+  --dur-reveal:700ms;   /* reveal allo scroll: marketing, curva expo ripida */
+  --dur-showpiece:800ms;/* pezzi forti: overlay delle card caso studio */
+  --dur-data:1000ms;    /* barre e grafici che "si riempiono" */
+  --stagger:100ms;      /* tra elementi fratelli in un reveal */
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
   background:var(--bg);color:var(--ink);
@@ -45,12 +61,13 @@ h3{font-size:1.25rem;letter-spacing:-0.02em}
 .section-head.center .lead{margin-left:auto;margin-right:auto}
 
 /* ---------- scroll reveal ---------- */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--dur-reveal) var(--ease-out-expo),transform var(--dur-reveal) var(--ease-out-expo)}
 .reveal.in{opacity:1;transform:none}
-.reveal.d1{transition-delay:.1s}
-.reveal.d2{transition-delay:.2s}
-.reveal.d3{transition-delay:.3s}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+.reveal.d1{transition-delay:var(--stagger)}
+.reveal.d2{transition-delay:calc(var(--stagger) * 2)}
+.reveal.d3{transition-delay:calc(var(--stagger) * 3)}
+/* reduced motion: resta la dissolvenza, sparisce lo spostamento */
+@media(prefers-reduced-motion:reduce){.reveal{transform:none;transition:opacity var(--dur-swap) linear}}
 
 /* ---------- nav ---------- */
 nav{
@@ -75,9 +92,10 @@ nav{
 .btn{
   display:inline-block;padding:14px 26px;border-radius:999px;
   font-weight:600;font-size:1rem;text-decoration:none;
-  transition:transform .15s ease, box-shadow .15s ease;
+  transition:transform var(--dur-press) var(--ease-press), box-shadow var(--dur-hover) ease;
 }
 .btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.97)}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover{box-shadow:0 8px 24px rgba(15,22,38,.25)}
 .btn-ghost{border:1px solid var(--line);background:var(--surface)}
@@ -109,7 +127,7 @@ footer a{color:var(--muted)}
   padding:13px 24px;border-radius:999px;font-size:14.5px;
   box-shadow:0 12px 32px rgba(47,75,255,.38);
   opacity:0;white-space:nowrap;max-width:calc(100vw - 28px);
-  transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s, box-shadow .2s;
+  transition:transform 500ms var(--ease-out-expo), opacity var(--dur-ui) var(--ease-out), box-shadow var(--dur-hover) ease; /* 500ms: viaggia 90px, curva ripida */
 }
 .float-cta strong{font-weight:700}
 .float-cta.show{opacity:1;transform:translateX(-50%) translateY(0)}

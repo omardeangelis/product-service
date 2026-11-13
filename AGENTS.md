@@ -19,4 +19,5 @@ La knowledge base e la suite di skill spec-driven vivono in `brain/`: leggi `bra
 - React serve solo ai prototipi in `src/prototypes/` (rotte `/p/<slug>`): le pagine `.astro` restano senza JS di framework.
 - Link (Cal, email, LinkedIn), slot, garanzia ed elenco dei prototipi stanno in un posto solo: `src/config.ts`.
 - Design token e stili condivisi in `src/styles/global.css`; gli stili di sezione vivono nei singoli `.astro`.
-- Le animazioni rispettano `prefers-reduced-motion`; lo stack per il motion è descritto in `brain/chore/motion-stack.md`.
+- Motion: usa sempre i token `--ease-*` / `--dur-*` / `--stagger` di `src/styles/global.css`, mai curve o durate scritte a mano. Personalità e deviazioni in `brain/chore/motion.md`, stack in `brain/chore/motion-stack.md`. Ogni animazione rispetta `prefers-reduced-motion`.
+- Chi deve convincere il sito: `brain/personas.md`; cosa vende e con che tono: `brain/chore/product.md`.

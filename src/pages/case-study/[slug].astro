@@ -395,7 +395,7 @@ const num = () => String(++sectionNum).padStart(2, '0');
     user-select:none;
   }
   .deepdive summary::-webkit-details-marker{display:none}
-  .deepdive summary::before{content:"▸";transition:transform .2s ease}
+  .deepdive summary::before{content:"▸";transition:transform var(--dur-ui) var(--ease-in-out)}
   .deepdive[open] summary::before{transform:rotate(90deg)}
   .deepdive .dd-lang{
     margin-left:auto;flex-shrink:0;font-size:.66rem;font-weight:600;letter-spacing:.08em;
@@ -474,9 +474,9 @@ const num = () => String(++sectionNum).padStart(2, '0');
   .frow + .frow{margin-top:14px}
   .frow > span{font-size:.9rem;color:var(--muted)}
   .fbar{display:flex;align-items:center;gap:12px}
-  .fbar i{display:block;height:34px;width:0;border-radius:8px;background:var(--ink);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .fbar i{display:block;height:34px;width:0;border-radius:8px;background:var(--ink);transition:width var(--dur-data) var(--ease-out-expo)}
   .frow.drop .fbar i{background:var(--bad)}
-  .fbar em{font-style:normal;font-weight:700;font-size:.95rem;opacity:0;transition:opacity .4s ease .6s}
+  .fbar em{font-style:normal;font-weight:700;font-size:.95rem;opacity:0;transition:opacity var(--dur-swap) var(--ease-out) .6s}
   .frow.drop .fbar em{color:var(--bad)}
   .chart.in .fbar i{width:var(--w)}
   .chart.in .fbar em{opacity:1}
@@ -503,11 +503,11 @@ const num = () => String(++sectionNum).padStart(2, '0');
   .ba.before .ba-stat b{color:var(--bad)}
   .ba.after .ba-stat b{color:var(--ok)}
   .sbar{height:8px;border-radius:4px;background:rgba(15,22,38,.08);margin-top:12px;overflow:hidden}
-  .sbar i{display:block;height:100%;width:0;border-radius:4px;transition:width 1s cubic-bezier(.2,.8,.2,1) .15s}
+  .sbar i{display:block;height:100%;width:0;border-radius:4px;transition:width var(--dur-data) var(--ease-out-expo) .15s}
   .ba.before .sbar i{background:var(--bad)}
   .ba.after .sbar i{background:var(--ok)}
   .ba.in .sbar i{width:var(--w)}
-  .ba li{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+  .ba li{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease-out-expo),transform .5s var(--ease-out-expo)}
   .ba.in li{opacity:1;transform:none}
   .ba.in li:nth-child(2){transition-delay:.1s}
   .ba.in li:nth-child(3){transition-delay:.2s}
