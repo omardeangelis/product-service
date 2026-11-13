@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { GUARANTEE, SITE, SLOTS } from '../config';
+import Clienti from '../components/Clienti.astro';
 
 const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
@@ -24,8 +25,9 @@ const slotsLabel =
       <div class:list={['badge', { full: slotsFree === 0 }]}>{slotsLabel}</div>
       <h1>Building products that<br />solve <em>real problems</em>.</h1>
       <p class="lead">
-        <strong>Product engineering in abbonamento</strong>: un prezzo fisso al mese e un senior nel team che pensa al
-        prodotto, non solo al codice. Attivi in 24 ore, in pausa quando vuoi.
+        <strong>Product engineering in abbonamento</strong>: un prezzo fisso al mese e un senior che pensa al prodotto,
+        non solo al codice. <strong>Nel tuo team, o sotto il tuo marchio in white label.</strong> Attivi in 24 ore, in
+        pausa quando vuoi.
       </p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
@@ -39,6 +41,8 @@ const slotsLabel =
       </div>
     </div>
   </header>
+
+  <Clienti />
 
   <!-- ============ 00 PER CHI — selettore "Ti riconosci?" ============ -->
   <section id="per-chi">
@@ -57,12 +61,12 @@ const slotsLabel =
         <p class="big">Il backlog è più veloce dell'hiring?<br /><em>Sblocco le feature</em> mentre il recruiting fa il suo corso.</p>
         <div class="who-proof">
           <span><b>Seniority garantita</b> · 10 anni di produzione</span>
-          <span><b>Product thinking</b> · non solo esecuzione</span>
-          <span><b>Pause libere</b> · quando assumi, sospendi</span>
+          <span><b>Visione di prodotto</b> · non solo esecuzione</span>
+          <span><b>Pause libere</b> · sospendi in un click</span>
         </div>
       </div>
       <div class="who-pane">
-        <p class="big">Hai venduto più di quanto il team riesce a consegnare?<br />Un senior <em>white-label</em> che si integra nel tuo processo.</p>
+        <p class="big">Il commerciale corre, lo sviluppo rincorre?<br />Un senior <em>white-label</em> che si integra nel tuo processo.</p>
         <div class="who-proof">
           <span><b>White-label</b> · il cliente resta tuo</span>
           <span><b>I tuoi standard</b> · mi adatto al tuo stack</span>
@@ -70,10 +74,10 @@ const slotsLabel =
         </div>
       </div>
       <div class="who-pane">
-        <p class="big">Hai validato con l'MVP e ora serve il prodotto vero?<br />Ti porto <em>dal prototipo al prodotto</em> mentre il go-to-market accelera.</p>
+        <p class="big">Hai validato l'MVP e ora vuoi costruire un prodotto.<br />Ti porto <em>dal prototipo al prodotto</em> mentre ti concentri sul go-to-market.</p>
         <div class="who-proof">
           <span><b>Fondamenta che reggono</b> · l'MVP smette di essere un prototipo</span>
-          <span><b>Go-to-market incluso</b> · onboarding, pricing, analytics</span>
+          <span><b>Product thinking</b> · ragioniamo insieme sulle feature</span>
           <span><b>Zero hiring</b> · si parte in 24h</span>
         </div>
       </div>
@@ -561,7 +565,7 @@ const slotsLabel =
   .who-chips button{
     position:relative;border:0;background:transparent;padding:12px 30px;border-radius:999px;
     font-size:.98rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;
-    transition:color .2s ease;overflow:hidden;
+    transition:color var(--dur-hover) ease;overflow:hidden;
   }
   .who-chips button.active{background:var(--ink);color:#fff}
   .chip-progress{
@@ -570,7 +574,7 @@ const slotsLabel =
   .who-chips button.active .chip-progress{animation:chipfill 6s linear forwards}
   @keyframes chipfill{from{width:0}to{width:100%}}
 
-  .who-pane{display:none;animation:whofade .5s ease both}
+  .who-pane{display:none;animation:whofade var(--dur-swap) var(--ease-out) both}
   .who-pane.active{display:block}
   @keyframes whofade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   .who-pane p.big{
@@ -604,7 +608,7 @@ const slotsLabel =
     position:relative;text-align:left;font-family:inherit;cursor:pointer;
     background:var(--surface);border:1px solid var(--line);border-radius:20px;
     padding:26px 28px;display:flex;gap:18px;align-items:flex-start;
-    transition:opacity .3s ease, box-shadow .3s ease, transform .3s ease;
+    transition:opacity var(--dur-ui) ease, box-shadow var(--dur-swap) var(--ease-out), transform var(--dur-swap) var(--ease-out);
     opacity:.55;overflow:hidden;
   }
   .tab-card:hover{opacity:.85}
@@ -619,7 +623,7 @@ const slotsLabel =
   .tab-card p{
     color:var(--muted);font-size:.92rem;
     max-height:0;opacity:0;overflow:hidden;
-    transition:max-height .45s ease, opacity .45s ease, margin .45s ease;
+    transition:max-height var(--dur-swap) var(--ease-in-out), opacity var(--dur-swap) var(--ease-in-out), margin var(--dur-swap) var(--ease-in-out);
   }
   .tab-card.active p{max-height:120px;opacity:1;margin-top:6px}
   .tab-progress{
@@ -657,7 +661,7 @@ const slotsLabel =
   .hire-row{
     display:flex;align-items:center;gap:12px;background:var(--surface);
     border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px;
-    font-size:.95rem;animation:rise .5s both;animation-delay:var(--d);
+    font-size:.95rem;animation:rise .5s var(--ease-out-expo) both;animation-delay:var(--d);
   }
   .hire-row b{margin-left:auto;font-size:.8rem;color:var(--muted);font-weight:600;white-space:nowrap}
   .hire-dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex-shrink:0}
@@ -667,29 +671,29 @@ const slotsLabel =
   .hire-wait{
     margin-top:18px;background:var(--bad-soft);color:var(--bad);border-radius:14px;
     padding:14px 18px;font-size:.92rem;font-weight:600;
-    animation:rise .5s both;animation-delay:2.4s;
+    animation:rise .5s var(--ease-out-expo) both;animation-delay:2.4s;
   }
 
   /* pane 2 — preventivo agenzia */
   .inv-row{
     display:flex;justify-content:space-between;background:var(--surface);
     border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px;
-    font-size:.95rem;animation:rise .5s both;animation-delay:var(--d);
+    font-size:.95rem;animation:rise .5s var(--ease-out-expo) both;animation-delay:var(--d);
   }
   .inv-row b{font-weight:600;color:var(--muted);font-size:.9rem}
-  .inv-row.extra{border-style:dashed;color:var(--bad);animation:rise .5s both, wiggle 2.5s ease-in-out 3s infinite;animation-delay:var(--d)}
+  .inv-row.extra{border-style:dashed;color:var(--bad);animation:rise .5s var(--ease-out-expo) both, wiggle 2.5s var(--ease-in-out) 3s infinite;animation-delay:var(--d)}
   .inv-row.extra b{color:var(--bad)}
   .inv-total{
     display:flex;justify-content:space-between;margin-top:18px;padding:16px 18px;
     background:var(--ink);color:#fff;border-radius:14px;font-weight:700;
-    animation:rise .5s both;animation-delay:2.6s;
+    animation:rise .5s var(--ease-out-expo) both;animation-delay:2.6s;
   }
   .inv-total span:last-child{color:#ff9d94}
 
   /* pane 3 — chat freelancer */
   .bubble{
     max-width:78%;padding:12px 18px;border-radius:18px;font-size:.95rem;margin-bottom:10px;
-    animation:pop .45s both;animation-delay:var(--d);
+    animation:pop .45s var(--ease-out) both;animation-delay:var(--d);
   }
   .bubble.me{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:6px}
   .bubble.them{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px}
@@ -699,7 +703,7 @@ const slotsLabel =
   .typing i:nth-child(3){animation-delay:.4s}
   .seen{
     text-align:center;font-size:.82rem;color:var(--muted);margin-top:16px;
-    animation:rise .6s both;animation-delay:3.6s;
+    animation:rise .6s var(--ease-out-expo) both;animation-delay:3.6s;
   }
 
   /* ============================================================
@@ -725,7 +729,7 @@ const slotsLabel =
   }
   .mini-sub .switch::after{
     content:"";position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;
-    animation:switch-on 3s ease-in-out infinite;
+    animation:switch-on 3s var(--ease-in-out) infinite;
   }
   @keyframes switch-on{0%,15%{left:3px}35%,85%{left:23px}100%{left:23px}}
 
@@ -736,7 +740,7 @@ const slotsLabel =
     display:flex;align-items:center;gap:10px;box-shadow:0 4px 14px rgba(15,22,38,.06);
   }
   .mini-task .prio{width:8px;height:8px;border-radius:50%;background:var(--line);flex-shrink:0}
-  .mini-task.hot{animation:task-up 4s ease-in-out infinite}
+  .mini-task.hot{animation:task-up 4s var(--ease-in-out) infinite}
   .mini-task.hot .prio{background:var(--accent)}
   @keyframes task-up{0%,100%{transform:translateY(0);box-shadow:0 4px 14px rgba(15,22,38,.06)}50%{transform:translateY(-4px);box-shadow:0 10px 24px rgba(47,75,255,.18)}}
   .mini-task.dim{opacity:.55}
@@ -751,12 +755,12 @@ const slotsLabel =
   .mini-pr .pr-row{display:flex;gap:8px;margin-top:12px;align-items:center}
   .badge-merged{
     background:#efe6ff;color:#6b21a8;font-size:.72rem;font-weight:700;
-    padding:4px 12px;border-radius:999px;animation:merged-pop 4s ease-in-out infinite;
+    padding:4px 12px;border-radius:999px;animation:merged-pop 4s var(--ease-in-out) infinite;
   }
   @keyframes merged-pop{0%,10%{transform:scale(.9);opacity:.6}25%,90%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
   .badge-metric{
     background:var(--ok-soft);color:var(--ok);font-size:.72rem;font-weight:700;
-    padding:4px 12px;border-radius:999px;animation:pop 4s ease-in-out infinite;
+    padding:4px 12px;border-radius:999px;animation:pop 4s var(--ease-in-out) infinite;
   }
 
   /* ============================================================
@@ -821,7 +825,7 @@ const slotsLabel =
     flex:0 0 min(880px, 78vw);min-height:min(560px,64vh);
     background:#171f33;border:1px solid #262f47;border-radius:28px;
     padding:clamp(32px,4.5vw,56px);display:flex;flex-direction:column;gap:26px;
-    text-decoration:none;transition:border-color .25s ease;
+    text-decoration:none;transition:border-color var(--dur-ui) ease;
   }
   .hs-card:hover{border-color:var(--accent)}
   .hs-top{display:flex;justify-content:space-between;align-items:center}
@@ -844,7 +848,7 @@ const slotsLabel =
   .hs-open::after{
     content:"";position:absolute;inset:-3px;border-radius:999px;
     border:2px solid var(--accent);opacity:0;
-    animation:openpulse 2.4s ease-out infinite;
+    animation:openpulse 2.4s var(--ease-out) infinite;
   }
   @keyframes openpulse{
     0%{transform:scale(.96);opacity:.7}
@@ -859,7 +863,7 @@ const slotsLabel =
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:22px;text-align:center;padding:clamp(32px,5vw,64px);
     clip-path:circle(0% at calc(100% - 72px) calc(100% - 60px));
-    transition:clip-path .65s cubic-bezier(.65,0,.35,1);
+    transition:clip-path var(--dur-showpiece) var(--ease-out-expo); /* esplode subito sotto il cursore, poi si assesta */
   }
   .hs-card:hover .hs-overlay{clip-path:circle(150% at calc(100% - 72px) calc(100% - 60px))}
   .ov-tag{
@@ -875,7 +879,7 @@ const slotsLabel =
     background:#fff;color:var(--accent);border-radius:999px;
     padding:18px 36px;font-weight:700;font-size:1.1rem;
     transform:translateY(10px);opacity:0;
-    transition:transform .4s ease .25s, opacity .4s ease .25s;
+    transition:transform var(--dur-swap) var(--ease-pop) .2s, opacity var(--dur-ui) var(--ease-out) .2s; /* overshoot di brand */
     box-shadow:0 12px 32px rgba(15,22,38,.25);
   }
   .hs-card:hover .ov-cta{transform:translateY(0);opacity:1}
@@ -908,7 +912,7 @@ const slotsLabel =
     flex:1;display:flex;flex-direction:column;gap:3px;text-align:left;
     padding:14px 20px;border:0;border-radius:13px;cursor:pointer;font-family:inherit;
     background:transparent;color:var(--muted);
-    transition:background .2s,box-shadow .2s,color .2s;
+    transition:background var(--dur-ui) ease,box-shadow var(--dur-ui) ease,color var(--dur-ui) ease;
   }
   .seg-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(15,22,38,.12)}
   .seg-name{font-size:1.05rem;font-weight:700}
@@ -950,7 +954,7 @@ const slotsLabel =
   .plan-mini{
     flex:1;display:flex;flex-direction:column;text-decoration:none;
     background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;
-    transition:transform .18s,box-shadow .18s,border-color .18s;
+    transition:transform var(--dur-ui) var(--ease-out),box-shadow var(--dur-ui) ease,border-color var(--dur-ui) ease;
   }
   .plan-mini:hover{transform:translateY(-3px);border-color:#c9ccf0;box-shadow:0 12px 26px rgba(15,22,38,.08)}
   .plan-mini-price{font-size:1.6rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}

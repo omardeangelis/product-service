@@ -52,6 +52,8 @@ const { proto } = Astro.props;
         // Elenco di tutti i prototipi su /p, solo in locale.
         if (command === 'dev') {
           injectRoute({ pattern: '/p', entrypoint: new URL('src/prototypes/Elenco.astro', config.root) });
+          // Lab delle esplorazioni UI sulle pagine del sito (skill prototype), mai in build.
+          injectRoute({ pattern: '/lab/[slug]', entrypoint: new URL('src/lab/Lab.astro', config.root) });
         }
       },
     },

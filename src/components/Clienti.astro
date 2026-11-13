@@ -1,0 +1,397 @@
+---
+/*
+ * Sezione "Hanno scelto un Product Engineer": parete inclinata di schermate dei clienti + elenco dei nomi.
+ * Dati in src/data/clienti.ts: senza clienti visibili la sezione non esiste (niente markup).
+ * Questa parte è solo statica; lo scatto delle file e l'accensione per cliente li aggiunge lo script.
+ * Lo stato "acceso" è guidato da `data-hot="<indice cliente>"` sulla sezione e da `data-on` sul <li>.
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { clientiVisibili } from '../data/clienti';
+
+const clienti = clientiVisibili(await getCollection('case-studies', ({ data }) => !data.draft));
+
+// Sequenza delle schermate a round-robin tra i clienti: A1, B1, C1, …, poi i secondi, ecc.
+const sequenza: { client: (typeof clienti)[number]; screen: (typeof clienti)[number]['screens'][number] }[] = [];
+const maxScreens = Math.max(0, ...clienti.map((c) => c.screens.length));
+for (let s = 0; s < maxScreens; s++) {
+  for (const client of clienti) if (client.screens[s]) sequenza.push({ client, screen: client.screens[s] });
+}
+
+// Tre file di lunghezza quasi uguale (20 → 7/7/6), in ordine sequenziale.
+const PERIODS = [2600, 3200, 2900];
+const COPIES = 3;
+const righe = PERIODS.map((period, r) => {
+  const da = Math.round((sequenza.length * r) / 3);
+  const a = Math.round((sequenza.length * (r + 1)) / 3);
+  return { period, seq: sequenza.slice(da, a) };
+}).filter((riga) => riga.seq.length > 0);
+
+// Stato acceso per N clienti qualunque: i selettori per indice si generano qui invece di scriverli a mano
+// (CSS puro non può confrontare data-hot con data-index). Le altre schermate scendono a .18, quelle del
+// cliente acceso restano piene e mostrano l'anello su ::after (si anima solo l'opacity).
+const hotCss = clienti
+  .map(
+    (c) =>
+      `.clienti[data-hot='${c.index}'] .clienti-win[data-index='${c.index}']::after{opacity:1}` +
+      `.clienti[data-hot='${c.index}'] .clienti-win:not([data-index='${c.index}']){opacity:.18}`,
+  )
+  .join('\n');
+---
+
+{
+  clienti.length > 0 && (
+    <>
+    <section class="clienti" aria-labelledby="clienti-h">
+      <style is:global set:html={hotCss} />
+      <div class="wrap clienti-head">
+        <p class="clienti-eyebrow">Clienti</p>
+        <h2 class="clienti-title" id="clienti-h">
+          Hanno scelto un Product Engineer.
+        </h2>
+      </div>
+
+      {righe.length > 0 && (
+        <div class="clienti-stage" aria-hidden="true">
+          <div class="clienti-plane">
+            {righe.map(({ period, seq }, r) => (
+              <div class="clienti-row" data-dir={r % 2 ? 'right' : 'left'} data-period={period} data-n={seq.length}>
+                <div class="clienti-track">
+                  {Array.from({ length: COPIES }, () => seq)
+                    .flat()
+                    .map(({ client, screen }) => (
+                      <figure class="clienti-win" data-index={client.index} style={`--tint:${client.tint}`}>
+                        <span class="clienti-bar">
+                          <i />
+                          <i />
+                          <i />
+                          <span>{screen.label}</span>
+                        </span>
+                        <Image
+                          src={screen.image}
+                          alt=""
+                          widths={[400, 720]}
+                          sizes="(max-width: 760px) 300px, 450px"
+                          width={720}
+                          height={450}
+                          format="webp"
+                          decoding="async"
+                          loading="lazy"
+                          draggable="false"
+                        />
+                      </figure>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="wrap">
+        <ul class="clienti-names">
+          {clienti.map((c) => {
+            const Tag = c.href ? 'a' : 'span';
+            return (
+              <li data-index={c.index} style={`--tint:${c.nameTint}`}>
+                <Tag class="clienti-name" href={c.href}>
+                  <b>{c.name}</b>{' '}
+                  <span>
+                    {c.line}
+                    {c.caseLabel && ' '}
+                    {c.caseLabel && <i>{c.caseLabel}</i>}
+                  </span>
+                </Tag>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+    {/* arma l'entrata prima del primo paint: senza JavaScript la sezione resta visibile (AC13) */}
+    <script is:inline>document.currentScript.previousElementSibling.setAttribute('data-armed', '');</script>
+    </>
+  )
+}
+
+<script>
+  import { initClienti } from '../scripts/clienti';
+
+  const section = document.querySelector<HTMLElement>('section.clienti');
+  if (section) initClienti(section);
+</script>
+
+<style>
+  .clienti {
+    --on: #fff;
+    --on-muted: rgba(255, 255, 255, 0.55);
+    --w: 300px;
+    --gap: 24px;
+    position: relative;
+    overflow: hidden;
+    overflow: clip;
+    background: var(--ink);
+    color: var(--on);
+    padding: 80px 0 72px;
+  }
+  .clienti-head {
+    display: grid;
+    gap: 14px;
+  }
+  .clienti-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--on-muted);
+  }
+  .clienti-title {
+    max-width: 760px;
+    color: var(--on);
+    text-wrap: balance;
+  }
+
+  /* ---------- la parete ---------- */
+  .clienti-stage {
+    position: relative;
+    height: min(440px, 60svh);
+    margin: 8px 0 12px;
+    perspective: 1600px;
+    perspective-origin: 50% 30%;
+    /* sfuma sui quattro lati: la parete continua oltre la sezione */
+    --fade-x: 14%;
+    --fade-y: 20%;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent),
+      linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent);
+    mask-composite: intersect;
+  }
+  .clienti-plane {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    justify-items: center;
+    gap: var(--gap);
+    translate: -50% -50%;
+    transform: rotateX(32deg) rotateZ(-14deg);
+  }
+  .clienti-row {
+    /* la fila centrale parte mezza finestra più in là: niente colonne allineate */
+    margin-left: calc(var(--row-shift, 0) * var(--w));
+  }
+  .clienti-row:nth-child(2) {
+    --row-shift: -0.5;
+  }
+  .clienti-track {
+    display: flex;
+    gap: var(--gap);
+    width: max-content;
+    /* --k = finestre di cui il nastro (centrato) è avanzato: lo imposta lo script */
+    transform: translateX(calc(var(--k, 0) * (var(--w) + var(--gap)) * -1));
+    transition: transform var(--dur-reveal) var(--ease-out-expo);
+  }
+  .clienti-win {
+    position: relative;
+    flex: none;
+    width: var(--w);
+    margin: 0;
+    /* niente overflow: hidden, taglierebbe l'anello di ::after; gli angoli li arrotondano barra e immagine */
+    border-radius: 8px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 20px 40px rgba(0, 0, 0, 0.35);
+    transition:
+      transform var(--dur-ui) var(--ease-out),
+      opacity var(--dur-ui) var(--ease-out);
+  }
+  /* anello e ombra profonda del cliente acceso: si anima solo l'opacity (mai il box-shadow) */
+  .clienti-win::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow:
+      0 0 0 2px var(--tint),
+      0 28px 56px rgba(0, 0, 0, 0.45);
+    transition: opacity var(--dur-ui) var(--ease-out);
+  }
+  .clienti-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 18px;
+    padding: 0 8px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    border-radius: 8px 8px 0 0;
+  }
+  .clienti-bar i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .clienti-bar span {
+    flex: 1;
+    min-width: 0;
+    margin: 0 26px 0 6px;
+    overflow: hidden;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .clienti-win img {
+    display: block;
+    width: 100%;
+    /* height: auto, se no l'attributo height="450" di <Image> vince sull'aspect-ratio e la schermata esce verticale */
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 0 0 8px 8px;
+    -webkit-user-drag: none;
+  }
+  /* lo stato acceso (data-hot) è nello <style is:global> generato in cima: vale per qualunque numero di clienti */
+  @media (hover: hover) and (pointer: fine) {
+    .clienti-win:hover {
+      transform: scale(1.06);
+    }
+  }
+
+  /* ---------- nomi ---------- */
+  .clienti-names {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .clienti-names li {
+    /* grid: il link si allunga a tutta l'altezza della riga */
+    display: grid;
+  }
+  .clienti-name {
+    display: grid;
+    /* le tracce restano in alto, così le righe sotto i nomi si allineano */
+    align-content: start;
+    gap: 4px;
+    padding-top: 14px;
+    border-top: 2px solid rgba(255, 255, 255, 0.14);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--dur-ui) var(--ease-out);
+  }
+  .clienti-name b {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .clienti-name span {
+    font-size: 0.85rem;
+    color: var(--on-muted);
+    transition: color var(--dur-ui) var(--ease-out);
+  }
+  /* "caso studio →" su una riga sua a ogni larghezza: mai una riga che comincia con un separatore */
+  .clienti-name i {
+    display: block;
+    white-space: nowrap;
+    font-style: normal;
+  }
+  /* niente opacità sugli altri nomi: restano tutti leggibili */
+  .clienti-names li[data-on] .clienti-name {
+    border-top-color: var(--tint);
+  }
+  .clienti-names li[data-on] .clienti-name span {
+    color: #fff;
+  }
+  /* l'outline sta dentro il padding di .wrap (24px) e l'offset è 4px: non lo taglia l'overflow della sezione */
+  .clienti-name:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 760px) {
+    .clienti {
+      --w: 200px;
+      --gap: 16px;
+      padding: 64px 0 56px;
+    }
+    .clienti-stage {
+      height: 300px;
+      --fade-x: 10%;
+    }
+    .clienti-bar {
+      height: 12px;
+    }
+    .clienti-bar span {
+      display: none;
+    }
+    .clienti-names {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 16px;
+    }
+    .clienti-name b {
+      font-size: 1rem;
+    }
+  }
+  /* sotto i 260px (280px con zoom 1.25× ne misura 224) "caso studio →" non sta in mezza riga: una colonna sola,
+     così il link e il suo contorno di focus restano dentro la sezione */
+  @media (max-width: 259px) {
+    .clienti-names {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- entrata ---------- */
+  /* Keyframe con fill "backwards": a fine animazione ogni elemento torna alla propria opacità, al proprio
+     transform e alle proprie transition di hover. Nascosti solo se lo script inline ha armato la sezione. */
+  .clienti[data-armed]:not([data-in]) :is(.clienti-plane, .clienti-head, .clienti-names) {
+    opacity: 0;
+  }
+  .clienti[data-in] .clienti-plane {
+    animation: clienti-rise var(--dur-showpiece) var(--ease-out-expo) backwards;
+    animation-delay: var(--stagger);
+  }
+  .clienti[data-in] .clienti-head {
+    animation: clienti-fade var(--dur-reveal) var(--ease-out-expo) backwards;
+    animation-delay: var(--stagger);
+  }
+  .clienti[data-in] .clienti-names {
+    animation: clienti-fade var(--dur-reveal) var(--ease-out-expo) backwards;
+    animation-delay: calc(var(--stagger) * 4);
+  }
+  @keyframes clienti-rise {
+    from {
+      opacity: 0;
+      transform: translateY(80px) rotateX(64deg) rotateZ(-14deg);
+    }
+  }
+  @keyframes clienti-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* entrata in sola dissolvenza, come .reveal: niente sollevamento, stessi ritardi */
+    .clienti[data-in] :is(.clienti-plane, .clienti-head, .clienti-names) {
+      animation-name: clienti-fade;
+      animation-duration: var(--dur-swap);
+      animation-timing-function: linear;
+    }
+    .clienti-track {
+      transition: none;
+    }
+    .clienti-win:hover {
+      transform: none;
+    }
+  }
+</style>
