@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-13
 ---
 
 # Brain — Master Map
@@ -12,7 +12,10 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 
 ## Chore (planning material)
 
+- [[chore/product|product.md]] — cosa promuove il sito, obiettivo (call prenotata), tono e offerta
+- [[chore/motion|motion.md]] — personalità del motion, token e deviazioni volute dagli standard
 - [[chore/motion-stack|motion-stack.md]] — frontend stack (Astro 7.3 + React islands, motion 14) and how the design-engineering references apply
+- [[personas|personas.md]] — CTO, agenzie di design, software house in white label
 
 ## Domains
 
@@ -22,7 +25,11 @@ _empty_
 
 ## Specs (per domain)
 
-_empty_
+| Domain | Spec | Status |
+|---|---|---|
+| home | [[specs/home/clienti-muro/SPEC]] | Draft |
+
+Spec map: [[specs/home/home-specs|home-specs.md]]
 
 ## Tech debt
 
