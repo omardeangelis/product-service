@@ -28,7 +28,7 @@ export const SITE = {
 // aggiorna `taken` e pusha: badge e note sul sito si aggiornano da soli.
 export const SLOTS = {
   total: 2,
-  taken: 0,
+  taken: 1,
 };
 
 // Prototipi da mandare ai clienti, serviti su /p/<slug>. Il codice di ognuno

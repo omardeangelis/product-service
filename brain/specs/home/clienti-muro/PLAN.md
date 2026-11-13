@@ -295,8 +295,8 @@ Nessuna: tutto è CSS e JS vanilla su API stabili (`IntersectionObserver`, `visi
     - tap che non accendono → `cursor: pointer` su voci e schermate solo con `(hover: none)`;
     - parete sfocata → 2 copie per nastro, con ogni fila che parte dalla copia rivolta nella sua direzione (circa 4536 px).
 - **validation**: ogni prova ha un esito nel `log`; ogni rimedio applicato è ripassato nel browser secondo T5.
-- **status**: Planned
-- **log**:
+- **status**: Done
+- **log**: 2026-11-13: Omar ha fatto le prove sui dispositivi e vanno bene; nessun rimedio necessario.
 - **files edited/created**:
 - **backlog_item_id**: none
 - **backlog_item_url**: none
@@ -321,9 +321,9 @@ Nessuna: tutto è CSS e JS vanilla su API stabili (`IntersectionObserver`, `visi
   - `dist/` non contiene `lab`;
   - `/lab/loghi` in dev risponde 404;
   - screenshot della home in dev a 1440 e 375 px identici a quelli presi prima della cancellazione.
-- **status**: In progress (parziale)
-- **log**: 2026-11-13: con l'OK di Omar cancellati `loghi-01-top.png` e `loghi-02-section.png` in radice. Prototipo `src/lab/` e rotta `/lab/[slug]` restano finché T6 non è chiuso (D18).
-- **files edited/created**:
+- **status**: Done
+- **log**: 2026-11-13: con l'OK di Omar cancellati `loghi-01-top.png` e `loghi-02-section.png` in radice. Poi, su richiesta di Omar dopo il merge della PR #1 e prima di T6, cancellati `src/lab/` e la rotta `/lab/[slug]`. Verificato: build passa, `grep` su `src` vuoto, `dist/` senza `lab`, home in dev invariata. Non verificato: il 404 di `/lab/loghi` in dev, perché il server già avviato tiene la rotta finché non riparte (oggi risponde 500).
+- **files edited/created**: `src/lab/` (cancellata), `src/prototypes/integration.mjs`
 - **backlog_item_id**: none
 - **backlog_item_url**: none
 - **relation_mode**: none

@@ -14,7 +14,7 @@ updated: 2026-11-13
 
 ## Summary
 
-- T1, T2, T3 e T4 fatti e verificati. T5 è fatto in parte e aspetta T0, cioè le righe vere di Omar: finché nessun cliente è confermato la sezione non compare in home. T6 è di Omar. T7 è parziale: gli screenshot in radice sono cancellati, mentre prototipo e rotta `/lab` restano fino a T6.
+- T1, T2, T3 e T4 fatti e verificati. T5 è fatto in parte e aspetta T0, cioè le righe vere di Omar: finché nessun cliente è confermato la sezione non compare in home. T6 è di Omar. T7 è fatto: screenshot in radice, prototipo `src/lab/` e rotta `/lab` cancellati (il prototipo su richiesta di Omar, prima di T6).
 
 ## Execution Mode
 
@@ -75,9 +75,8 @@ updated: 2026-11-13
 
 - **SeVedemo:** tolto dalla sezione il 2026-11-13 (è un prodotto di Omar, non un cliente). Resta in `CLIENTI` con `confirmed: false` solo per il controllo D19 sui suoi 3 casi studio. Il tema "prodotti" si apre più avanti con una spec sua.
 - **T5:** verifica con i dati veri, più paint flashing, CPU 4×, rete lenta e il controllo della sincronia degli scatti.
-- **T6 (Omar):** iPhone Safari e screen reader.
-- **T7:** cancellare `src/lab/` e la rotta `/lab/[slug]` dopo T6.
-- Spec ancora `draft`: va a `implemented` quando T5 e T7 sono chiusi.
+- **T6:** fatto da Omar il 2026-11-13, prove passate.
+- Spec ancora `draft`: va a `implemented` quando T5 è chiuso.
 
 ## Steering
 
