@@ -67,6 +67,9 @@ const hotCss = clienti
                           <i />
                           <span>{screen.label}</span>
                         </span>
+                        {/* niente loading="lazy": nel piano ruotato in 3D Chrome ne carica solo una parte (43 su 60)
+                            e le copie che entrano con gli scatti arriverebbero bianche. Priorità bassa: non rubano
+                            banda all'hero. Sono 20 file distinti, circa 500 KB su desktop e 200 KB su mobile */}
                         <Image
                           src={screen.image}
                           alt=""
@@ -76,7 +79,8 @@ const hotCss = clienti
                           height={450}
                           format="webp"
                           decoding="async"
-                          loading="lazy"
+                          loading="eager"
+                          fetchpriority="low"
                           draggable="false"
                         />
                       </figure>
@@ -177,8 +181,9 @@ const hotCss = clienti
     display: grid;
     justify-items: center;
     gap: var(--gap);
-    translate: -50% -50%;
-    transform: rotateX(32deg) rotateZ(-14deg);
+    /* la centratura sta dentro transform, non nella proprietà translate: il minifier della build
+       scarta translate quando la regola ha anche transform, e il piano finiva fuori dalla parete */
+    transform: translate(-50%, -50%) rotateX(32deg) rotateZ(-14deg);
   }
   .clienti-row {
     /* la fila centrale parte mezza finestra più in là: niente colonne allineate */
@@ -371,7 +376,7 @@ const hotCss = clienti
   @keyframes clienti-rise {
     from {
       opacity: 0;
-      transform: translateY(80px) rotateX(64deg) rotateZ(-14deg);
+      transform: translate(-50%, calc(-50% + 80px)) rotateX(64deg) rotateZ(-14deg);
     }
   }
   @keyframes clienti-fade {

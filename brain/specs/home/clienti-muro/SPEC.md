@@ -1,7 +1,7 @@
 ---
 domain: home
 type: spec
-status: draft
+status: implemented
 links: ["[[specs/home/clienti-muro/FLOW]]", "[[specs/home/clienti-muro/PLAN]]", "[[personas]]", "[[chore/motion]]", "[[chore/product]]"]
 created: 2026-11-13
 updated: 2026-11-13

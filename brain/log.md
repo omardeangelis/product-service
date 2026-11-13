@@ -18,6 +18,11 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-13] implemented | Sezione clienti in home (Muro)
+- Source: [[specs/home/clienti-muro/SPEC]]
+- T5 chiuso sulla build: corretti due bug visibili solo in produzione (piano fuori parete, lazy loading). CPU 4× con esito aperto in headless.
+- Prototipo `src/lab/loghi` cancellato.
+
 ## [2026-11-13] plan | Sezione clienti in home ("Muro")
 - Plan: [[specs/home/clienti-muro/PLAN]] (T0–T7, 6 ondate; T0 e T6 di Omar)
 - Motion budget: design-engineer; gate: adversarial-verifier (DO NOT SHIP, 0 blocker / 5 major / 6 minor, tutti corretti nel piano e nella spec)

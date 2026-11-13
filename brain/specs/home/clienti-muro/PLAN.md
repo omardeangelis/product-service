@@ -265,9 +265,17 @@ Nessuna: tutto è CSS e JS vanilla su API stabili (`IntersectionObserver`, `visi
     - con rete lenta: nessuna finestra bianca al primo scatto.
   - **Build:** `npm run build` passa e `dist/` non contiene nulla di `src/lab/`.
 - **validation**: ogni AC da AC1 ad AC14 ha un esito annotato nel `log` del compito; AC15 ha la parte automatica e rimanda a T6 per gli screen reader.
-- **status**: In progress (sbloccato da T0)
+- **status**: Done
 - **log**: 2026-11-13, parte anticipata con dati di prova (tutti confermati per prova, poi ripristinati dal backup): AC1 regione col nome del titolo, parete assente dall'albero di accessibilità; AC15 parte automatica: nomi accessibili "Valueize Con il mio team · 9 settimane caso studio →" e "SeVedemo … 3 casi studio ↓", senza parole attaccate; AC14 a 1.25× simulato con le larghezze CSS equivalenti (1152, 731, 609, 608, 300, 224): a 224 la colonna di destra spingeva il link a 1 px dal bordo e tagliava il contorno del focus → correzione del supervisore: elenco su una colonna sotto i 260 px (deviazione da "2 colonne fino a 760", vedi IMPLEMENTATION-NOTES); dopo la correzione tutto passa. Lo scorrimento orizzontale sotto i 280 px resta, ma lo causa `#problema` (tab-list a 256 px), non questa sezione. Da fare con i dati veri di T0: 5 clienti, testi (AC2), paint flashing, CPU 4×, rete lenta, 15 s di scatti sincronizzati.
-- **files edited/created**: `src/components/Clienti.astro` (media query sotto i 260 px)
+  2026-11-13, chiusura con i dati veri sulla build (`npm run preview`, porta 4322), Chrome headless via CDP:
+  - **Due bug di produzione trovati e corretti**, assenti in dev. (1) Il minifier CSS della build scartava `translate: -50% -50%` sul piano, che ha anche `transform`: il piano finiva fuori dalla parete e in produzione la parete era vuota. La centratura ora sta dentro `transform` (anche nel keyframe d'entrata). (2) Con `loading="lazy"` Chrome carica solo una parte delle schermate del piano 3D (43 su 60 in dev, 0 su 60 col piano spostato): ora `loading="eager"` con `fetchpriority="low"` (20 file, ~500 KB desktop, ~200 KB mobile).
+  - Dopo le correzioni: parete visibile in build a 1440 e 390 px, uguale al dev; 60 schermate su 60 caricate.
+  - **Sincronia degli scatti** (15 s, 16 scatti): periodi misurati 2601/3210/2901 ms; 0–1 coppie di scatti di file diverse nello stesso intervallo di 100 ms, mai due di fila. Passa.
+  - **Paint**: i 2 eventi Paint per frame ci sono anche con la parete ferma e fuori schermo, quindi non vengono dalla parete; mask-image resta.
+  - **Rete lenta** (400 kb/s, latenza 400 ms, cache disattivata): al primo scatto (2,9 s) 33 schermate su 60 caricate, 48 a 2 s dopo, 60 a 6 s. Le finestre non ancora caricate mostrano il fondo bianco della finestra per al più qualche secondo. Accettato.
+  - **CPU 4×**: in ogni prova il 95° percentile dei frame è 16,8 ms. In 4 prove su 9 compaiono raffiche di frame lunghi (50–160 ms) nei primi 10 s, senza script (blocking 0, render ~1 ms): con tutta probabilità è il rasterizzatore software di Chrome headless, che gira senza GPU. Provato `will-change: transform` sui nastri: non cambia l'esito, tolto. Esito aperto, da riguardare solo se compare su un dispositivo vero (T6 di Omar non lo ha mostrato).
+  - AC1–AC14: met (vedi IMPLEMENTATION-NOTES); AC15 parte automatica met, screen reader in T6 (fatto da Omar).
+- **files edited/created**: `src/components/Clienti.astro` (media query sotto i 260 px; centratura del piano dentro `transform`; immagini `eager` + `fetchpriority="low"`), `.claude/launch.json` (configurazione `astro-preview`)
 - **backlog_item_id**: none
 - **backlog_item_url**: none
 - **relation_mode**: none

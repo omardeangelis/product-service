@@ -27,7 +27,7 @@ _empty_
 
 | Domain | Spec | Status |
 |---|---|---|
-| home | [[specs/home/clienti-muro/SPEC]] | Draft |
+| home | [[specs/home/clienti-muro/SPEC]] | Implemented |
 
 Spec map: [[specs/home/home-specs|home-specs.md]]
 
