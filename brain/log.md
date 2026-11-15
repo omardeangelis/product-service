@@ -18,6 +18,23 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-15] implemented | Sezione confronto in home ("Ticket")
+- Source: [[specs/home/confronto-ticket/SPEC]] (AC1–AC18)
+- Scelte di Omar in corsa: spostamento a 400 ms (T7b), il freelancer porta in produzione un ticket (T7c), fino a 760 px la vista statica "Stesso ticket" al posto della board (T7d, AC18)
+- Prototipo `src/lab/` e rotta `/lab/[slug]` cancellati (T9, prima di T8 su richiesta di Omar)
+- Aperto: T8 (iPhone, iPad, VoiceOver); review indipendente offerta, non lanciata (`review.mode: plan`)
+
+## [2026-11-14] plan | Sezione confronto in home ("Ticket")
+- Plan: [[specs/home/confronto-ticket/PLAN]] (T1–T9, 7 ondate; T8 di Omar)
+- Motion budget: design-engineer (150 ms/giorno, FLIP a --dur-ui, tempo fermo con tab nascosta); gate: adversarial-verifier (DO NOT SHIP, 0 blocker / 5 major / 8 minor, tutti corretti nel piano)
+- Spec approvata: domande 1–7 chiuse (demo settimanali in 02 e Prezzi, riga scenario, corsia "Agenzia", eccezione pezzi forti)
+
+## [2026-11-14] spec | Sezione confronto in home ("Ticket")
+- Created spec: [[specs/home/confronto-ticket/SPEC]]
+- Domain: home
+- Status: Draft
+- Source: prototipo approvato `src/lab/confronto/` (`/lab/confronto`); nessuna review ux-advisor / ui-reviewer, quindi niente FLOW.md
+
 ## [2026-11-13] implemented | Sezione clienti in home (Muro)
 - Source: [[specs/home/clienti-muro/SPEC]]
 - T5 chiuso sulla build: corretti due bug visibili solo in produzione (piano fuori parete, lazy loading). CPU 4× con esito aperto in headless.

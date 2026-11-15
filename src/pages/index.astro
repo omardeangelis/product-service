@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { GUARANTEE, SITE, SLOTS } from '../config';
 import Clienti from '../components/Clienti.astro';
+import Confronto from '../components/Confronto.astro';
 
 const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
@@ -191,7 +192,7 @@ const slotsLabel =
           <div class="step-body">
             <span class="step-num">STEP 2</span>
             <h3>Definiamo le priorità</h3>
-            <p>Board condivisa, update async su Slack. Ti aiuto a scegliere <em>cosa</em> costruire, non solo a costruirlo.</p>
+            <p>Board condivisa, demo settimanali e update async su Slack. Ti aiuto a scegliere <em>cosa</em> costruire, non solo a costruirlo.</p>
           </div>
         </div>
         <div class="card step-card reveal d2">
@@ -215,74 +216,7 @@ const slotsLabel =
   </section>
 
   <!-- ============ 03 CONFRONTO ============ -->
-  <section id="confronto" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head center reveal">
-        <div class="eyebrow"><span class="num">03</span> Confronto</div>
-        <h2>Cosa rende diverso<br />il modello in abbonamento.</h2>
-      </div>
-      <div class="compare-scroll reveal d1">
-        <div class="compare">
-          <div class="col labels">
-            <div class="cell head">.</div>
-            <div class="cell">Prezzo</div>
-            <div class="cell">Cosa compri</div>
-            <div class="cell">Time to start</div>
-            <div class="cell">Product thinking</div>
-            <div class="cell">Seniority garantita</div>
-            <div class="cell">Pause &amp; disdetta libere</div>
-            <div class="cell">Impatto misurato</div>
-            <div class="cell">{GUARANTEE.label}</div>
-          </div>
-          <div class="col featured">
-            <div class="cell head">Product Engineer<br />in abbonamento</div>
-            <div class="cell">Fisso mensile</div>
-            <div class="cell">Delivery in produzione</div>
-            <div class="cell">&lt; 24 ore</div>
-            <div class="cell"><span class="mark-yes">✓</span></div>
-            <div class="cell"><span class="mark-yes">✓</span></div>
-            <div class="cell"><span class="mark-yes">✓</span></div>
-            <div class="cell"><span class="mark-yes">✓</span></div>
-            <div class="cell">{GUARANTEE.short}</div>
-          </div>
-          <div class="col">
-            <div class="cell head">Freelancer<br />classico</div>
-            <div class="cell">€/ora variabili</div>
-            <div class="cell">Ore</div>
-            <div class="cell">2+ settimane</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell">Lotteria</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell"><span class="mark-no">–</span></div>
-          </div>
-          <div class="col">
-            <div class="cell head">Agenzia /<br />software house</div>
-            <div class="cell">Preventivi + extra</div>
-            <div class="cell">Ore stimate</div>
-            <div class="cell">4+ settimane</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell">Junior sul tuo progetto</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell"><span class="mark-no">–</span></div>
-          </div>
-          <div class="col">
-            <div class="cell head">Assunzione<br />interna</div>
-            <div class="cell">70-90k€/anno + oneri</div>
-            <div class="cell">Un dipendente</div>
-            <div class="cell">4-6 mesi</div>
-            <div class="cell">Dipende</div>
-            <div class="cell">Dipende</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-            <div class="cell">Dipende</div>
-            <div class="cell"><span class="mark-no">–</span></div>
-          </div>
-        </div>
-      </div>
-      <p class="compare-hint">← Scorri per vedere tutte le colonne →</p>
-    </div>
-  </section>
+  <Confronto />
 
   <!-- ============ 04 REAL SHIPPED CODE ============ -->
   <section class="cases" id="shipped">
@@ -396,7 +330,7 @@ const slotsLabel =
                 <li>Product engineer dedicato, referente unico</li>
                 <li>Slot garantito per 3 mesi</li>
                 <li>Priorità sulla roadmap</li>
-                <li>Board condivisa e update async su Slack</li>
+                <li>Board condivisa, demo settimanali e update async su Slack</li>
               </ul>
               <a class="btn btn-accent plan-cta" href={SITE.calUrl} target="_blank" rel="noopener">Blocca lo slot</a>
             </div>
@@ -763,52 +697,6 @@ const slotsLabel =
     padding:4px 12px;border-radius:999px;animation:pop 4s var(--ease-in-out) infinite;
   }
 
-  /* ============================================================
-     CONFRONTO — tabella stile Magier
-     ============================================================ */
-  .compare-scroll{overflow-x:auto;padding:16px 4px 24px}
-  .compare{
-    display:grid;grid-template-columns:1.25fr 1.15fr 1fr 1fr 1fr;gap:14px;min-width:920px;
-  }
-  .compare .col{
-    background:var(--surface);border:1px solid var(--line);border-radius:20px;
-    padding:8px 0;display:flex;flex-direction:column;
-  }
-  .compare .col.labels{background:transparent;border:0}
-  .compare .cell{
-    padding:14px 18px;font-size:.92rem;color:var(--muted);
-    border-bottom:1px solid var(--line);min-height:76px;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-  }
-  .compare .cell:last-child{border-bottom:0}
-  .compare .col.labels .cell{
-    justify-content:flex-start;text-align:left;font-weight:600;color:var(--ink);
-    border-color:var(--line);
-  }
-  .compare .col.labels .cell::before{content:"✦";color:var(--accent);margin-right:10px;font-size:.8rem}
-  .compare .head{
-    font-weight:700;color:var(--ink);font-size:1.02rem;letter-spacing:-0.02em;min-height:88px;
-  }
-  .compare .col.labels .head{visibility:hidden}
-  .compare .col.labels .head::before{content:none}
-  /* prefisso .compare necessario: lo scoping di Astro aggiunge un attributo per
-     classe, quindi `.compare .col` supererebbe in specificità `.col.featured` */
-  .compare .col.featured{
-    background:var(--accent);border-color:var(--accent);color:#fff;
-    box-shadow:0 0 0 5px var(--accent-soft), 0 20px 44px rgba(47,75,255,.25);
-    transform:translateY(-10px);
-  }
-  .compare .col.featured .cell{color:rgba(255,255,255,.92);border-bottom-color:rgba(255,255,255,.18);font-weight:600}
-  .compare .col.featured .head{color:#fff}
-  .mark-yes,.mark-no{
-    width:30px;height:30px;border-radius:50%;display:inline-flex;
-    align-items:center;justify-content:center;font-weight:700;font-size:.9rem;
-  }
-  .mark-yes{background:var(--ok-soft);color:var(--ok)}
-  .compare .col.featured .mark-yes{background:#fff;color:var(--accent)}
-  .mark-no{background:#f1f1ef;color:#a5aab5}
-  .compare-hint{display:none;text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
-
   /* ---------- case studies (scroll orizzontale pinnato) ---------- */
   .cases{background:var(--ink);color:#fff;overflow:clip;padding-bottom:0}
   .cases .eyebrow{color:#9aa3b5}
@@ -1003,13 +891,11 @@ const slotsLabel =
   @media(max-width:960px){
     .tabs-layout{grid-template-columns:1fr}
     .tabs-pane{min-height:420px;padding:28px}
-    .compare-hint{display:block}
   }
   @media(max-width:900px){
     section{padding:72px 0}
     .hero{padding:80px 0 64px}
     .hero-proof{gap:28px}
-    .compare .col.featured{transform:none}
   }
   @media(max-width:640px){
     .tab-card{padding:16px;gap:12px;border-radius:16px}

@@ -4,12 +4,10 @@ const guaranteeDays = 5;
 
 export const GUARANTEE = {
   days: guaranteeDays,
-  // Titolo della promessa, usato come etichetta nei box e nella tabella confronto.
+  // Titolo della promessa, usato come etichetta nei box garanzia.
   label: 'Garanzia primo mese',
   // Formulazione estesa, per i box garanzia di home e pricing.
   claim: `primo deploy in produzione entro ${guaranteeDays} giorni lavorativi dal kickoff, o il primo mese è gratis`,
-  // Versione corta, per la cella della tabella confronto.
-  short: `Deploy in ${guaranteeDays} giorni o mese gratis`,
 } as const;
 
 // Dati di contatto e link esterni, in un posto solo.

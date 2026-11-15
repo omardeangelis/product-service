@@ -1,9 +1,9 @@
 ---
 domain: _root
 type: decision
-links: ["[[index]]", "[[chore/motion-stack]]", "[[chore/product]]"]
+links: ["[[index]]", "[[chore/motion-stack]]", "[[chore/product]]", "[[specs/home/confronto-ticket/SPEC]]"]
 created: 2026-11-12
-updated: 2026-11-13
+updated: 2026-11-14
 ---
 
 # Motion — decisioni del progetto
@@ -15,8 +15,8 @@ Queste decisioni vincono sui riferimenti di `design-engineering` (vedi la sua Pr
 Il sito è una **marketing page** che deve convincere CTO, agenzie di design e software house (vedi [[personas]]) a prenotare una call. Lo visitano poche volte e lo leggono più che usarlo, quindi ha **licenza creativa**: il motion può essere scenico e sorprendere, purché ogni momento sia scelto e dica qualcosa ("questo studio cura i dettagli").
 
 - **Tono:** sicuro e scattante, mai morbido o fluttuante. Curve ripide con una coda lunga (`--ease-out-expo`): l'elemento risponde subito e si assesta con calma.
-- **Delight:** sì, ma dosato. L'overshoot (`--ease-pop`) è una firma di brand riservata ai momenti rari: la CTA che compare sull'overlay dei casi studio e gli elementi "pop" delle demo in hero. Mai su controlli che si usano spesso (tab, segmented, accordion, bottoni).
-- **Pezzi forti:** uno o due per pagina al massimo (in home: l'overlay circolare delle card dei casi studio e le demo animate del problema). Il resto della pagina li lascia emergere restando sobrio.
+- **Delight:** sì, ma dosato. L'overshoot (`--ease-pop`) è una firma di brand riservata ai momenti rari: la CTA che compare sull'overlay dei casi studio, gli elementi "pop" delle demo in hero e la spunta del primo deploy sulla board del confronto (una volta per giro). Mai su controlli che si usano spesso (tab, segmented, accordion, bottoni).
+- **Pezzi forti:** uno o due per pagina al massimo. Il resto della pagina li lascia emergere restando sobrio. La home ne ha quattro, per scelta (vedi Deviazioni): l'overlay circolare delle card dei casi studio, le demo animate del problema, l'entrata della parete clienti e la board del confronto.
 - **I controlli restano rapidi** anche qui: tab, segmented control, FAQ e bottoni seguono i tempi da UI (`--dur-ui`, `--dur-press`).
 
 ## Token
@@ -45,8 +45,11 @@ Il sito è una **marketing page** che deve convincere CTO, agenzie di design e s
 - **`MotionDemos.astro`** usa i suoi token `--m-ease-*`: sono i valori reali del caso studio sul motion, mostrati come contenuto. Non vanno allineati ai token del sito.
 - **Prototipi su `/p`** (`src/prototypes/`): non caricano `global.css` e definiscono il motion per conto loro (`MotionConfig` in ogni prototipo), perché imitano il prodotto del cliente e non questo sito.
 - **Sezione clienti in home, hover `scale(1.06)` sulle schermate della parete** (lo standard dice 1–2%): le schermate sono decorative, piccole e inclinate in prospettiva, e un ingrandimento minore non si vede. Solo con `(hover: hover) and (pointer: fine)`, niente scala con `prefers-reduced-motion`. `src/components/Clienti.astro`.
-- **Entrata della parete clienti a `--dur-showpiece` (800ms, `--ease-out-expo`, ritardo `--stagger`)**: la parete si alza da `translateY(80px) rotateX(64deg)` alla sua inclinazione; è il secondo pezzo forte della home, una volta per visita. Con reduced motion diventa una dissolvenza `--dur-swap` lineare.
+- **Entrata della parete clienti a `--dur-showpiece` (800ms, `--ease-out-expo`, ritardo `--stagger`)**: la parete si alza da `translateY(80px) rotateX(64deg)` alla sua inclinazione; è uno dei pezzi forti della home, una volta per visita. Con reduced motion diventa una dissolvenza `--dur-swap` lineare.
 - **Scatti ambient delle file della parete a `--dur-reveal` (700ms, `--ease-out-expo`)**: ogni scatto viaggia oltre 300px; periodi 2600/3200/2900 ms per non sincronizzarsi. Si fermano fuori schermo, con la tab nascosta, con il mouse sulla parete e con reduced motion.
+- **Board del confronto in home** (`src/components/Confronto.astro`, `src/scripts/confronto.ts`): tre sprint raccontati una volta per visita, a 150 ms per giorno lavorativo lineari (4,5 s; l'ultimo movimento finisce entro 5 s, WCAG 2.2.2, senza controllo di pausa). Spostamenti FLIP a `--dur-swap` (400ms) con `--ease-in-out`: la board è grande e Omar ha scelto il movimento più lento (2026-11-14). Due spostamenti dello stesso ticket a 2 giorni di distanza (300ms) si sovrappongono; il FLIP è interrompibile e il secondo riparte dalla posizione visibile del primo. Stati che cambiano con lo scambio piccolo (8px + blur, `--dur-ui`). È un pezzo forte oltre il limite della personalità: eccezione scelta da Omar il 2026-11-14 ([[specs/home/confronto-ticket/SPEC]]). Con reduced motion la board mostra subito lo stato finale.
+- **Spunta del primo deploy a `--ease-pop` / `--dur-swap`**, una volta per giro, con un ritardo di 0.6 × lo spostamento (240ms: arriva quando il ticket atterra). Le altre spunte usano `--dur-ui` / `--ease-out`.
+- **Spunta della board da `scale(0.5)`** (lo standard chiede di partire da 0.9 o più): è un glifo di 18 px (14 px sotto 760 px), e da 0.9 la crescita non si vedrebbe.
 
 ## Accessibilità
 
@@ -57,3 +60,5 @@ Il sito è una **marketing page** che deve convincere CTO, agenzie di design e s
 - I reveal partono con il contenuto nascosto anche senza JavaScript (`.reveal{opacity:0}` in CSS): se lo script non gira, le sezioni restano invisibili. Lo standard chiede "visibile di default" (lo script dovrebbe applicare lo stato nascosto).
 - La home usa `.reveal` su molte sezioni: lo standard ne consiglia 2–4 per pagina. Da rivedere con un audit di `design-engineer` quando si lavora al copy.
 - **La sezione clienti non usa `.reveal`:** arma l'entrata con uno script inline (`data-armed` / `data-in`), così senza JavaScript resta visibile. È il modello da estendere alle altre sezioni quando si risolve il punto sopra sui reveal invisibili senza JS.
+- **Sezione confronto:** l'intestazione è visibile senza JavaScript e uno script inline le aggiunge `.reveal`; la board è nello stato finale nell'HTML e uno script inline la riporta al giorno 0 prima del primo paint (`data-armed`). È il secondo esempio del modello, dopo la parete clienti.
+- **Proposta di `design-engineer`, da decidere (Omar):** riscrivere la regola dei pezzi forti come "al massimo un pezzo forte attivo per sezione visibile", al posto del conteggio per pagina.

@@ -1,0 +1,548 @@
+---
+/*
+ * Confronto: board "Ticket" in stato finale (dopo i tre sprint), statica.
+ * Funziona senza JS (AC11): tutto il contenuto è già nell'HTML, il bottone di replay è nascosto.
+ * Lo script della simulazione arriva dopo e parte da questo markup.
+ * Fino a 760px la board è nascosta e al suo posto c'è la vista statica "Stesso ticket" (AC18), calcolata qui in build.
+ */
+import { SPRINTS, SPRINT_DAYS, COLUMNS, LANES, EVENTS, SEED_CODE, SEED_TITLE, stateAt } from '../data/confronto';
+
+const final = stateAt(30);
+
+/* vista statica: dove è finito "Nuovo onboarding" in ogni corsia, e in che sprint è andato in produzione */
+const shipDay = new Map(EVENTS.filter((e) => e.ship).map((e) => [e.id, e.d]));
+const sprintOf = (id: string) => Math.ceil((shipDay.get(id) ?? 0) / SPRINT_DAYS);
+const phone = LANES.map((l, li) => {
+  const seedId = `${l.key}-1`;
+  const cells = final.lanes[li].cells;
+  const col = cells.findIndex((c) => c.some((t) => t.id === seedId));
+  const seed = cells[col].find((t) => t.id === seedId)!;
+  const others = cells[3]
+    .filter((t) => t.shipped && t.id !== seedId)
+    .sort((a, b) => (shipDay.get(a.id) ?? 0) - (shipDay.get(b.id) ?? 0))
+    .map((t) => t.title);
+  return { key: l.key, name: l.name, col, seed, sprint: seed.shipped ? sprintOf(seedId) : null, others };
+});
+---
+
+<section id="confronto" class="confronto" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow"><span class="num">03</span> Confronto</div>
+      <h2>Diverso nel modello.<br />Migliore nel metodo.</h2>
+      <p class="lead">Abbonamento, priorità decise a ogni sprint, demo settimanali e rilasci continui.</p>
+    </div>
+    <script is:inline>document.currentScript.previousElementSibling.classList.add('reveal');</script>
+
+    <div class="board-card" data-enter>
+      <div class="board-top">
+        <div class="day" aria-live="off">
+          <b data-sprint>Sprint {SPRINTS}</b>
+          <span class="of">di {SPRINTS}</span>
+        </div>
+        <div class="track" aria-hidden="true">
+          {
+            Array.from({ length: SPRINTS }, (_, i) => (
+              <div class="seg" data-on>
+                <span class="seg-fill" data-seg={i} />
+                <small>Sprint {i + 1}</small>
+              </div>
+            ))
+          }
+        </div>
+        <button type="button" class="replay" data-replay aria-label="Rivedi gli sprint" hidden>↻<span class="replay-l"> Rivedi gli sprint</span></button>
+      </div>
+
+      <div class="board" role="table" aria-label="Board dei primi tre sprint">
+        <div class="b-row b-head" role="row">
+          <span role="columnheader" class="corner"><span class="sr-only">Modo di lavorare</span></span>
+          {COLUMNS.map((c, i) => <span role="columnheader" class:list={{ prod: i === 3 }}>{c}</span>)}
+        </div>
+        {
+          LANES.map((l, li) => (
+            <div class:list={['b-row', 'lane', l.key]} role="row" data-lane={l.key}>
+              <div class="lane-name" role="rowheader">
+                <b>{l.name}</b>
+                {l.sub && <small>{l.sub}</small>}
+                <span class="shipped" data-count data-some={final.lanes[li].shipped > 0 ? '' : undefined}>
+                  {final.lanes[li].shipped} in produzione
+                </span>
+              </div>
+              {final.lanes[li].cells.map((tickets, i) => (
+                <div class:list={['cell', { prod: i === 3 }]} role="cell" data-col={i}>
+                  {tickets.map((t) => (
+                    <article class="tk" data-ticket={t.id} data-lane={l.key} data-shipped={t.shipped ? '' : undefined} data-warn={t.warn ? '' : undefined}>
+                      <span class="tk-id">{t.code}</span>
+                      <b class="tk-title">{t.title}</b>
+                      <span class="tk-st">{t.status}</span>
+                    </article>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- i ticket iniziali, uno per corsia: lo script li mette in colonna "Da fare" -->
+      <template data-seed>
+        {
+          LANES.map((l) => (
+            <article class="tk" data-ticket={`${l.key}-1`} data-lane={l.key}>
+              <span class="tk-id">{SEED_CODE}</span>
+              <b class="tk-title">{SEED_TITLE}</b>
+              <span class="tk-st">{l.seedStatus}</span>
+            </article>
+          ))
+        }
+      </template>
+    </div>
+    {/* arma la board prima del primo paint: giorno 0 (con reduced motion resta finale). Senza JS non gira (AC11) */}
+    <script is:inline>
+      (function () {
+        var c = document.currentScript.previousElementSibling;
+        c.querySelector('[data-replay]').hidden = false;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        c.querySelectorAll('.tk').forEach(function (t) { t.remove(); });
+        c.querySelector('template[data-seed]').content.querySelectorAll('.tk').forEach(function (s) {
+          var t = s.cloneNode(true);
+          c.querySelector('.lane[data-lane="' + t.dataset.lane + '"] [data-col="0"]').appendChild(t);
+        });
+        c.querySelectorAll('[data-count]').forEach(function (n) { n.textContent = '0 in produzione'; n.removeAttribute('data-some'); });
+        c.querySelector('[data-sprint]').textContent = 'Sprint 1';
+        c.querySelectorAll('.seg-fill').forEach(function (f) { f.style.transform = 'scaleX(0)'; });
+        c.querySelectorAll('.seg').forEach(function (g, i) { g.toggleAttribute('data-on', i === 0); });
+        c.setAttribute('data-armed', '');
+      })();
+    </script>
+    <!-- fino a 760px: la stessa storia ferma, un ticket e quattro esiti (AC18) -->
+    <div class="phone">
+      <div class="ph-ticket">
+        <span class="ph-code">{SEED_CODE}</span>
+        <b>{SEED_TITLE}</b>
+        <small>Lo stesso ticket, dato a tutti. Dopo {SPRINTS} sprint:</small>
+      </div>
+      <div class="ph-head" aria-hidden="true">
+        {COLUMNS.map((c, i) => <span class:list={{ prod: i === 3 }}>{c}</span>)}
+      </div>
+      <ul class="ph-lanes" aria-label={`${SEED_TITLE} dopo ${SPRINTS} sprint`}>
+        {
+          phone.map((p) => (
+            <li class:list={['ph-lane', p.key, { 'ph-done': p.sprint !== null }]}>
+              <b class="ph-name">{p.name}</b>
+              <div class="ph-steps" role="img" aria-label={`Arrivato a: ${COLUMNS[p.col]}`}>
+                {COLUMNS.map((_, i) => <span class:list={{ on: i <= p.col, here: i === p.col }} />)}
+              </div>
+              {p.sprint !== null ? (
+                <p class="ph-res ok">
+                  In produzione nello sprint {p.sprint}
+                  {p.others.length > 0 && <span class="ph-more">poi altri {p.others.length}: {p.others.join(', ')}</span>}
+                </p>
+              ) : (
+                <p class:list={['ph-res', { warn: p.seed.warn }]}>{p.seed.status}</p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <p class="board-note">Scenario tipico: tempi medi di partenza, non un cliente reale.</p>
+  </div>
+</section>
+
+<script>
+  import { initConfronto } from '../scripts/confronto';
+
+  const root = document.querySelector<HTMLElement>('#confronto');
+  if (root) initConfronto(root);
+</script>
+
+<style>
+  /* padding-top resta 0 (stile inline); in basso come le altre sezioni: 104px, 72px su mobile */
+  .confronto {
+    padding-bottom: 104px;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .board-note {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  /* sottotitolo su due righe pari: niente parola orfana */
+  .confronto .lead {
+    text-wrap: balance;
+  }
+  .board-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 24px 26px;
+    box-shadow: 0 24px 48px rgba(15, 22, 38, 0.06);
+  }
+  .board-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 18px;
+  }
+  .day {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .day b {
+    display: inline-block;
+    color: var(--ink);
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
+  }
+  /* tre segmenti, uno per sprint */
+  .track {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    align-self: flex-start;
+    padding-top: 12px;
+  }
+  .seg {
+    position: relative;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--line);
+  }
+  .seg-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--ink);
+    transform-origin: left center;
+  }
+  .seg small {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color var(--dur-hover) ease;
+  }
+  .seg[data-on] small {
+    color: var(--ink);
+  }
+  .replay {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-height: 24px;
+    min-width: 24px;
+    transition:
+      border-color var(--dur-hover) ease,
+      transform var(--dur-press) var(--ease-press);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .replay:hover {
+      border-color: var(--ink);
+    }
+  }
+  .replay:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .replay:active {
+    transform: scale(0.97);
+  }
+
+  .b-row {
+    display: grid;
+    grid-template-columns: 150px repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .b-head span {
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 0 4px 8px;
+  }
+  .b-head .prod {
+    color: var(--ok);
+  }
+  .lane {
+    border-top: 1px solid var(--line);
+    padding: 10px 0;
+    min-height: 112px;
+  }
+  .lane-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    padding-top: 6px;
+  }
+  .lane-name small {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .pe .lane-name b {
+    color: var(--accent);
+  }
+  .shipped {
+    margin-top: 8px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .shipped[data-some] {
+    color: var(--ok);
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 12px;
+    background: #f6f5f2;
+    padding: 6px;
+  }
+  .cell.prod {
+    background: var(--ok-soft);
+  }
+
+  /* ---------- ticket ---------- */
+  .cell :global(.tk) {
+    display: grid;
+    gap: 2px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 10px;
+    box-shadow: 0 2px 6px rgba(15, 22, 38, 0.05);
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+  .cell :global(.tk-id) {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.66rem;
+    color: var(--muted);
+  }
+  .cell :global(.tk-title) {
+    font-size: 0.84rem;
+    letter-spacing: -0.01em;
+  }
+  .cell :global(.tk-st) {
+    color: var(--muted);
+    font-size: 0.74rem;
+  }
+  .pe .cell :global(.tk) {
+    border-color: rgba(47, 75, 255, 0.35);
+  }
+  /* in produzione i ticket si compattano: conta quanti sono, non il dettaglio */
+  .cell.prod :global(.tk[data-shipped]) {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-color: transparent;
+  }
+  .cell.prod :global(.tk[data-shipped] .tk-st),
+  .cell.prod :global(.tk[data-shipped] .tk-id) {
+    display: none;
+  }
+  .cell.prod :global(.tk[data-shipped])::before {
+    content: '✓';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ok);
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cell :global(.tk[data-warn] .tk-st) {
+    color: var(--bad);
+  }
+
+  @media (max-width: 900px) {
+    .confronto {
+      padding-bottom: 72px;
+    }
+  }
+
+  /* ---------- vista statica fino a 760px (AC18) ---------- */
+  .phone {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .board-card {
+      display: none;
+    }
+    .phone {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 14px 6px;
+      box-shadow: 0 24px 48px rgba(15, 22, 38, 0.06);
+    }
+  }
+  .ph-ticket {
+    display: grid;
+    gap: 2px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(15, 22, 38, 0.05);
+    margin-bottom: 14px;
+  }
+  .ph-code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .ph-ticket b {
+    font-size: 1rem;
+  }
+  .ph-ticket small {
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  /* quattro tappe: etichette e pallini sulla stessa griglia */
+  .ph-head,
+  .ph-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .ph-head span {
+    text-align: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: var(--muted);
+    padding-bottom: 8px;
+  }
+  .ph-head .prod {
+    color: var(--ok);
+  }
+  .ph-lanes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ph-lane {
+    --lc: var(--ink);
+    border-top: 1px solid var(--line);
+    padding: 10px 0 12px;
+  }
+  .ph-lane.pe {
+    --lc: var(--accent);
+  }
+  .ph-lane.ph-done {
+    --lc: var(--ok);
+  }
+  .ph-name {
+    display: block;
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+  }
+  .pe .ph-name {
+    color: var(--accent);
+  }
+  .ph-steps {
+    position: relative;
+  }
+  /* la linea tra il primo e l'ultimo pallino */
+  .ph-steps::before {
+    content: '';
+    position: absolute;
+    left: 12.5%;
+    right: 12.5%;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    background: var(--line);
+  }
+  .ph-steps span {
+    position: relative;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+  }
+  /* tratto colorato fino alla tappa raggiunta */
+  .ph-steps span.on:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    width: 100%;
+    top: 6px;
+    height: 2px;
+    background: var(--lc);
+  }
+  .ph-steps span::after {
+    content: '';
+    position: relative;
+    width: 8px;
+    height: 8px;
+    margin-top: 3px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    background: var(--surface);
+    box-sizing: border-box;
+  }
+  .ph-steps span.on::after {
+    border-color: var(--lc);
+  }
+  .ph-steps span.here::after {
+    width: 14px;
+    height: 14px;
+    margin-top: 0;
+    border: 0;
+    background: var(--lc);
+  }
+  .ph-res {
+    margin: 8px 0 0;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  .ph-res.ok {
+    color: var(--ok);
+    font-weight: 600;
+  }
+  .ph-res.warn {
+    color: var(--bad);
+  }
+  .ph-more {
+    display: block;
+    font-weight: 400;
+    color: var(--muted);
+  }
+</style>

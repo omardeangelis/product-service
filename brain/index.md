@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-13
+updated: 2026-11-15
 ---
 
 # Brain — Master Map
@@ -28,6 +28,7 @@ _empty_
 | Domain | Spec | Status |
 |---|---|---|
 | home | [[specs/home/clienti-muro/SPEC]] | Implemented |
+| home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
 
 Spec map: [[specs/home/home-specs|home-specs.md]]
 
