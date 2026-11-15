@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../config';
+import { type LdNode, ldJson, sharedGraph } from '../seo';
 
 interface Props {
   title?: string;
@@ -12,6 +13,10 @@ interface Props {
   floatCta?: boolean;
   /** Pagine operative (es. /benvenuto) da tenere fuori dai motori di ricerca */
   noindex?: boolean;
+  /** og:type: 'article' sui casi studio */
+  ogType?: 'website' | 'article';
+  /** Nodi JSON-LD della pagina (es. Article), aggiunti al grafo condiviso di src/seo.ts */
+  jsonLd?: LdNode[];
 }
 
 const {
@@ -21,9 +26,12 @@ const {
   active,
   floatCta = true,
   noindex = false,
+  ogType = 'website',
+  jsonLd = [],
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
 ---
 
 <!doctype html>
@@ -35,11 +43,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="it_IT" />
+    {/* Anteprima social generica (public/og.png): logo, titolo della hero e claim, niente dati che invecchiano */}
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="spatalo.tech — Building products that solve real problems. Product engineering in abbonamento." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script is:inline type="application/ld+json" set:html={structuredData} />
   </head>
   <body>
     <nav>

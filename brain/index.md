@@ -40,13 +40,14 @@ _empty_
 
 > One page per feature under `feature-improvement/<domain>/`. Entries are proposed by the suite and recorded only when the user accepts them (see `AGENTS.md` → `feature-improvement/`).
 
-_empty_
+- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 5 open (2026-11-15)
 
 ## Reviews
 
 > `adversarial-review` writes SHIP/DO-NOT-SHIP reports. Standalone reviews land under `<reviews>/<slug>/`; spec-implementation reviews land in the spec's review folder — inside the spec folder (`review.location: spec-folder`) or at `<reviews>/<domain>/<spec>/` (`review-tree`). Paths come from `brain/brain.config.json` (see `AGENTS.md` → Project configuration).
 
-_empty_
+- [[review/2026-11-15-count-up-fix/REPORT|2026-11-15-count-up-fix]] — standalone · do-not-ship · critical · 2026-11-15
+- [[review/2026-11-15-seo-geo-basi/REPORT|2026-11-15-seo-geo-basi]] — standalone · do-not-ship · critical · 2026-11-15
 
 ## Log
 

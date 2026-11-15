@@ -1,0 +1,7 @@
+# Tutto il sito è aperto, motori di ricerca e crawler AI compresi.
+# /benvenuto e /p/* restano raggiungibili ma portano noindex nella pagina:
+# un Disallow qui impedirebbe ai crawler di leggerlo.
+User-agent: *
+Allow: /
+
+Sitemap: https://spatalo.tech/sitemap-index.xml
