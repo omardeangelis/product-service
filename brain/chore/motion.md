@@ -3,7 +3,7 @@ domain: _root
 type: decision
 links: ["[[index]]", "[[chore/motion-stack]]", "[[chore/product]]", "[[specs/home/confronto-ticket/SPEC]]"]
 created: 2026-11-12
-updated: 2026-11-14
+updated: 2026-11-15
 ---
 
 # Motion — decisioni del progetto
@@ -61,4 +61,5 @@ Il sito è una **marketing page** che deve convincere CTO, agenzie di design e s
 - La home usa `.reveal` su molte sezioni: lo standard ne consiglia 2–4 per pagina. Da rivedere con un audit di `design-engineer` quando si lavora al copy.
 - **La sezione clienti non usa `.reveal`:** arma l'entrata con uno script inline (`data-armed` / `data-in`), così senza JavaScript resta visibile. È il modello da estendere alle altre sezioni quando si risolve il punto sopra sui reveal invisibili senza JS.
 - **Sezione confronto:** l'intestazione è visibile senza JavaScript e uno script inline le aggiunge `.reveal`; la board è nello stato finale nell'HTML e uno script inline la riporta al giorno 0 prima del primo paint (`data-armed`). È il secondo esempio del modello, dopo la parete clienti.
+- **Count-up dei risultati nei casi studio** (`src/pages/case-study/[slug].astro`): l'HTML porta il numero finale (`data-to`), così crawler e motori AI leggono il dato giusto; uno script inline subito dopo la griglia lo riporta a `data-from` e lo arma (`data-armed`), con reduced motion resta finale. Armando, il testo finale passa a una copia `.sr-only` e quello che conta diventa `aria-hidden`: gli screen reader leggono sempre il valore vero. Il conteggio parte quando il reveal aggiunge `.in` alla card, dopo il suo `transition-delay` (stagger d1/d2), e usa `--dur-data` e `--ease-out-expo` (un'animazione WAAPI senza keyframe fa da orologio con la curva del token). Rete di sicurezza: se al `load` il count-up non si è registrato (`data-cu-ready`), prima di stampare, o se `animate()` lancia, i numeri tornano al valore finale. Tra il parsing della griglia e lo script inline può passare un frame col numero finale: oggi non si vede perché le card sono `.reveal` (opacità 0). Se i reveal diventano visibili senza JS (punto sopra), il count-up va armato in un altro modo.
 - **Proposta di `design-engineer`, da decidere (Omar):** riscrivere la regola dei pezzi forti come "al massimo un pezzo forte attivo per sezione visibile", al posto del conteggio per pagina.

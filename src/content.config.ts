@@ -7,6 +7,11 @@ import { glob } from 'astro/loaders';
  * src/pages/case-study/[slug].astro e dalla vetrina in homepage.
  * I campi di testo ammettono <strong>/<em> inline (renderizzati con set:html).
  */
+// Giorno di calendario "YYYY-MM-DD", tra virgolette, emesso così com'è nel JSON-LD. Senza virgolette lo YAML ne
+// fa una Date e corregge da solo le date impossibili (2026-02-30 diventa il 2 marzo): per questo si accetta solo la
+// stringa, e una data non quotata, con orario o inesistente fa fallire la build invece di spostare il giorno.
+const isoDay = z.iso.date({ error: 'data tra virgolette nel formato "YYYY-MM-DD", es. published: "2026-03-05"' });
+
 // Video dimostrativo (file in public/), con didascalia sotto il player.
 const video = z.object({
   src: z.string(),
@@ -66,6 +71,9 @@ const caseStudies = defineCollection({
     tags: z.array(z.string()),
     order: z.number(),
     draft: z.boolean().default(false),
+    // Date facoltative (YYYY-MM-DD) per l'Article in JSON-LD: senza, il caso studio resta valido.
+    published: isoDay.optional(),
+    updated: isoDay.optional(),
 
     // Card nella vetrina "Real shipped code" in homepage
     home: z.object({

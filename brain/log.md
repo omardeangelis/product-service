@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-15
 ---
 
 # Brain — Log
@@ -17,6 +17,20 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Flows written: <count>
 - Concepts written: <count>
 -->
+
+## [2026-11-15] review | Correzioni del count-up dei casi studio
+- Report: [[review/2026-11-15-count-up-fix/REPORT]]
+- Scope: standalone
+- Verdict: DO NOT SHIP
+- Impact: critical
+- Verifiers: 4 (1 major sullo schema delle date; count-up SHIP su logica, motion e UI)
+
+## [2026-11-15] review | Basi SEO/GEO e count-up dei casi studio
+- Report: [[review/2026-11-15-seo-geo-basi/REPORT]]
+- Scope: standalone
+- Verdict: DO NOT SHIP
+- Impact: critical
+- Verifiers: 8 (1 blocker, 2 major)
 
 ## [2026-11-15] implemented | Sezione confronto in home ("Ticket")
 - Source: [[specs/home/confronto-ticket/SPEC]] (AC1–AC18)

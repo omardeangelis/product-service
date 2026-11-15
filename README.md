@@ -21,7 +21,11 @@ npm run preview   # anteprima della build
 | `src/pages/pricing.astro` | Pagina prezzi dedicata: piani Solo/Team, MVP e a progetto, garanzia, FAQ |
 | `src/pages/case-study/[slug].astro` | Template caso studio: problema → soluzione → risultati, con funnel chart animato, count-up e prima/dopo |
 | `src/content/case-studies/*.md` | I casi studio: tutto il contenuto è nel frontmatter, validato dallo schema in `src/content.config.ts` |
-| `src/layouts/Base.astro` | Layout condiviso: head/SEO, nav, footer, CTA flottante, scroll reveal |
+| `src/layouts/Base.astro` | Layout condiviso: head/SEO (Open Graph, JSON-LD), nav, footer, CTA flottante, scroll reveal |
+| `src/seo.ts` | Dati strutturati JSON-LD: studio, fondatore e sito su ogni pagina; le pagine aggiungono i propri nodi (es. `Article` nei casi studio) |
+| `src/pages/llms.txt.ts` | Genera `/llms.txt` per i motori AI: chi è Spatalo, offerta e link ai casi studio pubblicati |
+| `public/og.png` | Anteprima social generica (1200×630) di tutte le pagine: logo, titolo della hero e claim, senza prezzi né date |
+| `public/robots.txt` | Tutto aperto ai crawler, con il link alla sitemap (generata in build da `@astrojs/sitemap`, senza `/benvenuto` e `/p/*`) |
 | `src/config.ts` | Link Cal, email, LinkedIn, slot, garanzia e l'elenco dei prototipi per i clienti — un posto solo |
 | `src/prototypes/<slug>/` | Un prototipo React per un cliente, servito su `/p/<slug>` |
 | `src/prototypes/integration.mjs` | Genera una rotta per ogni prototipo ammesso: tutti in locale, solo i pubblicati in build |
@@ -36,7 +40,8 @@ npm run preview   # anteprima della build
 
 1. Copia un file esistente in `src/content/case-studies/` e rinominalo (il nome file diventa lo slug dell'URL).
 2. Compila il frontmatter — lo schema è validato in build, i campi mancanti fanno fallire `npm run build` con un errore chiaro.
-3. La card in homepage (sezione "Real shipped code") si genera da sola dal blocco `home:`, ordinata per `order:`.
+3. La card in homepage (sezione "Real shipped code") si genera da sola dal blocco `home:`, ordinata per `order:`. Sitemap e `/llms.txt` lo prendono da soli.
+4. Facoltativo: `published:` e `updated:` tra virgolette (`published: "2026-03-05"`) finiscono nell'`Article` JSON-LD della pagina.
 
 ## Aggiungere un prototipo per un cliente
 
@@ -56,4 +61,5 @@ Non è una protezione vera: chiunque abbia il link lo apre. Per qualcosa di rise
 
 - Tutti i numeri, i casi studio, le metriche e le testimonianze sono **placeholder** da sostituire con dati reali.
 - Le CTA "Prenota una call" puntano al link Cal definito in `src/config.ts`.
+- I prezzi sono scritti a mano in tre posti: `src/pages/index.astro`, `src/pages/pricing.astro` e `src/pages/llms.txt.ts`. Se cambiano, vanno cambiati in tutti e tre.
 - Pagamenti (Stripe) volutamente non integrati: la conversione avviene in call, il payment link si manda dopo.
