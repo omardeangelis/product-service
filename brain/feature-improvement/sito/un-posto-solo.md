@@ -12,7 +12,7 @@ updated: 2026-11-16
 Migliorie a quello che la spec [[specs/sito/un-posto-solo/SPEC]] ha consegnato: prezzi in `src/config.ts`, sitemap e versione di Node.
 
 ## Prezzi nei dati strutturati
-- **Status:** planned
+- **Status:** done
 - **Proposed:** 2026-11-16, by implement-spec during la chiusura di un-posto-solo; accepted by the user, che ha chiesto di implementarla subito
 - **Observed:** `src/seo.ts` dichiarava solo `Organization`, `Person` e `WebSite`; i piani e i prezzi erano soltanto nel testo di home, `/pricing` e `/llms.txt`.
 - **Improvement:** `/pricing` dichiara nel JSON-LD i piani Partner, Team e MVP come `Service` dello studio, ognuno con le sue `Offer` in euro IVA esclusa, lette da `PRICES` come il resto del sito.

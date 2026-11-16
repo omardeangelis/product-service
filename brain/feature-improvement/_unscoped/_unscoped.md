@@ -4,7 +4,7 @@ type: feature-improvement
 spec: null
 links: ["[[index]]", "[[review/2026-11-15-seo-geo-basi/REPORT]]", "[[personas]]", "[[specs/sito/un-posto-solo/SPEC]]"]
 created: 2026-11-15
-updated: 2026-11-15
+updated: 2026-11-16
 ---
 
 # Feature improvements — fuori da una spec
@@ -12,7 +12,7 @@ updated: 2026-11-15
 Migliorie a parti del sito che nessuna spec copre ancora: SEO/GEO, metadati, build.
 
 ## Prezzi in un posto solo
-- **Status:** planned
+- **Status:** done
 - **Proposed:** 2026-11-15, by adversarial-review during la review delle basi SEO/GEO e del count-up (verifier v5); accepted by the user
 - **Observed:** i prezzi dei piani sono scritti a mano in tre file: `src/pages/pricing.astro`, `src/pages/index.astro` e `src/pages/llms.txt.ts` (righe 35-38). Il README avvisa che vanno cambiati in tutti e tre.
 - **Improvement:** una costante dei prezzi in `src/config.ts`, letta da home, pricing e `/llms.txt`, come già succede per garanzia e slot.
@@ -30,7 +30,7 @@ Migliorie a parti del sito che nessuna spec copre ancora: SEO/GEO, metadati, bui
 - **Spec:** none
 
 ## Esclusioni della sitemap dai flag di pagina
-- **Status:** planned
+- **Status:** done
 - **Proposed:** 2026-11-15, by adversarial-review during la review delle basi SEO/GEO e del count-up (verifier v2); accepted by the user
 - **Observed:** `/benvenuto` e `/p/*` sono esclusi dalla sitemap con una regex scritta a mano (`astro.config.mjs:8`); una nuova pagina `noindex` va aggiunta lì a mano.
 - **Improvement:** derivare le esclusioni dai flag che le pagine hanno già (`noindex` di `Base.astro`, `visible` dei prototipi in `src/config.ts`), così nessuna pagina privata finisce nella sitemap per dimenticanza.
@@ -39,7 +39,7 @@ Migliorie a parti del sito che nessuna spec copre ancora: SEO/GEO, metadati, bui
 - **Spec:** [[specs/sito/un-posto-solo/SPEC]]
 
 ## Versione di Node fissata
-- **Status:** planned
+- **Status:** done
 - **Proposed:** 2026-11-15, by adversarial-review during la review delle basi SEO/GEO e del count-up (verifier v3); accepted by the user
 - **Observed:** `sitemap@10.0.0` (dipendenza di `@astrojs/sitemap`) dichiara `engines: node >=22.22.1`; il repo non ha `engines` né `.nvmrc`, e il Node locale (22.17.1) è sotto la soglia.
 - **Improvement:** fissare Node 26, l'ultima LTS (scelta di Omar), con `engines` in `package.json` e un `.nvmrc`, e allineare la versione dell'host di deploy.

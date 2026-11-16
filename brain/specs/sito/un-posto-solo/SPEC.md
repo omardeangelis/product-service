@@ -5,6 +5,8 @@ status: implemented
 links: ["[[feature-improvement/_unscoped/_unscoped]]", "[[review/2026-11-15-seo-geo-basi/REPORT]]", "[[personas]]", "[[specs/sito/sito-specs]]"]
 created: 2026-11-15
 updated: 2026-11-16
+ingested: true
+last_ingested: 2026-11-16
 ---
 
 # Spec: Un posto solo — prezzi, sitemap e versione di Node

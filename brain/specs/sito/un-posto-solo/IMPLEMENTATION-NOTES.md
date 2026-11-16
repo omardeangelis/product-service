@@ -5,8 +5,14 @@ spec: un-posto-solo
 links:
   - "[[specs/sito/un-posto-solo/SPEC]]"
   - "[[specs/sito/un-posto-solo/PLAN]]"
-ingested: false
-last_ingested: null
+  - "[[domains/sito/flows/cambio-di-un-prezzo]]"
+  - "[[domains/sito/flows/esclusione-dalla-sitemap]]"
+  - "[[domains/sito/flows/controllo-della-versione-di-node]]"
+  - "[[domains/sito/concepts/prezzi]]"
+  - "[[domains/sito/concepts/indicizzabilita-della-pagina]]"
+  - "[[domains/sito/concepts/versione-di-node]]"
+ingested: true
+last_ingested: 2026-11-16
 created: 2026-11-16
 updated: 2026-11-16
 ---

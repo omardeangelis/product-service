@@ -18,6 +18,13 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-16] ingest | Un posto solo — prezzi, sitemap e versione di Node
+- Source: [[specs/sito/un-posto-solo/SPEC]] (con IMPLEMENTATION-NOTES)
+- Flows written: 3
+- Concepts written: 3
+- Review ingested: none
+- Nuovo dominio [[domains/sito/sito]] con contract; migliorie "Prezzi in un posto solo", "Esclusioni della sitemap", "Versione di Node" e "Prezzi nei dati strutturati" passate a done
+
 ## [2026-11-16] implemented | Un posto solo — prezzi, sitemap e versione di Node
 - Source: [[specs/sito/un-posto-solo/SPEC]] (AC1–AC13, AC15–AC16 met; AC14 blocked)
 - T1–T5 sequenziali, T2/T4/T5 a worker `sonnet` rivisti dall'orchestratore, nessuna escalation; HTML, `/llms.txt` e sitemap identici alla fotografia di partenza
