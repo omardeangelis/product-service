@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { GUARANTEE, SITE, SLOTS } from '../config';
+import { GUARANTEE, PRICES, SITE, SLOTS, formatEuro } from '../config';
+import { pricingGraph } from '../seo';
 
 const slotsFree = SLOTS.total - SLOTS.taken;
 ---
 
-<Base title={`Pricing — ${SITE.name}`} active="pricing">
+<Base title={`Pricing — ${SITE.name}`} active="pricing" jsonLd={pricingGraph(Astro.site!)}>
   <header class="hero wrap">
     <span class="kicker reveal">Pricing</span>
     <h1 class="reveal d1">Due modi di lavorare, prezzi semplici.</h1>
@@ -27,11 +28,11 @@ const slotsFree = SLOTS.total - SLOTS.taken;
         <div class="tiers">
           <div class="tier">
             <span class="t-label">Mensile<span class="t-note">massima flessibilità</span></span>
-            <span class="t-price">2.400€ <small>/mese</small></span>
+            <span class="t-price">{formatEuro(PRICES.partner.monthly)}€ <small>/mese</small></span>
           </div>
           <div class="tier hot">
-            <span class="t-label">Trimestrale<span class="t-note">risparmi 600€ e blocchi lo slot</span></span>
-            <span class="t-price">2.200€ <small>/mese</small></span>
+            <span class="t-label">Trimestrale<span class="t-note">risparmi {formatEuro(PRICES.partner.quarterSaving)}€ e blocchi lo slot</span></span>
+            <span class="t-price">{formatEuro(PRICES.partner.quarterlyMonthly)}€ <small>/mese</small></span>
           </div>
         </div>
 
@@ -73,11 +74,11 @@ const slotsFree = SLOTS.total - SLOTS.taken;
         <div class="tiers">
           <div class="tier">
             <span class="t-label">Sprint<span class="t-note">2 settimane, scope definito insieme</span></span>
-            <span class="t-price">5.000€ <small>/sprint</small></span>
+            <span class="t-price">{formatEuro(PRICES.team.sprint)}€ <small>/sprint</small></span>
           </div>
           <div class="tier hot">
-            <span class="t-label">Trimestre<span class="t-note">6 sprint consecutivi · risparmi 2.000€</span></span>
-            <span class="t-price">28.000€ <small>/trimestre</small></span>
+            <span class="t-label">Trimestre<span class="t-note">{PRICES.team.sprintsPerQuarter} sprint consecutivi · risparmi {formatEuro(PRICES.team.quarterSaving)}€</span></span>
+            <span class="t-price">{formatEuro(PRICES.team.quarter)}€ <small>/trimestre</small></span>
           </div>
         </div>
 
@@ -112,7 +113,7 @@ const slotsFree = SLOTS.total - SLOTS.taken;
           <h3>MVP in 6 settimane</h3>
           <p>Hai solo un'idea? Dalla discovery al primo rilascio in produzione, con metriche dal giorno uno.</p>
         </div>
-        <div class="x-price">4.500€<small>/mese</small></div>
+        <div class="x-price">{formatEuro(PRICES.mvp.monthly)}€<small>/mese</small></div>
       </div>
       <div class="extra-card reveal d1">
         <div>

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { GUARANTEE, SITE, SLOTS } from '../config';
+import { GUARANTEE, PRICES, SITE, SLOTS, formatEuro } from '../config';
 import Clienti from '../components/Clienti.astro';
 import Confronto from '../components/Confronto.astro';
 
@@ -294,11 +294,11 @@ const slotsLabel =
         <div class="seg" role="tablist">
           <button class="seg-btn active" data-group="partner" role="tab" aria-selected="true">
             <span class="seg-name">Partner</span>
-            <span class="seg-sub">Un product engineer dedicato · da 2.200€/mese</span>
+            <span class="seg-sub">Un product engineer dedicato · da {formatEuro(PRICES.partner.from)}€/mese</span>
           </button>
           <button class="seg-btn" data-group="team" role="tab" aria-selected="false">
             <span class="seg-name">Team</span>
-            <span class="seg-sub">Product team completo · da 5.000€/sprint</span>
+            <span class="seg-sub">Product team completo · da {formatEuro(PRICES.team.from)}€/sprint</span>
           </button>
         </div>
 
@@ -321,8 +321,8 @@ const slotsLabel =
             <div class="plan-hero">
               <span class="plan-hero-badge">Blocca lo slot</span>
               <span class="plan-kicker">Trimestrale</span>
-              <div class="plan-price">2.200€<small>/mese</small></div>
-              <p class="plan-meta">Paghi mese per mese · risparmi 600€ rispetto al mensile</p>
+              <div class="plan-price">{formatEuro(PRICES.partner.quarterlyMonthly)}€<small>/mese</small></div>
+              <p class="plan-meta">Paghi mese per mese · risparmi {formatEuro(PRICES.partner.quarterSaving)}€ rispetto al mensile</p>
               <p class="plan-desc">
                 Blocca il tuo slot Partner per 3 mesi. Un product engineer dedicato al tuo prodotto, in continuità.
               </p>
@@ -337,7 +337,7 @@ const slotsLabel =
             <div class="plan-side">
               <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
                 <span class="plan-kicker">Mensile</span>
-                <div class="plan-mini-price">2.400€<small>/mese</small></div>
+                <div class="plan-mini-price">{formatEuro(PRICES.partner.monthly)}€<small>/mese</small></div>
                 <p>Un product engineer sul tuo prodotto, mese per mese. Cancella quando vuoi.</p>
                 <span class="plan-mini-link">Scegli Mensile →</span>
               </a>
@@ -361,9 +361,9 @@ const slotsLabel =
             <div class="plan-hero">
               <span class="plan-hero-badge">Miglior valore</span>
               <span class="plan-kicker">Trimestre</span>
-              <div class="plan-price">28.000€<small>/trimestre</small></div>
-              <p class="plan-meta">4.667€ a sprint</p>
-              <p class="plan-desc">6 sprint consecutivi con lo stesso team. Risparmi 2.000€ rispetto ai singoli sprint.</p>
+              <div class="plan-price">{formatEuro(PRICES.team.quarter)}€<small>/trimestre</small></div>
+              <p class="plan-meta">{formatEuro(PRICES.team.quarterPerSprint)}€ a sprint</p>
+              <p class="plan-desc">{PRICES.team.sprintsPerQuarter} sprint consecutivi con lo stesso team. Risparmi {formatEuro(PRICES.team.quarterSaving)}€ rispetto ai singoli sprint.</p>
               <ul class="plan-checks">
                 <li>Tutto il piano Sprint, in continuità</li>
                 <li>Roadmap di trimestre e obiettivi misurabili</li>
@@ -375,7 +375,7 @@ const slotsLabel =
             <div class="plan-side">
               <a class="plan-mini" href={SITE.calUrl} target="_blank" rel="noopener">
                 <span class="plan-kicker">Sprint</span>
-                <div class="plan-mini-price">5.000€<small>/sprint</small></div>
+                <div class="plan-mini-price">{formatEuro(PRICES.team.sprint)}€<small>/sprint</small></div>
                 <p>Un team completo, uno sprint alla volta. Ideale per iniziare.</p>
                 <span class="plan-mini-link">Scegli Sprint →</span>
               </a>

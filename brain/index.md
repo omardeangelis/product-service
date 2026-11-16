@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-15
+updated: 2026-11-16
 ---
 
 # Brain — Master Map
@@ -21,7 +21,9 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 
 > Domain pages (`domains/<domain>/<domain>.md` + `<domain>-contract.md` + `concepts/` + `flows/` + `decisions/`) are created by the `docs-maintenance` flow when a spec in that domain is ready to be ingested. Until then a domain appears here only via its spec map.
 
-_empty_
+| Domain | Map | Contract | Flows | Concepts |
+|---|---|---|---|---|
+| sito | [[domains/sito/sito]] | [[domains/sito/sito-contract]] | 3 | 3 |
 
 ## Specs (per domain)
 
@@ -29,8 +31,9 @@ _empty_
 |---|---|---|
 | home | [[specs/home/clienti-muro/SPEC]] | Implemented |
 | home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
+| sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (aperto T6: deploy su Vercel) |
 
-Spec map: [[specs/home/home-specs|home-specs.md]]
+Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]]
 
 ## Tech debt
 
@@ -40,7 +43,8 @@ _empty_
 
 > One page per feature under `feature-improvement/<domain>/`. Entries are proposed by the suite and recorded only when the user accepts them (see `AGENTS.md` → `feature-improvement/`).
 
-- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 5 open (2026-11-15)
+- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 2 open, 3 done con [[specs/sito/un-posto-solo/SPEC]] (2026-11-16)
+- [[feature-improvement/sito/un-posto-solo]] — dopo [[specs/sito/un-posto-solo/SPEC]]: 1 done, i prezzi nel JSON-LD di `/pricing`, implementata su richiesta di Omar (2026-11-16)
 
 ## Reviews
 
