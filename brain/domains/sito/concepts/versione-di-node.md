@@ -29,7 +29,7 @@ La major di Node con cui il sito si installa, si costruisce e gira, in locale e 
 
 - Install, build, dev e preview non girano mai su una major diversa da quella di `engines.node`.
 - `.nvmrc` mancante o discorde ferma la build.
-- Locale e produzione usano la stessa major. ⚠ blocked — su Vercel va confermato dal log della prima build (AC14).
+- Locale e produzione usano la stessa major. Su Vercel confermato nel log di build da Omar (AC14, 2026-11-16).
 
 ## Related flows
 

@@ -18,6 +18,11 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-16] closed | Un posto solo — T6, deploy su Vercel con Node 26
+- Source: [[specs/sito/un-posto-solo/IMPLEMENTATION-NOTES]] (AC14 met: tutti gli AC soddisfatti)
+- PR #4 mergiata (`e858e2e`); Node 26.x confermato da Omar nel log di Vercel; produzione verificata con `curl` (sitemap 7 URL, `/llms.txt`, 5 `Offer` su `/pricing`)
+- Dominio principale reso `spatalo.tech` su Vercel (prima reindirizzava a www, in contrasto con il canonical)
+
 ## [2026-11-16] ingest | Un posto solo — prezzi, sitemap e versione di Node
 - Source: [[specs/sito/un-posto-solo/SPEC]] (con IMPLEMENTATION-NOTES)
 - Flows written: 3

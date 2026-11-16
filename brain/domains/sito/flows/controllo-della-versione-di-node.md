@@ -35,7 +35,7 @@ flowchart TD
 4. La config confronta la major di `process.versions.node` con `engines.node` di `package.json`, unica fonte; se non coincidono la build si ferma col messaggio che chiede Node 26 (AC11, AC12).
 5. Controlla poi che `.nvmrc` esista e chieda la stessa major.
 6. Con Node 26 install e build finiscono senza errori né `EBADENGINE` (AC13).
-7. Vercel legge `engines.node: "26.x"`. ⚠ blocked — AC14: il log di build di Vercel con Node 26.x va confermato da Omar alla prima PR (T6).
+7. Vercel legge `engines.node: "26.x"`. Omar ha confermato Node 26.x nel log di build (AC14, 2026-11-16).
 
 ## [Source: [[specs/sito/un-posto-solo/IMPLEMENTATION-NOTES]]]
 

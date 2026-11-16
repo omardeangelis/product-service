@@ -359,9 +359,12 @@ T1 ── T2 ── T3 ── T4 ── T5 ── T6
   - dopo il merge: deploy di `main` "Ready", e Omar conferma Node 26.x nel log (AC14);
   - `curl -s https://spatalo.tech/sitemap-0.xml` elenca gli stessi 7 URL di "Cosa ho trovato nel codice";
   - `curl -s https://spatalo.tech/llms.txt` contiene "2.400 €".
-- **status**: Planned
+- **status**: Done
 - **log**:
-- **files edited/created**:
+  - 2026-11-16: push e PR [omardeangelis/product-service#4](https://github.com/omardeangelis/product-service/pull/4) su richiesta di Omar. Check verdi (Vercel, GitGuardian). Omar ha confermato Node 26.x nel log di build dell'anteprima e ha letto `/llms.txt` sull'anteprima: prezzi giusti.
+  - Merge su `main` (`e858e2e`) chiesto da Omar. Sul deploy di produzione: `/sitemap-0.xml` con i 7 URL attesi, `/llms.txt` con "2.400 €", 5 `Offer` nel JSON-LD di `/pricing`.
+  - Scoperto in verifica: `spatalo.tech` reindirizzava a `www.spatalo.tech`, mentre canonical, sitemap e JSON-LD usano il dominio senza www. Omar ha reso principale `spatalo.tech` su Vercel: ora `www` e `http` fanno 308 verso `https://spatalo.tech`, con il percorso.
+- **files edited/created**: nessun file del repo
 - **backlog_item_id**: none
 - **backlog_item_url**: none
 - **relation_mode**: none

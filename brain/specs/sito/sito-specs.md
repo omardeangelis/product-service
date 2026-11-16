@@ -10,4 +10,4 @@ updated: 2026-11-16
 
 Parti trasversali del sito: dati condivisi tra pagine, sitemap e indicizzazione, build e ambiente.
 
-- [[specs/sito/un-posto-solo/SPEC|un-posto-solo]] — prezzi scritti in un punto solo con i derivati calcolati, sitemap che esclude da sé le pagine `noindex`, Node 26 fissato in locale e su Vercel (Implemented, con [[specs/sito/un-posto-solo/PLAN|PLAN]] e [[specs/sito/un-posto-solo/IMPLEMENTATION-NOTES|note]]; aperto T6, il deploy su Vercel con Node 26)
+- [[specs/sito/un-posto-solo/SPEC|un-posto-solo]] — prezzi scritti in un punto solo con i derivati calcolati, sitemap che esclude da sé le pagine `noindex`, Node 26 fissato in locale e su Vercel (Implemented, con [[specs/sito/un-posto-solo/PLAN|PLAN]] e [[specs/sito/un-posto-solo/IMPLEMENTATION-NOTES|note]]; T6 chiuso, in produzione dal 2026-11-16)

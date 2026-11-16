@@ -31,7 +31,7 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 |---|---|---|
 | home | [[specs/home/clienti-muro/SPEC]] | Implemented |
 | home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
-| sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (aperto T6: deploy su Vercel) |
+| sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (in produzione dal 2026-11-16) |
 
 Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]]
 

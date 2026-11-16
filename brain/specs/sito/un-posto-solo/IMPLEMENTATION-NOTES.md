@@ -24,7 +24,7 @@ updated: 2026-11-16
 - T1–T5 fatti e verificati. Node 26 è richiesto da install, build e dev. I prezzi stanno solo in `src/config.ts` e i derivati si calcolano da soli. La sitemap esclude da sé le pagine `noindex`.
 - L'HTML di home e `/pricing`, `/llms.txt` e la sitemap sono identici alla fotografia di partenza (T3).
 - Dopo l'audit, su richiesta di Omar: `/pricing` dichiara piani e prezzi nel JSON-LD, letti da `PRICES` (vedi Deviations).
-- Resta T6 (AC14): il deploy su Vercel con Node 26.x si verifica quando Omar chiede push e PR (D16).
+- T6 chiuso il 2026-11-16: PR #4 mergiata, Node 26.x confermato da Omar nel log di Vercel, produzione verificata (sitemap, `/llms.txt`, JSON-LD).
 
 ## Execution Mode
 
@@ -49,6 +49,7 @@ updated: 2026-11-16
 
 ## Surprises and Decisions
 
+- In produzione `spatalo.tech` reindirizzava a `www.spatalo.tech`, ma canonical, sitemap, JSON-LD e `/llms.txt` dichiarano il dominio senza www (problema precedente a questa spec). Omar ha reso principale `spatalo.tech` su Vercel: `www` e `http` fanno ora 308 verso `https://spatalo.tech`.
 - La shell dei tool dell'agente non carica l'alias `default` di nvm e resta su `/usr/local/bin/node` v22.17.1. Ogni comando di verifica mette `~/.nvm/versions/node/v26.13.1/bin` (o `v24.14.1` per le prove negative) in testa al `PATH`, al posto di `nvm exec`. Un terminale nuovo di Omar invece parte su Node 26.13.1.
 - `astro preview` con Node 24, in una shell d'agente, scrive il messaggio su Node 26 solo in `.astro/preview.log`. Il terminale stampa "Preview server process exited before becoming ready". `astro dev` invece lo stampa direttamente.
 - `/llms.txt` scrive anche "(6 sprint)" accanto al trimestre Team. Non era tra le righe del piano: per D8 segue `team.sprintsPerQuarter` anche lì.
@@ -99,7 +100,7 @@ updated: 2026-11-16
 | AC11 build con Node ≠ 26 si ferma | met | Node 24: exit 1, "Questo sito richiede Node 26" |
 | AC12 dev con Node ≠ 26 si ferma | met | Node 24: `astro dev` exit 1 con lo stesso messaggio |
 | AC13 Node 26 pulito | met | install e build exit 0, nessun `EBADENGINE`; il warning `allowScripts` è atteso (D15) |
-| AC14 Vercel su Node 26.x | blocked | T6: serve push e PR, che Omar fa partire (D16); il log di build di Vercel lo vede solo lui |
+| AC14 Vercel su Node 26.x | met | Omar ha confermato Node 26.x nel log di build dell'anteprima; il deploy di `main` (stesso `engines`) è online e verificato con `curl` |
 | AC15 terminale nuovo su 26.x | met | `zsh -lic 'cd <repo> && node -v'` → `v26.13.1` |
 | AC16 README con versione e attivazione | met | sezione "Requisiti": Node 26, `nvm install 26`, `nvm use` |
 
@@ -109,4 +110,4 @@ updated: 2026-11-16
 
 ## Remaining Work
 
-- T6 / AC14: quando Omar chiede push e PR, deploy di anteprima "Ready" e, nel log di build di Vercel, Node 26.x (lo conferma Omar). Dopo il merge, lo stesso sul deploy di `main`, più `curl` di `/sitemap-0.xml` (7 URL) e `/llms.txt` ("2.400 €").
+- Nessuno.
