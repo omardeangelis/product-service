@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-15
+updated: 2026-11-16
 ---
 
 # Brain — Master Map
@@ -29,8 +29,9 @@ _empty_
 |---|---|---|
 | home | [[specs/home/clienti-muro/SPEC]] | Implemented |
 | home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
+| sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (aperto T6: deploy su Vercel) |
 
-Spec map: [[specs/home/home-specs|home-specs.md]]
+Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]]
 
 ## Tech debt
 
@@ -40,7 +41,8 @@ _empty_
 
 > One page per feature under `feature-improvement/<domain>/`. Entries are proposed by the suite and recorded only when the user accepts them (see `AGENTS.md` → `feature-improvement/`).
 
-- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 5 open (2026-11-15)
+- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 2 open, 3 planned in [[specs/sito/un-posto-solo/SPEC]] (2026-11-15)
+- [[feature-improvement/sito/un-posto-solo]] — dopo [[specs/sito/un-posto-solo/SPEC]]: 1 planned, i prezzi nel JSON-LD di `/pricing`, implementata su richiesta di Omar (2026-11-16)
 
 ## Reviews
 

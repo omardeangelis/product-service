@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-15
+updated: 2026-11-16
 ---
 
 # Brain — Log
@@ -17,6 +17,23 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Flows written: <count>
 - Concepts written: <count>
 -->
+
+## [2026-11-16] implemented | Un posto solo — prezzi, sitemap e versione di Node
+- Source: [[specs/sito/un-posto-solo/SPEC]] (AC1–AC13, AC15–AC16 met; AC14 blocked)
+- T1–T5 sequenziali, T2/T4/T5 a worker `sonnet` rivisti dall'orchestratore, nessuna escalation; HTML, `/llms.txt` e sitemap identici alla fotografia di partenza
+- Aperto: T6, deploy su Vercel con Node 26.x, quando Omar chiede push e PR; review indipendente offerta, non lanciata (`review.mode: plan`)
+- Dopo l'audit, su richiesta di Omar: piani e prezzi nel JSON-LD di `/pricing` (`Service` con `Offer`, da `PRICES`); registrata in [[feature-improvement/sito/un-posto-solo]]
+
+## [2026-11-15] plan | Un posto solo — prezzi, sitemap e versione di Node
+- Plan: [[specs/sito/un-posto-solo/PLAN]] (T1–T6 in sequenza; T6 con Omar sul log di Vercel)
+- Gate: adversarial-verifier (DO NOT SHIP, 0 blocker / 3 major / 5 minor / 8 nit, tutti integrati nel piano: `outDir` stringa, grep di AC1 rifatto, mutazioni per ogni derivato, bundle client senza `Intl`)
+- Spec approvata: "da" del Team resta 5.000€, blocco di Node anche su `dev` (nuovo AC12), Node 26 default di nvm; Vercel supporta Node 26
+
+## [2026-11-15] spec | Un posto solo — prezzi, sitemap e versione di Node
+- Created spec: [[specs/sito/un-posto-solo/SPEC]]
+- Domain: sito
+- Status: Draft
+- Source: evolutive 1, 3, 4 di [[feature-improvement/_unscoped/_unscoped]] (ora planned)
 
 ## [2026-11-15] review | Correzioni del count-up dei casi studio
 - Report: [[review/2026-11-15-count-up-fix/REPORT]]

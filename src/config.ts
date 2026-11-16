@@ -29,6 +29,42 @@ export const SLOTS = {
   taken: 1,
 };
 
+// Prezzi, in euro interi. Cambia qui: home, pricing (testo e JSON-LD) e /llms.txt si aggiornano
+// da soli, compresi risparmi, prezzo a sprint e i "da …" (calcolati sotto).
+const partnerMonthly = 2400;
+const partnerQuarterlyMonthly = 2200;
+const teamSprint = 5000;
+const teamQuarter = 28000;
+const teamSprintsPerQuarter = 6;
+
+export const PRICES = {
+  partner: {
+    monthly: partnerMonthly,
+    quarterlyMonthly: partnerQuarterlyMonthly,
+    quarterSaving: (partnerMonthly - partnerQuarterlyMonthly) * 3,
+    from: Math.min(partnerMonthly, partnerQuarterlyMonthly),
+  },
+  team: {
+    sprint: teamSprint,
+    quarter: teamQuarter,
+    sprintsPerQuarter: teamSprintsPerQuarter,
+    quarterPerSprint: Math.round(teamQuarter / teamSprintsPerQuarter),
+    quarterSaving: teamSprint * teamSprintsPerQuarter - teamQuarter,
+    // Il "da …" del Team resta lo sprint singolo.
+    from: teamSprint,
+  },
+  mvp: {
+    monthly: 4500,
+  },
+} as const;
+
+// Solo il numero con il separatore delle migliaia ("2.400"): il simbolo € lo
+// aggiunge chi lo usa. Il formattatore è creato qui dentro perché questo file
+// finisce anche nel bundle del client.
+export function formatEuro(n: number): string {
+  return new Intl.NumberFormat('it-IT', { useGrouping: 'always', maximumFractionDigits: 0 }).format(n);
+}
+
 // Prototipi da mandare ai clienti, serviti su /p/<slug>. Il codice di ognuno
 // vive in src/prototypes/<slug>/ (lo slug è anche il nome della cartella).
 // `visible: false` lo toglie dalla build di produzione, ma in locale

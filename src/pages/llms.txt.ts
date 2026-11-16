@@ -1,12 +1,11 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { GUARANTEE, SITE, SLOTS } from '../config';
+import { GUARANTEE, PRICES, SITE, SLOTS, formatEuro } from '../config';
 
 /*
  * /llms.txt (https://llmstxt.org): chi è Spatalo e cosa vende, per i motori AI.
  * Generato in build: i casi studio pubblicati e i dati di src/config.ts entrano da soli.
- * I prezzi invece sono scritti a mano come in src/pages/pricing.astro e in home:
- * se cambiano lì, vanno cambiati anche qui.
+ * Anche i prezzi arrivano da src/config.ts (PRICES).
  */
 export const GET: APIRoute = async ({ site }) => {
   const url = (path: string) => new URL(path, site).href;
@@ -32,9 +31,9 @@ Come funziona:
 
 Prezzi IVA esclusa, fattura a inizio periodo, nessun costo di setup.
 
-- Partner: un product engineer senior dedicato, in abbonamento, con accesso diretto al founder. 2.400 € al mese (mensile) o 2.200 € al mese (trimestrale, pagato mese per mese). Al massimo ${SLOTS.total} clienti attivi.
-- Team: ${SITE.founder} come product lead, più un product engineer e un product designer senior. 5.000 € a sprint di 2 settimane o 28.000 € a trimestre (6 sprint). Si rinnova sprint per sprint.
-- MVP in 6 settimane: dalla discovery al primo rilascio in produzione, 4.500 € al mese.
+- Partner: un product engineer senior dedicato, in abbonamento, con accesso diretto al founder. ${formatEuro(PRICES.partner.monthly)} € al mese (mensile) o ${formatEuro(PRICES.partner.quarterlyMonthly)} € al mese (trimestrale, pagato mese per mese). Al massimo ${SLOTS.total} clienti attivi.
+- Team: ${SITE.founder} come product lead, più un product engineer e un product designer senior. ${formatEuro(PRICES.team.sprint)} € a sprint di 2 settimane o ${formatEuro(PRICES.team.quarter)} € a trimestre (${PRICES.team.sprintsPerQuarter} sprint). Si rinnova sprint per sprint.
+- MVP in 6 settimane: dalla discovery al primo rilascio in produzione, ${formatEuro(PRICES.mvp.monthly)} € al mese.
 - A progetto: scope chiuso, prezzo fisso concordato prima di iniziare, preventivo in 48 ore.
 
 ## Pagine
