@@ -734,7 +734,7 @@ Campi comuni a tutti i task: `backlog_item_id: none`, `backlog_item_url: none`, 
   - `grep -rl '# SEGNAPOSTO' src/content` è vuoto;
   - ci sono almeno 4 release non in bozza e i 4 casi studio hanno `published`;
   - `npm run build` passa.
-- **status**: Planned
+- **status**: Completed
 - **log**:
 - **files edited/created**:
 - **tdd_target**: `VERCEL_ENV=production npm run build` passa. Oggi fallisce per i segnaposto.
@@ -760,7 +760,7 @@ Campi comuni a tutti i task: `backlog_item_id: none`, `backlog_item_url: none`, 
   - la sitemap contiene esattamente i 7 URL di oggi, più `/showcase/`, più uno per ogni release vera;
   - i titoli delle 28 release del prototipo non compaiono in `dist/`;
   - tutti i controlli cli di T3, T11 e T12 passano sui contenuti veri.
-- **status**: Planned
+- **status**: Completed
 - **log**:
 - **files edited/created**:
 - **tdd_target**: è un task di verifica, senza RED proprio. Il controllo guida: la sitemap contiene i 7 URL di oggi, più `/showcase/`, più una voce per ogni release vera.
@@ -809,9 +809,9 @@ Campi comuni a tutti i task: `backlog_item_id: none`, `backlog_item_url: none`, 
   - `git diff main -- src/prototypes/integration.mjs` è vuoto;
   - `npm run build` passa;
   - in dev, `/lab/showcase` risponde 404.
-- **status**: Planned
-- **log**:
-- **files edited/created**:
+- **status**: Completed
+- **log**: 2026-11-17 orchestratore, dopo la conferma di Omar del deploy in produzione (PR #5, merge 732b96d). `src/lab/` cancellata (con `UX-REVIEW.md` e `UI-REVIEW.md`); `integration.mjs` riportato a `main` (`git diff main` vuoto); `grep -rn "src/lab\|/lab/" src` vuoto; build di produzione verde, niente `lab` in `dist/`. Le righe del README erano già nella PR.
+- **files edited/created**: `src/lab/` (cancellata), `src/prototypes/integration.mjs` (ripristinato)
 - **tdd_target**: `test ! -d src/lab && npm run build` passa. Oggi `src/lab` esiste.
 - **review_mode**: cli
 - **complexity**: low

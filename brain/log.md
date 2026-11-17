@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-16
+updated: 2026-11-17
 ---
 
 # Brain — Log
@@ -17,6 +17,12 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Flows written: <count>
 - Concepts written: <count>
 -->
+
+## [2026-11-17] implementing | Showcase: in produzione, prototipo cancellato
+- Source: [[specs/showcase/log-articoli/SPEC]] (T15, T16 e T18 completati)
+- Sei release vere al posto dei 13 segnaposto; build di produzione verde; PR #5 mergiata su main (732b96d) e deploy confermato da Omar
+- Prototipo `src/lab/` (con UX-REVIEW e UI-REVIEW) e rotta `/lab/[...slug]` cancellati
+- Aperto: T17 (prove a mano su iPhone Safari, VoiceOver, NVDA, Firefox, Safari desktop)
 
 ## [2026-11-16] implementing | Showcase: gli articoli in home e nella pagina /showcase ("Fila")
 - Source: [[specs/showcase/log-articoli/SPEC]] (T1–T14 completati, in sequenza, worker supervisionati; nessuna escalation)
