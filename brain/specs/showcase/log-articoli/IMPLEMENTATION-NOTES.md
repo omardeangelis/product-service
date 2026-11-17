@@ -16,7 +16,8 @@ updated: 2026-11-17
 
 - T1–T14 completati il 2026-11-16, in sequenza, con i 13 articoli segnaposto. Il codice della feature è tutto scritto e verificato: contenuti e guardia, `/showcase/`, pagine delle release, sezione 04 in home con frecce e motion, feed, `/llms.txt`, JSON-LD rigido, link del sito.
 - T15 e T16 chiusi il 2026-11-17: sei release vere (Jev, Agenda, Skill suggerite, UI sweep, Beautiful UI, CV anonimo e report, dal 22 set al 17 nov), segnaposto cancellati, build di produzione verde. Testi di `/showcase/` e della sezione 04 riscritti da Omar; il pulsante dell'hero ora dice «Vedi portfolio ↓».
-- Restano T17 (prove a mano) e T18 (cancellazione del prototipo dopo il deploy). Per questo la spec resta `approved` e il piano non è `Complete`.
+- Deploy in produzione il 2026-11-17 (PR #5). T18 chiuso lo stesso giorno: prototipo `src/lab/` cancellato, rotta `/lab` tolta.
+- Resta solo T17 (prove a mano di Omar). Per questo la spec resta `approved` e il piano non è `Complete`.
 
 ## Execution Mode
 
@@ -85,5 +86,4 @@ updated: 2026-11-17
 ## Remaining Work
 
 - T17: prove a mano su iPhone Safari, VoiceOver, NVDA, Firefox e Safari desktop.
-- T18: cancellare `src/lab/` e le righe della rotta `/lab` dopo il deploy in produzione (D24).
 - Review indipendente (`adversarial-review`) non lanciata: con `review.mode: plan` si offre e non parte da sola.
