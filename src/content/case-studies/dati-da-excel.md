@@ -4,6 +4,13 @@ excerpt: "Abilitare gli operatori dell'app a copiare una riga da Excel, Google S
 tags: ["Real shipped code", "Financial modeling · SaaS", "Reusable architecture"]
 order: 3
 draft: false
+published: "2025-05-21"
+cover:
+  kind: img
+  src: /case-studies/dati-da-excel/2-anteprima.png
+  alt: "Anteprima della riga incollata da Excel"
+  width: 3024
+  height: 1964
 
 home:
   tag: "Financial modeling · SaaS"

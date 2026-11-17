@@ -105,6 +105,58 @@ export function pricingGraph(site: URL): LdNode[] {
   ];
 }
 
+/** Caratteri che il serializzatore sostituisce con escape: `<` chiuderebbe lo script, U+2028/2029 rompono i parser. */
+const ESCAPE: Record<string, string> = {
+  '<': '\\u003c',
+  '>': '\\u003e',
+  '&': '\\u0026',
+  '\u2028': '\\u2028',
+  '\u2029': '\\u2029',
+};
+
 /** Serializza il grafo per un <script type="application/ld+json">, senza poterne chiudere il tag. */
 export const ldJson = (nodes: LdNode[]) =>
-  JSON.stringify({ '@context': 'https://schema.org', '@graph': nodes }).replace(/</g, '\\u003c');
+  JSON.stringify({ '@context': 'https://schema.org', '@graph': nodes }).replace(
+    /[<>&\u2028\u2029]/g,
+    (c) => ESCAPE[c],
+  );
+
+// Auto-verifica: il modulo viene importato da ogni pagina, quindi gira a ogni build.
+if (ldJson([{ t: '</script><!--' }]).includes('<')) {
+  throw new Error('ldJson: il serializzatore lascia passare `<`, che potrebbe chiudere il tag <script>.');
+}
+
+/** Un articolo (caso studio o release) come Article, citando per @id i nodi condivisi (autore, editore). */
+export function articleNode({
+  site,
+  url,
+  headline,
+  description,
+  published,
+  updated,
+  lang = 'it',
+}: {
+  site: URL;
+  url: string;
+  headline: string;
+  description: string;
+  published?: string;
+  updated?: string;
+  /** lingua del testo dell'articolo */
+  lang?: 'it' | 'en';
+}): LdNode {
+  return {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline,
+    // Niente markup nella descrizione: il testo arriva così com'è anche nei risultati di ricerca.
+    description: description.replace(/<[^>]*>/g, ''),
+    url,
+    mainEntityOfPage: url,
+    inLanguage: lang === 'en' ? 'en-US' : 'it-IT',
+    author: { '@id': ldId(site, 'founder') },
+    publisher: { '@id': ldId(site, 'org') },
+    ...(published && { datePublished: published }),
+    ...(updated && { dateModified: updated }),
+  };
+}

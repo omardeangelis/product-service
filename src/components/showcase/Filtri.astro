@@ -1,0 +1,133 @@
+---
+/*
+ * I filtri per tipo. Senza JS non si vedono (`hidden`): nessun controllo che non fa niente. Lo script li rivela
+ * togliendo `hidden` prima del primo paint. Un chip con zero articoli non si rende.
+ */
+import { TAGS } from '../../data/articoli-testi';
+import type { Articolo } from '../../data/articoli';
+
+interface Props {
+  articoli: Articolo[];
+}
+const { articoli } = Astro.props;
+const conteggio = (id: string) => (id === 'all' ? articoli.length : articoli.filter((a) => a.tag === id).length);
+const chips = TAGS.map((t) => ({ ...t, n: conteggio(t.id) })).filter((t) => t.n > 0);
+---
+
+<div class="sc-chips solo-js" role="group" aria-label="Filtra per tipo" hidden>
+  {
+    chips.map((t) => (
+      <button type="button" class="chip" data-filter={t.id} data-total={t.n} aria-pressed={t.id === 'all' ? 'true' : 'false'}>
+        {t.label} <span class="chip-n">{t.n}</span>
+      </button>
+    ))
+  }
+</div>
+<p class="sc-count" role="status" data-count></p>
+
+<style is:global>
+  .sc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sc-chips[hidden] {
+    display: none;
+  }
+  .sc-chips .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--t-line);
+    border-radius: 999px;
+    background: var(--t-card);
+    color: var(--t-ink);
+    font: inherit;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out),
+      color var(--dur-hover) var(--ease-out),
+      transform var(--dur-press) var(--ease-press);
+  }
+  /* bordo più marcato all'hover; `--t-line-strong` lo definisce ogni tema (sezione 04 e /showcase/) */
+  @media (hover: hover) and (pointer: fine) {
+    .sc-chips .chip:hover:not([aria-pressed='true']) {
+      border-color: var(--t-line-strong);
+    }
+  }
+  /* la pressione non dipende dall'hover: vale anche al tocco */
+  @media (prefers-reduced-motion: no-preference) {
+    .sc-chips .chip:active {
+      transform: scale(0.97);
+    }
+  }
+  .sc-chips .chip:focus-visible {
+    outline: 2px solid var(--t-accent);
+    outline-offset: 2px;
+  }
+  .sc-chips .chip[aria-pressed='true'] {
+    background: var(--t-ink);
+    border-color: var(--t-ink);
+    color: var(--t-card);
+  }
+  .sc-chips .chip-n {
+    font-size: 0.8rem;
+    color: var(--t-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .sc-chips .chip[aria-pressed='true'] .chip-n {
+    color: var(--t-line);
+  }
+  /* il conteggio lo leggono gli screen reader quando cambia il filtro; a vista c'è già nei chip */
+  .sc-count {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Swap del filtro (riparti in src/scripts/showcase.ts): in home le schede visibili e la scheda finale, in
+     /showcase/ i mesi visibili. Entrano insieme, senza stagger e senza uscita; fill "backwards", poi tornano
+     ai propri stili. Nessuna altezza si anima. */
+  .sc-strip > li[data-swap],
+  [data-showcase] [data-group][data-swap] {
+    animation: sc-swap var(--dur-ui) var(--ease-out) backwards;
+  }
+  @keyframes sc-swap {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @keyframes sc-swap-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* resta solo l'opacità */
+    .sc-strip > li[data-swap],
+    [data-showcase] [data-group][data-swap] {
+      animation-name: sc-swap-fade;
+    }
+  }
+
+  @media (max-width: 700px) {
+    /* i tre filtri stanno in una riga da 358 px; sotto, al massimo due righe */
+    .sc-chips {
+      gap: 6px;
+    }
+    .sc-chips .chip {
+      padding: 0 11px;
+      gap: 5px;
+      font-size: 0.88rem;
+    }
+  }
+</style>

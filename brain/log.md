@@ -18,6 +18,31 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-16] implementing | Showcase: gli articoli in home e nella pagina /showcase ("Fila")
+- Source: [[specs/showcase/log-articoli/SPEC]] (T1–T14 completati, in sequenza, worker supervisionati; nessuna escalation)
+- Verifica completa T14 sui segnaposto: 6 difetti trovati e corretti (chip premuto illeggibile, anello tagliato nella fila e sotto la nav, pulsante flottante sopra il focus, nav a 125 %, filtro perso senza bfcache)
+- Aperto: T15 (release vere di Omar), T16, T17, T18; AC4 bloccato fino a T15. Nessun commit
+
+## [2026-11-16] plan | Showcase: chiuse le domande aperte
+- Plan: [[specs/showcase/log-articoli/PLAN]] (D29–D32); spec e FLOW aggiornati, domande aperte 1 e 2 della spec chiuse
+- Date dei casi studio da Omar: Excel 2025-05-21, Onboarding 2026-03-20, Offerte AI 2026-04-30, Motion 2026-07-26, senza segnaposto
+- Nuova regola in AC10: la data della scheda porta l'anno quando è diverso da quello dell'articolo più recente («21 mag 2025»)
+- Zoom della copertina da `left top` confermato; refuso «Da form  chat» corretto in `offerte-ai.md` (già online nella sezione 04 di oggi)
+
+## [2026-11-16] plan | Showcase: gli articoli in home e nella pagina /showcase ("Fila")
+- Plan: [[specs/showcase/log-articoli/PLAN]] (T1–T18 in sequenza; T15 e T17 con Omar)
+- Gate: adversarial-verifier (DO NOT SHIP, 0 blocker / 6 major / 9 minor / 4 nit, tutti integrati: `reference()` che non blocca la build, dipendenze di T7 e T10, esecuzione in sequenza per `dist/` condiviso, ritorno dalla release in una scheda nuova, indice delle frecce dopo uno scorrimento a mano)
+- design-engineer: budget di motion confermato; chiuso l'open risk del brief, aggiunte le regole su swap, frecce e controlli prima del paint
+- Grill con Omar: release scritte da lui alla fine, segnaposto bloccati in produzione; corpo della release di lunghezza libera; AC3 solo per lo showcase; copertine dei casi studio dal prototipo. Spec aggiornata e approvata
+
+## [2026-11-16] spec | Showcase: gli articoli in home e nella pagina /showcase ("Fila")
+- Created spec: [[specs/showcase/log-articoli/SPEC]]
+- Flow: [[specs/showcase/log-articoli/FLOW]]
+- Domain: showcase (nuovo; tocca home e sito)
+- Status: Draft
+- Source: prototipo approvato `src/lab/showcase/` (`/lab/showcase`), review ux-advisor e ui-reviewer (proceed with decisions), state sweep saltato
+- Presa in carico la miglioria "Serializer JSON-LD più rigido" ([[feature-improvement/_unscoped/_unscoped]], ora planned)
+
 ## [2026-11-16] closed | Un posto solo — T6, deploy su Vercel con Node 26
 - Source: [[specs/sito/un-posto-solo/IMPLEMENTATION-NOTES]] (AC14 met: tutti gli AC soddisfatti)
 - PR #4 mergiata (`e858e2e`); Node 26.x confermato da Omar nel log di Vercel; produzione verificata con `curl` (sitemap 7 URL, `/llms.txt`, 5 `Offer` su `/pricing`)

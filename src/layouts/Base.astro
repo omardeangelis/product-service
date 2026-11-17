@@ -6,9 +6,9 @@ import { type LdNode, ldJson, sharedGraph } from '../seo';
 interface Props {
   title?: string;
   description?: string;
-  /** 'default' = nav completa · 'case-study' = logo + link di ritorno · 'minimal' = solo logo */
-  nav?: 'default' | 'case-study' | 'minimal';
-  active?: 'pricing';
+  /** 'default' = nav completa · 'case-study' = logo + link di ritorno · 'article' = logo + «← Tutti gli articoli» (indietro nella cronologia se si arriva da /showcase/) · 'minimal' = solo logo */
+  nav?: 'default' | 'case-study' | 'article' | 'minimal';
+  active?: 'pricing' | 'showcase';
   /** CTA flottante "Prenota una call" — da spegnere sulle pagine post-vendita */
   floatCta?: boolean;
   /** Pagine operative (es. /benvenuto) da tenere fuori dai motori di ricerca */
@@ -57,6 +57,7 @@ const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — Showcase`} href="/rss.xml" />
     <script is:inline type="application/ld+json" set:html={structuredData} />
   </head>
   <body>
@@ -65,13 +66,15 @@ const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
         <a class="logo" href="/">spatalo<span>.</span>tech</a>
         {
           nav === 'case-study' ? (
-            <a class="back" href="/#shipped">← Tutti i casi studio</a>
+            <a class="back" href="/showcase/?tag=caso-studio">← Tutti i casi studio</a>
+          ) : nav === 'article' ? (
+            <a class="back" href="/showcase/" data-back-showcase>← Tutti gli articoli</a>
           ) : nav === 'minimal' ? null : (
             <div class="nav-links">
               <a href="/#modello">Come funziona</a>
               <a href="/#confronto">Confronto</a>
-              <a href="/#shipped">Showcase</a>
-              <a href="/pricing" class:list={[{ 'active-link': active === 'pricing' }]}>Prezzi</a>
+              <a href="/showcase/" class:list={[{ 'active-link': active === 'showcase' }]} aria-current={active === 'showcase' ? 'page' : undefined}>Showcase</a>
+              <a href="/pricing" class:list={[{ 'active-link': active === 'pricing' }]} aria-current={active === 'pricing' ? 'page' : undefined}>Prezzi</a>
               <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call</a>
             </div>
           )
@@ -115,6 +118,23 @@ const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
         { threshold: 0.15 }
       );
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      /* ----- «← Tutti gli articoli»: torna indietro nella cronologia (ritrova filtro e posizione) solo se si arriva da /showcase/ ----- */
+      const back = document.querySelector<HTMLAnchorElement>('[data-back-showcase]');
+      if (back) {
+        back.addEventListener('click', (e) => {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          let daShowcase = false;
+          try {
+            const ref = new URL(document.referrer);
+            daShowcase = ref.origin === location.origin && ref.pathname === '/showcase/';
+          } catch {}
+          if (daShowcase && history.length > 1) {
+            e.preventDefault();
+            history.back();
+          }
+        });
+      }
 
       /* ----- floating CTA ----- */
       const fc = document.querySelector('.float-cta');

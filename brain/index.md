@@ -32,8 +32,9 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 | home | [[specs/home/clienti-muro/SPEC]] | Implemented |
 | home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
 | sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (in produzione dal 2026-11-16) |
+| showcase | [[specs/showcase/log-articoli/SPEC]] | Approved (con PLAN) |
 
-Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]]
+Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]] · [[specs/showcase/showcase-specs|showcase-specs.md]]
 
 ## Tech debt
 
@@ -43,7 +44,7 @@ _empty_
 
 > One page per feature under `feature-improvement/<domain>/`. Entries are proposed by the suite and recorded only when the user accepts them (see `AGENTS.md` → `feature-improvement/`).
 
-- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 2 open, 3 done con [[specs/sito/un-posto-solo/SPEC]] (2026-11-16)
+- [[feature-improvement/_unscoped/_unscoped]] — SEO/GEO, metadati e build fuori da una spec: 1 open, 1 planned con [[specs/showcase/log-articoli/SPEC]], 3 done con [[specs/sito/un-posto-solo/SPEC]] (2026-11-16)
 - [[feature-improvement/sito/un-posto-solo]] — dopo [[specs/sito/un-posto-solo/SPEC]]: 1 done, i prezzi nel JSON-LD di `/pricing`, implementata su richiesta di Omar (2026-11-16)
 
 ## Reviews

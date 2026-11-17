@@ -1,0 +1,122 @@
+---
+/*
+ * Il feed: il pulsante "Copia" nasce `hidden` (serve JS), il link vero a /rss.xml c'è sempre.
+ * Le due etichette del bottone sono impilate nella stessa cella: la larghezza è quella della più lunga e non
+ * cambia quando si scambiano. L'esito passa dalla regione di stato: "copiato" la legge solo lo screen reader
+ * (a vista c'è già l'etichetta), l'errore si vede sotto il riquadro, in posizione assoluta, senza spingere niente.
+ * Il comportamento sta in `src/scripts/showcase.ts` (bindFeed).
+ */
+---
+
+<div class="feed-box">
+  <button type="button" class="feed solo-js" data-copy-feed data-feed-url="https://spatalo.tech/rss.xml" hidden>
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+      <circle cx="3" cy="13" r="1.8" fill="currentColor"></circle>
+      <path d="M1.5 7.2a7.3 7.3 0 0 1 7.3 7.3M1.5 1.8a12.7 12.7 0 0 1 12.7 12.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <span class="feed-labels">
+      <span data-feed-label>Copia il feed RSS</span>
+      <span data-feed-label-ok>Link del feed copiato</span>
+    </span>
+  </button>
+  <a class="feed-link" href="/rss.xml">Feed RSS</a>
+  <p class="feed-status" role="status" data-feed-status></p>
+</div>
+
+<style is:global>
+  .feed-box {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 20px;
+  }
+  .feed,
+  .feed-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 4px;
+    color: var(--t-muted);
+    font: inherit;
+    font-size: 0.95rem;
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .feed:hover,
+    .feed-link:hover {
+      color: var(--t-ink);
+    }
+  }
+  .feed {
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .feed[hidden] {
+    display: none;
+  }
+  .feed-labels {
+    display: inline-grid;
+    text-align: left;
+  }
+  .feed-labels > * {
+    grid-area: 1 / 1;
+  }
+  .feed [data-feed-label-ok],
+  .feed[data-copiato] [data-feed-label] {
+    visibility: hidden;
+  }
+  .feed[data-copiato] [data-feed-label-ok] {
+    visibility: visible;
+  }
+  .feed svg {
+    color: #b25e00;
+  }
+  .feed-link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .feed:focus-visible,
+  .feed-link:focus-visible {
+    outline: 2px solid var(--t-accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  /* fuori dal flusso: l'errore compare sotto il riquadro, nello spazio prima della griglia */
+  .feed-status {
+    position: absolute;
+    top: 100%;
+    right: 4px;
+    width: max-content;
+    max-width: min(32rem, calc(100vw - 56px));
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--t-muted);
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+  .feed-status:empty,
+  .feed-status[data-esito='ok'] {
+    /* "copiato" resta per gli screen reader, a vista lo dice già l'etichetta */
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .feed-url {
+    color: var(--t-ink);
+    user-select: all;
+  }
+
+  @media (max-width: 700px) {
+    .feed-status {
+      right: auto;
+      left: 4px;
+      text-align: left;
+    }
+  }
+</style>

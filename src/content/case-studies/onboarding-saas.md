@@ -3,6 +3,12 @@ title: "L'onboarding che si compila da solo: dal 12,5% all'80% di completamento.
 excerpt: "Un flusso di 11 step manuali che solo il 12,5% degli utenti portava a termine. L'abbiamo sostituito con la sincronizzazione del profilo LinkedIn: Apify estrae i dati, l'utente rivede e conferma, e ora l'80% completa l'onboarding in meno di 37 secondi."
 tags: ["Real shipped code", "Talent platform · SaaS", "Onboarding & attivazione"]
 order: 1
+published: "2026-03-20"
+cover:
+  kind: video
+  src: /case-studies/onboarding/onboarding.mp4
+  poster: /case-studies/onboarding/onboarding-poster.png
+  alt: "Il nuovo onboarding in azione"
 
 home:
   tag: "Talent platform"

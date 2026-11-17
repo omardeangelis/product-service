@@ -29,11 +29,13 @@
   --dur-ui:250ms;       /* stati di controlli: tab, segmented, accordion */
   --dur-swap:400ms;     /* cambio contenuto in un pannello, CTA che entra */
   --dur-reveal:700ms;   /* reveal allo scroll: marketing, curva expo ripida */
-  --dur-showpiece:800ms;/* pezzi forti: overlay delle card caso studio */
+  --dur-showpiece:800ms;/* pezzi forti: entrata della parete clienti */
   --dur-data:1000ms;    /* barre e grafici che "si riempiono" */
   --stagger:100ms;      /* tra elementi fratelli in un reveal */
 }
 *{margin:0;padding:0;box-sizing:border-box}
+/* nav fissa: 68px + 1px di bordo, più 8px di respiro. Un elemento a fuoco non finisce sotto la nav */
+html{scroll-padding-top:77px}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
@@ -87,6 +89,12 @@ nav{
 .back{font-size:.95rem;color:var(--muted);text-decoration:none}
 .back:hover{color:var(--ink)}
 @media(max-width:900px){.nav-links a:not(.btn){display:none}}
+/* 280 px: «Prenota una call» resta su una riga e lascia respiro al logo, anche col testo a 1,25x (AC28) */
+@media(max-width:360px){
+  nav .wrap{padding:0 16px}
+  .logo{font-size:.85rem}
+  .nav-links .btn{white-space:nowrap;padding:10px 9px;font-size:.8rem}
+}
 
 /* ---------- buttons ---------- */
 .btn{
