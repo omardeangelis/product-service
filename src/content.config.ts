@@ -1,6 +1,7 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { PROJECTS } from './config';
 
 /*
  * Casi studio: contenuto strutturato in frontmatter, renderizzato da
@@ -11,6 +12,29 @@ import { glob } from 'astro/loaders';
 // fa una Date e corregge da solo le date impossibili (2026-02-30 diventa il 2 marzo): per questo si accetta solo la
 // stringa, e una data non quotata, con orario o inesistente fa fallire la build invece di spostare il giorno.
 const isoDay = z.iso.date({ error: 'data tra virgolette nel formato "YYYY-MM-DD", es. published: "2026-03-05"' });
+
+// Elemento visivo di un articolo (caso studio o release): schermata, video o curva di easing.
+// `alt` è obbligatorio per tutti; il video vuole sempre un `poster`.
+const media = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('img'),
+    src: z.string(),
+    alt: z.string(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+  }),
+  z.object({
+    kind: z.literal('video'),
+    src: z.string(),
+    poster: z.string(),
+    alt: z.string(),
+  }),
+  z.object({
+    kind: z.literal('curve'),
+    value: z.string().regex(/^cubic-bezier\(/, { error: 'la curva deve iniziare con "cubic-bezier("' }),
+    alt: z.string(),
+  }),
+]);
 
 // Video dimostrativo (file in public/), con didascalia sotto il player.
 const video = z.object({
@@ -65,15 +89,18 @@ const motion = z.object({
 
 const caseStudies = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/case-studies' }),
-  schema: z.object({
+  schema: z
+    .object({
     title: z.string(),
     excerpt: z.string(),
     tags: z.array(z.string()),
     order: z.number(),
     draft: z.boolean().default(false),
-    // Date facoltative (YYYY-MM-DD) per l'Article in JSON-LD: senza, il caso studio resta valido.
+    // Obbligatoria per un caso studio pubblicato (vedi il refine in fondo): ordina il log e alimenta l'Article in JSON-LD.
     published: isoDay.optional(),
     updated: isoDay.optional(),
+    // Schermata, video o curva mostrata nella scheda del log
+    cover: media.optional(),
 
     // Card nella vetrina "Real shipped code" in homepage
     home: z.object({
@@ -214,7 +241,46 @@ const caseStudies = defineCollection({
       heading: z.string(),
       text: z.string(),
     }),
-  }),
+    })
+    .refine((d) => d.draft || d.published, {
+      error: 'published è obbligatorio per un caso studio pubblicato: aggiungi published: "YYYY-MM-DD"',
+      path: ['published'],
+    }),
 });
 
-export const collections = { 'case-studies': caseStudies };
+/*
+ * Release: voce del log, con il corpo scritto in markdown nel file.
+ * Il progetto è un nome della lista PROJECTS (src/config.ts); in white label non compare il cliente.
+ */
+const releases = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/releases' }),
+  schema: z
+    .object({
+      title: z.string().check((ctx) => {
+        if (ctx.value.length > 70) {
+          ctx.issues.push({
+            code: 'custom',
+            message: `il titolo di una release ha al massimo 70 caratteri: questo ne ha ${ctx.value.length}`,
+            input: ctx.value,
+          });
+        }
+      }),
+      // Testo breve della scheda: ammette <strong>/<em> inline
+      excerpt: z.string().min(1),
+      published: isoDay,
+      project: z.enum(PROJECTS),
+      cover: media.optional(),
+      metric: z.object({ value: z.string(), label: z.string() }).optional(),
+      caseStudy: reference('case-studies').optional(),
+      draft: z.boolean().default(false),
+      // Lingua del testo (titolo, testo breve, corpo): il resto del sito è in italiano
+      lang: z.enum(['it', 'en']).default('it'),
+    })
+    .refine((d) => !(d.project === 'Cliente in white label' && d.caseStudy), {
+      error:
+        'una release in white label non può avere caseStudy: il caso studio nomina il progetto, quindi il cliente sarebbe a un clic',
+      path: ['caseStudy'],
+    }),
+});
+
+export const collections = { 'case-studies': caseStudies, releases };

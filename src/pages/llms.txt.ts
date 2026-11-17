@@ -1,10 +1,12 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { GUARANTEE, PRICES, SITE, SLOTS, formatEuro } from '../config';
+import { getArticles } from '../data/articoli';
+import { testoPiano } from '../data/articoli-testi';
 
 /*
  * /llms.txt (https://llmstxt.org): chi è Spatalo e cosa vende, per i motori AI.
- * Generato in build: i casi studio pubblicati e i dati di src/config.ts entrano da soli.
+ * Generato in build: i casi studio pubblicati, le release dello showcase e i dati di src/config.ts entrano da soli.
  * Anche i prezzi arrivano da src/config.ts (PRICES).
  */
 export const GET: APIRoute = async ({ site }) => {
@@ -12,6 +14,7 @@ export const GET: APIRoute = async ({ site }) => {
   const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
     (a, b) => a.data.order - b.data.order
   );
+  const releases = (await getArticles()).filter((a) => a.tag === 'release');
 
   const text = `# ${SITE.name}
 
@@ -38,12 +41,18 @@ Prezzi IVA esclusa, fattura a inizio periodo, nessun costo di setup.
 
 ## Pagine
 
-- [Home](${url('/')}): il modello in abbonamento, il confronto con le alternative e i casi studio
+- [Home](${url('/')}): il modello in abbonamento, il confronto con le alternative e gli articoli: casi studio e release
 - [Prezzi](${url('/pricing/')}): piani Partner e Team, MVP, lavoro a progetto e domande frequenti su prezzi, pause e garanzia
 
 ## Casi studio
 
 ${caseStudies.map((cs) => `- [${cs.data.title}](${url(`/case-study/${cs.id}/`)}): ${cs.data.excerpt}`).join('\n')}
+
+## Showcase
+
+- [Showcase](${url('/showcase/')}): tutti gli articoli di ${SITE.founder}, dal più recente: release brevi e casi studio completi
+- [Feed RSS](${url('/rss.xml')}): gli stessi articoli in RSS 2.0
+${releases.map((r) => `- [${r.title}](${url(r.href)}): ${testoPiano(r.excerpt)}`).join('\n')}
 
 ## Contatti
 

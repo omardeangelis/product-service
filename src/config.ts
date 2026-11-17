@@ -89,3 +89,7 @@ export const PROTOTYPES: Prototype[] = [
     visible: false,
   },
 ];
+
+// Progetti ammessi nel log degli articoli. Un progetto nuovo si aggiunge qui; il nome di un cliente non va mai qui:
+// per un cliente in white label si usa "Cliente in white label".
+export const PROJECTS = ['Valueize', 'SeVedemo', 'brain-manager', 'Agenda Wave', 'Cliente in white label'] as const;

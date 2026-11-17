@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import MotionDemos from '../../components/MotionDemos.astro';
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config';
-import { ldId } from '../../seo';
+import { articleNode } from '../../seo';
 
 export async function getStaticPaths() {
   const caseStudies = await getCollection('case-studies', ({ data }) => !data.draft);
@@ -18,19 +18,14 @@ const num = () => String(++sectionNum).padStart(2, '0');
 
 // Dati strutturati: il caso studio come Article, scritto da Omar e pubblicato dallo studio.
 const url = new URL(Astro.url.pathname, Astro.site).href;
-const article = {
-  '@type': 'Article',
-  '@id': `${url}#article`,
+const article = articleNode({
+  site: Astro.site!,
+  url,
   headline: d.title.replace(/\.$/, ''),
   description: d.excerpt,
-  url,
-  mainEntityOfPage: url,
-  inLanguage: 'it-IT',
-  author: { '@id': ldId(Astro.site!, 'founder') },
-  publisher: { '@id': ldId(Astro.site!, 'org') },
-  ...(d.published && { datePublished: d.published }),
-  ...(d.updated && { dateModified: d.updated }),
-};
+  published: d.published,
+  updated: d.updated,
+});
 ---
 
 <Base
@@ -387,7 +382,7 @@ const article = {
         <p>{d.cta.text}</p>
         <a class="btn btn-accent" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
         &nbsp;
-        <a class="btn btn-ghost cta-secondary" href="/#shipped">Altri casi studio</a>
+        <a class="btn btn-ghost cta-secondary" href="/showcase/?tag=caso-studio">Altri casi studio</a>
       </div>
     </div>
   </section>

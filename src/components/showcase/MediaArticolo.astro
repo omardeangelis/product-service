@@ -1,0 +1,56 @@
+---
+/*
+ * Copertina dell'articolo: video con controlli (parte da solo, muto, quando è in vista: vedi src/scripts/articolo.ts),
+ * schermata alla sua misura naturale, oppure la curva (stesso disegno della scheda) con la didascalia.
+ */
+import type { ArticoloCover } from '../../data/articoli';
+
+interface Props {
+  cover: ArticoloCover;
+  /** lingua del testo alternativo, se non è l'italiano della pagina */
+  lang?: string;
+}
+const { cover, lang } = Astro.props;
+const P = cover.kind === 'curve' ? cover.value.match(/[\d.]+/g)!.map(Number) : [];
+const pt = (x: number, y: number) => `${x * 100} ${100 - y * 100}`;
+---
+
+<figure class="media-articolo" lang={lang}>
+  {
+    cover.kind === 'video' && (
+      <video controls playsinline preload="metadata" poster={cover.poster} muted src={cover.src} aria-label={cover.alt} />
+    )
+  }
+  {
+    cover.kind === 'img' && (
+      <img src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} decoding="async" />
+    )
+  }
+  {
+    cover.kind === 'curve' && (
+      <div class="ma-curve" role="img" aria-label={cover.alt}>
+        <svg viewBox="-14 -14 128 128" focusable="false" aria-hidden="true">
+          <rect x="0" y="0" width="100" height="100" class="c-frame" />
+          <path d={`M ${pt(0, 0)} L ${pt(P[0], P[1])} M ${pt(1, 1)} L ${pt(P[2], P[3])}`} class="c-handle" />
+          <circle cx={P[0] * 100} cy={100 - P[1] * 100} r="2.6" class="c-knob" />
+          <circle cx={P[2] * 100} cy={100 - P[3] * 100} r="2.6" class="c-knob" />
+          <path d={`M ${pt(0, 0)} C ${pt(P[0], P[1])}, ${pt(P[2], P[3])}, ${pt(1, 1)}`} class="c-line" />
+        </svg>
+      </div>
+    )
+  }
+  {cover.kind === 'curve' && <figcaption>{cover.value} · {cover.alt}</figcaption>}
+</figure>
+
+<style>
+  .media-articolo { margin: 40px 0 0; min-width: 0; }
+  video, img { display: block; width: 100%; max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+  video { background: var(--ink); }
+  .ma-curve { display: flex; justify-content: center; padding: 28px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .ma-curve svg { width: min(260px, 100%); height: auto; overflow: visible; }
+  figcaption { margin-top: 12px; font-size: 0.85rem; color: var(--muted); overflow-wrap: anywhere; font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+  .c-frame { fill: none; stroke: var(--line); }
+  .c-handle { stroke: var(--muted); stroke-width: 1; fill: none; }
+  .c-knob { fill: var(--muted); }
+  .c-line { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+</style>

@@ -1,0 +1,106 @@
+---
+/*
+ * Pagina di una release: /showcase/<slug>/. Impaginazione dei casi studio, accorciata: data, progetto, titolo,
+ * testo breve, numero, copertina; sotto il corpo in Markdown; in fondo le call to action.
+ * All'arrivo si muove solo il video: niente .reveal, niente count-up.
+ */
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import MediaArticolo from '../../components/showcase/MediaArticolo.astro';
+import { SITE } from '../../config';
+import { articleNode } from '../../seo';
+import { getArticles, langAttr } from '../../data/articoli';
+import { inlineHtml, longDate, testoPiano } from '../../data/articoli-testi';
+
+export async function getStaticPaths() {
+  const articoli = await getArticles();
+  const releases = await getCollection('releases', ({ data }) => !data.draft);
+  return releases.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, articolo: articoli.find((a) => a.id === entry.id && a.tag === 'release')! },
+  }));
+}
+
+const { entry, articolo: a } = Astro.props;
+const { Content } = await render(entry);
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const lang = langAttr(a);
+---
+
+<Base
+  title={`${a.title} — ${SITE.name}`}
+  description={testoPiano(a.excerpt)}
+  nav="article"
+  ogType="article"
+  jsonLd={[articleNode({ site: Astro.site!, url, headline: a.title, description: a.excerpt, published: a.date, lang: a.lang })]}
+>
+  <main data-articolo>
+    <header class="ar-hero">
+      <div class="wrap">
+        <p class="ar-meta"><time datetime={a.date}>{longDate(a.date)}</time> · {a.project}</p>
+        <h1 lang={lang}>{a.title}</h1>
+        <p class="ar-lead" lang={lang} set:html={inlineHtml(a.excerpt)} />
+        {
+          a.metric && (
+            <p class="ar-metric">
+              <b>{a.metric.value}</b> <span>{a.metric.label}</span>
+            </p>
+          )
+        }
+        {a.cover && <MediaArticolo cover={a.cover} lang={lang} />}
+      </div>
+    </header>
+
+    <article class="ar-body" lang={lang}>
+      <div class="wrap articolo-corpo">
+        <Content />
+      </div>
+    </article>
+
+    <section class="ar-cta">
+      <div class="wrap">
+        <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
+        {a.caseStudy && <a class="btn btn-ghost" href={a.caseStudy.href}>Leggi il caso studio completo</a>}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import '../../scripts/articolo';
+  </script>
+</Base>
+
+<style>
+  .wrap { max-width: 840px; }
+  .ar-hero { padding: 72px 0 48px; border-bottom: 1px solid var(--line); }
+  .ar-meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.03em; line-height: 1.12; overflow-wrap: anywhere; }
+  .ar-lead { font-size: 1.15rem; line-height: 1.6; color: var(--muted); margin-top: 20px; max-width: 640px; overflow-wrap: anywhere; }
+  .ar-metric { margin-top: 28px; color: var(--muted); overflow-wrap: anywhere; }
+  .ar-metric b { font-size: clamp(2rem, 6vw, 2.8rem); letter-spacing: -0.04em; color: var(--ink); line-height: 1.1; display: block; }
+
+  .ar-body { padding: 56px 0; line-height: 1.7; }
+  .ar-cta { padding: 48px 0 80px; border-top: 1px solid var(--line); }
+  .ar-cta .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .articolo-corpo { min-width: 0; overflow-wrap: anywhere; }
+  .articolo-corpo > :global(* + *) { margin-top: 18px; }
+  .articolo-corpo :global(h2) { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.03em; line-height: 1.15; margin-top: 44px; }
+  .articolo-corpo :global(h3) { font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.25; margin-top: 32px; }
+  .articolo-corpo :global(p),
+  .articolo-corpo :global(li) { color: var(--muted); }
+  .articolo-corpo :global(strong) { color: var(--ink); }
+  .articolo-corpo :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .articolo-corpo :global(ul),
+  .articolo-corpo :global(ol) { padding-left: 1.4em; }
+  .articolo-corpo :global(li + li) { margin-top: 6px; }
+  .articolo-corpo :global(img),
+  .articolo-corpo :global(video) { display: block; max-width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+  .articolo-corpo :global(video) { width: 100%; background: var(--ink); }
+  .articolo-corpo :global(figure) { margin-left: 0; margin-right: 0; }
+  .articolo-corpo :global(figcaption) { margin-top: 10px; font-size: 0.85rem; color: var(--muted); }
+  .articolo-corpo :global(blockquote) { margin-left: 0; padding-left: 20px; border-left: 3px solid var(--line); font-size: 1.1rem; }
+  .articolo-corpo :global(pre) { max-width: 100%; overflow-x: auto; padding: 16px 20px; border-radius: 12px; background: var(--ink); color: #e6eaf2; font-size: 0.82rem; line-height: 1.7; }
+  .articolo-corpo :global(pre code) { font-family: ui-monospace, 'SF Mono', Menlo, monospace; white-space: pre; overflow-wrap: normal; }
+  .articolo-corpo :global(:not(pre) > code) { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9em; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+</style>

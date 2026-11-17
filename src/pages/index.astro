@@ -1,14 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { GUARANTEE, PRICES, SITE, SLOTS, formatEuro } from '../config';
 import Clienti from '../components/Clienti.astro';
 import Confronto from '../components/Confronto.astro';
-
-const caseStudies = (await getCollection('case-studies', ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const caseCount = String(caseStudies.length).padStart(2, '0');
+import Showcase from '../components/Showcase.astro';
 
 const slotsFree = SLOTS.total - SLOTS.taken;
 const slotsLabel =
@@ -32,7 +27,7 @@ const slotsLabel =
       </p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href={SITE.calUrl} target="_blank" rel="noopener">Prenota una call di 30 min</a>
-        <a class="btn btn-ghost" href="#shipped">Show me the code ↓</a>
+        <a class="btn btn-ghost" href="#shipped">Vedi portfolio ↓</a>
       </div>
       <div class="hero-proof">
         <div class="proof"><b>10 anni</b><span>di prodotti in produzione</span></div>
@@ -218,68 +213,8 @@ const slotsLabel =
   <!-- ============ 03 CONFRONTO ============ -->
   <Confronto />
 
-  <!-- ============ 04 REAL SHIPPED CODE ============ -->
-  <section class="cases" id="shipped">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><span class="num">04</span> La prova</div>
-        <h2>Talk is cheap. Show me the code.</h2>
-        <p class="lead">
-          Non portfolio, non mockup: casi studio di codice reale in produzione. Qual era il problema, come l'ho
-          risolto, cosa è cambiato nei numeri.
-        </p>
-      </div>
-    </div>
-
-    <div class="hscroll" id="hscroll">
-      <div class="hs-sticky">
-        <div class="hs-track" id="hsTrack">
-          {
-            caseStudies.map((cs, i) => (
-              <a class="hs-card" href={`/case-study/${cs.id}`}>
-                <div class="hs-top">
-                  <span class="case-tag">{cs.data.home.tag}</span>
-                  <span class="hs-idx">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <h3>{cs.data.home.title}</h3>
-                <div class="hs-cols">
-                  <div class="case-block">
-                    <b>Problema</b>
-                    <p>{cs.data.home.problem}</p>
-                  </div>
-                  <div class="case-block">
-                    <b>Soluzione</b>
-                    <p>{cs.data.home.solution}</p>
-                  </div>
-                </div>
-                <div class="hs-bottom">
-                  <div class="case-metrics">
-                    {cs.data.home.metrics.map((m) => (
-                      <div>
-                        <b>{m.value}</b>
-                        <span>{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <span class="hs-open">Apri il caso studio →</span>
-                </div>
-                <div class="hs-overlay">
-                  <span class="ov-tag">Caso studio · {cs.data.home.tag}</span>
-                  <p class="ov-title">{cs.data.home.title}</p>
-                  <span class="ov-cta">Leggi come l'ho fatto →</span>
-                  <span class="ov-sub">Problema, decisioni, codice e numeri</span>
-                </div>
-              </a>
-            ))
-          }
-        </div>
-        <div class="hs-progress">
-          <span id="hsCount">01 / {caseCount}</span>
-          <div class="hs-bar"><i id="hsFill"></i></div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ============ 04 LA PROVA ============ -->
+  <Showcase />
 
   <!-- ============ 05 PRICING ============ -->
   <section id="pricing">
@@ -697,99 +632,6 @@ const slotsLabel =
     padding:4px 12px;border-radius:999px;animation:pop 4s var(--ease-in-out) infinite;
   }
 
-  /* ---------- case studies (scroll orizzontale pinnato) ---------- */
-  .cases{background:var(--ink);color:#fff;overflow:clip;padding-bottom:0}
-  .cases .eyebrow{color:#9aa3b5}
-  .cases .lead{color:#9aa3b5}
-  .cases .section-head{margin-bottom:0}
-  .hscroll{position:relative;margin-top:-8px}
-  .hs-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;gap:28px;overflow:hidden}
-  .hs-track{
-    display:flex;gap:28px;align-items:stretch;will-change:transform;
-    padding:0 max(24px, calc((100vw - min(880px, 78vw)) / 2));
-  }
-  .hs-card{
-    position:relative;overflow:hidden;
-    flex:0 0 min(880px, 78vw);min-height:min(560px,64vh);
-    background:#171f33;border:1px solid #262f47;border-radius:28px;
-    padding:clamp(32px,4.5vw,56px);display:flex;flex-direction:column;gap:26px;
-    text-decoration:none;transition:border-color var(--dur-ui) ease;
-  }
-  .hs-card:hover{border-color:var(--accent)}
-  .hs-top{display:flex;justify-content:space-between;align-items:center}
-  .hs-idx{font-size:.85rem;font-weight:600;color:#727d95;letter-spacing:.08em}
-  .hs-card h3{font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;max-width:15em}
-  .hs-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-  .hs-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:auto;padding-top:24px;border-top:1px solid #262f47;flex-wrap:wrap}
-  .case-tag{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#8a93ff}
-  .case-block b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#727d95;margin-bottom:4px}
-  .case-block p{color:#c3c9d6;font-size:.98rem}
-  .case-metrics{display:flex;gap:36px}
-  .case-metrics div b{display:block;font-size:clamp(1.7rem,2.4vw,2.2rem);letter-spacing:-0.03em;color:#fff}
-  .case-metrics div span{font-size:.82rem;color:#8a93a8}
-  /* --- affordance a riposo: badge pulsante che dichiara il click --- */
-  .hs-open{
-    position:relative;display:inline-flex;align-items:center;gap:10px;
-    color:#fff;background:var(--accent);border-radius:999px;
-    padding:12px 24px;font-weight:600;font-size:.95rem;white-space:nowrap;
-  }
-  .hs-open::after{
-    content:"";position:absolute;inset:-3px;border-radius:999px;
-    border:2px solid var(--accent);opacity:0;
-    animation:openpulse 2.4s var(--ease-out) infinite;
-  }
-  @keyframes openpulse{
-    0%{transform:scale(.96);opacity:.7}
-    70%{transform:scale(1.12);opacity:0}
-    100%{transform:scale(1.12);opacity:0}
-  }
-
-  /* --- overlay CTA: cerchio che si espande dall'angolo in basso a destra,
-     stesso titolo della card (l'hover cambia il tema, non il contenuto) --- */
-  .hs-overlay{
-    position:absolute;inset:0;z-index:2;background:var(--accent);color:#fff;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:22px;text-align:center;padding:clamp(32px,5vw,64px);
-    clip-path:circle(0% at calc(100% - 72px) calc(100% - 60px));
-    transition:clip-path var(--dur-showpiece) var(--ease-out-expo); /* esplode subito sotto il cursore, poi si assesta */
-  }
-  .hs-card:hover .hs-overlay{clip-path:circle(150% at calc(100% - 72px) calc(100% - 60px))}
-  .ov-tag{
-    font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
-    color:rgba(255,255,255,.75);
-  }
-  .ov-title{
-    font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;
-    max-width:14em;
-  }
-  .ov-cta{
-    display:inline-flex;align-items:center;gap:12px;
-    background:#fff;color:var(--accent);border-radius:999px;
-    padding:18px 36px;font-weight:700;font-size:1.1rem;
-    transform:translateY(10px);opacity:0;
-    transition:transform var(--dur-swap) var(--ease-pop) .2s, opacity var(--dur-ui) var(--ease-out) .2s; /* overshoot di brand */
-    box-shadow:0 12px 32px rgba(15,22,38,.25);
-  }
-  .hs-card:hover .ov-cta{transform:translateY(0);opacity:1}
-  .ov-sub{font-size:.9rem;color:rgba(255,255,255,.75)}
-  .hs-progress{display:flex;align-items:center;gap:18px;max-width:var(--max);margin:0 auto;padding:0 24px;width:100%}
-  .hs-progress span{font-size:.85rem;font-weight:600;color:#727d95;letter-spacing:.1em;white-space:nowrap}
-  .hs-bar{flex:1;height:2px;background:#262f47;border-radius:2px;overflow:hidden}
-  .hs-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s linear}
-  @media(max-width:800px){
-    .cases{padding-bottom:72px}
-    .hs-sticky{position:static;height:auto;overflow:visible;padding:40px 0 0}
-    .hs-track{overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px;transform:none!important;-webkit-overflow-scrolling:touch}
-    .hs-card{flex:0 0 86vw;min-height:0;scroll-snap-align:center}
-    .hs-cols{grid-template-columns:1fr;gap:20px}
-    .hs-progress{display:none}
-    .hs-overlay{display:none} /* su touch niente hover: la card resta un link diretto */
-  }
-  @media(prefers-reduced-motion:reduce){
-    .hs-overlay,.ov-cta{transition:none}
-    .hs-open::after{animation:none}
-  }
-
   /* ---------- pricing ---------- */
   .pricing-panel{
     background:var(--surface);border:1px solid var(--line);border-radius:26px;
@@ -1017,44 +859,5 @@ const slotsLabel =
         { threshold: 0.25 }
       ).observe(section);
     }
-  })();
-
-  /* ----- case studies: scroll verticale → orizzontale ----- */
-  (function () {
-    const sec = document.getElementById('hscroll');
-    if (!sec) return;
-    const track = document.getElementById('hsTrack')!;
-    const fill = document.getElementById('hsFill')!;
-    const count = document.getElementById('hsCount')!;
-    const cards = track.children.length;
-    const mq = matchMedia('(max-width:800px)');
-    const rm = matchMedia('(prefers-reduced-motion: reduce)');
-    const off = () => mq.matches || rm.matches;
-    let maxX = 0;
-
-    function size() {
-      if (off()) {
-        sec!.style.height = '';
-        track.style.transform = '';
-        return;
-      }
-      maxX = track.scrollWidth - window.innerWidth;
-      /* altezza = viewport + corsa orizzontale: lo scroll resta 1:1 */
-      sec!.style.height = window.innerHeight + maxX + 'px';
-      update();
-    }
-    function update() {
-      if (off()) return;
-      const total = sec!.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      const p = Math.min(1, Math.max(0, -sec!.getBoundingClientRect().top / total));
-      track.style.transform = 'translate3d(' + -p * maxX + 'px,0,0)';
-      fill.style.width = p * 100 + '%';
-      count.textContent =
-        '0' + Math.min(cards, Math.floor(p * cards) + 1) + ' / 0' + cards;
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', size);
-    size();
   })();
 </script>

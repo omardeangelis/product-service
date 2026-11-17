@@ -3,10 +3,17 @@ title: "Automatizzare la creazione di un brief di progetto in 3 domande"
 excerpt: "Una chat interattiva dove l'AI ti intervista, interpreta e legge PDF, immagini, TXT e ti accompagna nella creazione dell'offerta: propone la tariffa di mercato e in 3 domande l'annuncio completo e pronto da pubblicare."
 tags: ["Real shipped code", "Talent platform · SaaS", "AI integration"]
 order: 2
+published: "2026-04-30"
+cover:
+  kind: img
+  src: /case-studies/offerte-ai/new-flow/1-chat-start.png
+  alt: "La chat che apre il brief"
+  width: 3024
+  height: 1964
 
 home:
   tag: "Talent platform · AI"
-  title: "Da form  chat interattiva: il brief si crea in 3 domande."
+  title: "Da form a chat interattiva: il brief si crea in 3 domande."
   problem: "Il wizard manuale accettava descrizioni di una riga: offerte vaghe, tariffe fuori mercato, candidature poco pertinenti."
   solution: "Una chat AI che intervista e ti guida lungo la creazione dell'offerta: legge PDF, immagini, TXT generando un output completo e revisionabile."
   metrics:

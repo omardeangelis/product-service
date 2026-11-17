@@ -1,5 +1,5 @@
 // @ts-check
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
@@ -22,6 +22,23 @@ if (!existsSync(nvmrcUrl)) {
 const nvmrc = major(readFileSync(nvmrcUrl, 'utf8'));
 if (nvmrc !== richiesta) {
   throw new Error(`\`.nvmrc\` chiede Node ${nvmrc} ma engines.node in package.json chiede ${richiesta}: allineali.`);
+}
+
+// Guardia segnaposto: un contenuto con la riga `# SEGNAPOSTO` è una bozza di testo finto e non deve mai arrivare
+// in produzione. Blocca solo la build di produzione su Vercel; locale e preview passano.
+if (process.env.VERCEL_ENV === 'production') {
+  const contentDir = fileURLToPath(new URL('./src/content/', import.meta.url));
+  const trovati = readdirSync(contentDir, { recursive: true })
+    .map(String)
+    .filter((f) => f.endsWith('.md'))
+    .filter((f) => /^\s*# SEGNAPOSTO\b/m.test(readFileSync(contentDir + f, 'utf8')))
+    .map((f) => `src/content/${f}`);
+  if (trovati.length) {
+    throw new Error(`Segnaposto in produzione: rimuovi \`# SEGNAPOSTO\` da\n${trovati.join('\n')}`);
+  }
+  console.log('Segnaposto: guardia attiva');
+} else {
+  console.log(`Segnaposto: guardia spenta (VERCEL_ENV=${process.env.VERCEL_ENV ?? ''})`);
 }
 
 const outDirUrl = new URL('./dist/', import.meta.url);

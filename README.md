@@ -54,7 +54,29 @@ npm run preview   # anteprima della build
 1. Copia un file esistente in `src/content/case-studies/` e rinominalo (il nome file diventa lo slug dell'URL).
 2. Compila il frontmatter — lo schema è validato in build, i campi mancanti fanno fallire `npm run build` con un errore chiaro.
 3. La card in homepage (sezione "Real shipped code") si genera da sola dal blocco `home:`, ordinata per `order:`. Sitemap e `/llms.txt` lo prendono da soli.
-4. Facoltativo: `published:` e `updated:` tra virgolette (`published: "2026-03-05"`) finiscono nell'`Article` JSON-LD della pagina.
+4. `published:` tra virgolette (`published: "2026-03-05"`) è obbligatorio, a meno che il caso studio non sia `draft: true`: senza, la build fallisce. Va nell'`Article` JSON-LD della pagina. `updated:` è facoltativo e segue la stessa forma.
+5. Facoltativo: `cover:` è la schermata o il video mostrato nella scheda del log. Ha un `kind`:
+   - `img`: `src`, `alt` obbligatorio, `width` e `height` facoltativi;
+   - `video`: `src`, `poster` obbligatorio (l'immagine di anteprima, es. `qlmanage -t -s 1600 -o <cartella> <video.mp4>`) e `alt`;
+   - `curve`: `value` che inizia con `cubic-bezier(` e `alt`.
+
+## Aggiungere una release
+
+Le release sono le voci del log su `/showcase`, una per file in `src/content/releases/`.
+
+1. Copia un file esistente in `src/content/releases/`. Il nome del file è lo slug dell'URL (`/showcase/<slug>/`): non cambiarlo dopo la pubblicazione, il link si romperebbe.
+2. Compila il frontmatter:
+   - `title`: massimo 70 caratteri, la build fallisce oltre.
+   - `excerpt`: testo breve della scheda; ammette `<strong>` e `<em>`.
+   - `published`: data tra virgolette, `"YYYY-MM-DD"`.
+   - `project`: uno dei valori di `PROJECTS` in `src/config.ts`. Per un cliente in white label si usa `Cliente in white label`, oppure la release non si pubblica. Un progetto nuovo si aggiunge a `PROJECTS`.
+   - `cover` (facoltativo): stesso schema dei casi studio, con `kind`. Un video richiede il `poster`.
+   - `metric` (facoltativo): `value` e `label`, il numero evidenziato nella scheda.
+   - `caseStudy` (facoltativo): slug di un caso studio (es. `onboarding-saas`), collega la release al caso. Vietato in white label.
+   - `draft` (facoltativo, default `false`): con `true` la release non compare.
+   - `lang` (facoltativo, default `it`): `en` per una release scritta in inglese. Titolo, testo breve, corpo e testo alternativo della copertina vengono marcati in inglese, così gli screen reader li leggono con la pronuncia giusta; il resto della pagina resta in italiano.
+3. Il corpo è Markdown di qualsiasi lunghezza. Un video va inserito come HTML grezzo, su righe separate: `<video controls playsinline preload="metadata" muted poster="…" src="…"></video>`. Il codice va tra backtick (o in un blocco recintato). Un `<` nel testo deve essere seguito da uno spazio, altrimenti Markdown lo legge come tag.
+4. Segnaposto: una release con la riga `# SEGNAPOSTO` nel frontmatter marca contenuto finto. Con quella riga la build di produzione (`VERCEL_ENV=production`) fallisce e ne elenca i file. Prima di pubblicarla, rimuovi la riga e sostituisci il testo.
 
 ## Aggiungere un prototipo per un cliente
 

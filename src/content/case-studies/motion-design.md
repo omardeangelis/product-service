@@ -4,6 +4,11 @@ excerpt: "Rifinire l'esperienza non è quasi mai la priorità: le animazioni sem
 tags: ["Real shipped code", "Talent platform · SaaS", "UX & motion engineering"]
 order: 4
 draft: false
+published: "2026-07-26"
+cover:
+  kind: curve
+  value: "cubic-bezier(0.32, 0.72, 0, 1)"
+  alt: "La curva di easing usata in tutta l'interfaccia"
 
 home:
   tag: "Talent platform · Motion"

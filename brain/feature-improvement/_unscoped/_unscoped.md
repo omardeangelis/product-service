@@ -2,7 +2,7 @@
 domain: _unscoped
 type: feature-improvement
 spec: null
-links: ["[[index]]", "[[review/2026-11-15-seo-geo-basi/REPORT]]", "[[personas]]", "[[specs/sito/un-posto-solo/SPEC]]"]
+links: ["[[index]]", "[[review/2026-11-15-seo-geo-basi/REPORT]]", "[[personas]]", "[[specs/sito/un-posto-solo/SPEC]]", "[[specs/showcase/log-articoli/SPEC]]"]
 created: 2026-11-15
 updated: 2026-11-16
 ---
@@ -48,10 +48,10 @@ Migliorie a parti del sito che nessuna spec copre ancora: SEO/GEO, metadati, bui
 - **Spec:** [[specs/sito/un-posto-solo/SPEC]]
 
 ## Serializer JSON-LD più rigido
-- **Status:** open
+- **Status:** planned
 - **Proposed:** 2026-11-15, by adversarial-review during la review delle basi SEO/GEO e del count-up (verifier v1); accepted by the user
 - **Observed:** `ldJson` in `src/seo.ts:47-48` escapa solo `<`: basta per `application/ld+json` in HTML, ma non se il serializer venisse riusato in uno `<script>` JavaScript o in XHTML. Il progetto non ha test che proteggano l'escape.
 - **Improvement:** escapare anche `>`, `&`, U+2028 e U+2029, e aggiungere un autocontrollo in build (es. che `ldJson([{ x: '</script><!--' }])` non contenga `<`).
 - **Why it matters:** l'escape resta sicuro anche dopo modifiche future al serializer o riusi in altri contesti.
 - **Size:** small
-- **Spec:** none
+- **Spec:** [[specs/showcase/log-articoli/SPEC]]

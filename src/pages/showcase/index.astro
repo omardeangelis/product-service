@@ -1,0 +1,194 @@
+---
+/*
+ * /showcase: il muro di tutti gli articoli (casi studio e release), un gruppo per mese dal più recente.
+ * Senza JS si vedono tutti gli articoli; filtri e pulsante "Copia" nascono nascosti e li rivela lo script.
+ * Lo script inline subito dopo i controlli gira prima del primo paint (D11, D26): rivela i `.solo-js`, mette
+ * `data-js` e, con un `?tag` valido, `data-filtro` sulla pagina; il CSS qui sotto nasconde schede e mesi fuori
+ * filtro finché `src/scripts/showcase.ts` non passa agli attributi `hidden`.
+ */
+import Base from '../../layouts/Base.astro';
+import Scheda from '../../components/showcase/Scheda.astro';
+import Filtri from '../../components/showcase/Filtri.astro';
+import Feed from '../../components/showcase/Feed.astro';
+import { SITE } from '../../config';
+import { getArticles, annoRif } from '../../data/articoli';
+import { monthOf } from '../../data/articoli-testi';
+
+const articoli = await getArticles();
+const anno = annoRif(articoli);
+
+// già ordinati dal più recente: i mesi escono nell'ordine giusto
+const gruppi: { mese: string; items: typeof articoli }[] = [];
+for (const a of articoli) {
+  const mese = monthOf(a.date);
+  const ultimo = gruppi[gruppi.length - 1];
+  if (ultimo && ultimo.mese === mese) ultimo.items.push(a);
+  else gruppi.push({ mese, items: [a] });
+}
+---
+
+<Base
+  title={`Showcase — ${SITE.name}`}
+  description="Una raccolta di feature che ho portato in produzione, ricerche che porto avanti e casi studio di grandi progetti."
+  active="showcase"
+>
+  <main class="sc-page" data-showcase>
+    <div class="wrap">
+      <header class="sc-head">
+        <p class="eyebrow">Showcase</p>
+        <h1>Cosa ho rilasciato in produzione.</h1>
+        <p class="lead">
+          Una raccolta di feature che ho portato in produzione, ricerche che porto avanti e casi studio di grandi progetti.
+        </p>
+      </header>
+      <div class="sc-tools">
+        <Filtri articoli={articoli} />
+        <Feed />
+      </div>
+      <script is:inline>
+        (() => {
+          const page = document.currentScript.closest('[data-showcase]');
+          page.querySelectorAll('.solo-js').forEach((el) => el.removeAttribute('hidden'));
+          page.setAttribute('data-js', '');
+          const tag = new URLSearchParams(location.search).get('tag');
+          const chip = tag && tag !== 'all' && [...page.querySelectorAll('[data-filter]')].find((c) => c.dataset.filter === tag);
+          if (!chip) return;
+          page.setAttribute('data-filtro', tag);
+          page.querySelectorAll('[data-filter]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        })();
+      </script>
+      <div class="sc-months">
+      {
+        gruppi.map((g) => (
+          <section class="month" data-group data-tags={[...new Set(g.items.map((a) => a.tag))].join(' ')}>
+            <h2 class="month-h">{g.mese}</h2>
+            <ol class="sc-grid">
+              {g.items.map((a) => (
+                <li data-tag={a.tag}>
+                  <Scheda a={a} anno={anno} variant="pagina" />
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))
+      }
+      </div>
+      <div class="sc-cta">
+        <a class="btn btn-primary" href={SITE.calUrl}>Prenota una call di 30 min</a>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<script>
+  import { initShowcasePage } from '../../scripts/showcase';
+
+  const page = document.querySelector<HTMLElement>('[data-showcase]');
+  if (page) initShowcasePage(page);
+</script>
+
+<style is:global>
+  .sc-page {
+    --t-ink: var(--ink);
+    --t-muted: var(--muted);
+    --t-faint: #687080;
+    --t-line: var(--line);
+    --t-line-strong: #c9c5bb;
+    --t-accent: var(--accent);
+    --t-hover: rgba(15, 22, 38, 0.035);
+    --t-card: var(--surface);
+    color: var(--t-ink);
+    padding: 88px 0 120px;
+  }
+  .sc-head {
+    max-width: 760px;
+  }
+  /* a 280 px con il testo ingrandito «produzione.» non sta in riga: va a capo con il trattino, senza sbordare (AC28) */
+  .sc-head h1 {
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  .sc-head .lead {
+    margin-top: 20px;
+  }
+  /* filtri a sinistra, feed a destra: il feed arriva al bordo destro della griglia */
+  .sc-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin: 32px 0 56px;
+  }
+  .sc-tools .feed-box {
+    margin-left: auto;
+  }
+  /* gap invece di margini fra fratelli: un mese nascosto non lascia spazio */
+  .sc-months {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .month[hidden],
+  .sc-grid > li[hidden] {
+    display: none;
+  }
+  /* filtro iniziale da ?tag, prima che parta il modulo (D26) */
+  .sc-page[data-filtro='caso-studio'] li[data-tag]:not([data-tag='caso-studio']),
+  .sc-page[data-filtro='caso-studio'] [data-group]:not([data-tags~='caso-studio']),
+  .sc-page[data-filtro='release'] li[data-tag]:not([data-tag='release']),
+  .sc-page[data-filtro='release'] [data-group]:not([data-tags~='release']) {
+    display: none;
+  }
+  .month-h {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--t-faint);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--t-line);
+  }
+  .sc-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+  .sc-grid > li {
+    display: flex;
+    min-width: 0;
+  }
+  .sc-cta {
+    margin-top: 80px;
+    text-align: center;
+  }
+
+  @media (min-width: 701px) {
+    .sc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .sc-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 700px) {
+    .sc-page {
+      padding: 64px 0 96px;
+    }
+    .sc-tools {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .sc-tools .feed-box {
+      margin-left: 0;
+    }
+    .sc-cta {
+      margin-top: 56px;
+    }
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+/*
+ * Una scheda, uguale per ogni articolo: caso studio o release non cambia niente (il tag serve solo al filtro).
+ * Tutta la scheda è un solo link verso l'articolo; il nome del link è il titolo, il resto è la descrizione.
+ * `home`: corpo ad altezza fissa (titolo fino a 3 righe, testo 3 righe, riga del numero sempre riservata),
+ * così le schede della fila hanno la stessa altezza. `pagina`: il corpo cresce col contenuto.
+ */
+import Copertina from './Copertina.astro';
+import { dayMonth, inlineHtml } from '../../data/articoli-testi';
+import { langAttr, type Articolo } from '../../data/articoli';
+
+interface Props {
+  a: Articolo;
+  anno: number;
+  variant?: 'home' | 'pagina';
+}
+const { a, anno, variant = 'pagina' } = Astro.props;
+const base = `sc-${a.id}-${variant}`;
+const titleId = `${base}-t`;
+const metaId = `${base}-m`;
+const textId = `${base}-x`;
+const coverIsTitle = !a.cover && !a.metric;
+const lang = langAttr(a);
+---
+
+<a class:list={['sc-card', `is-${variant}`]} href={a.href} aria-labelledby={titleId} aria-describedby={`${metaId} ${textId}`}>
+  <Copertina a={a} titleId={titleId} />
+  <div class="sc-body">
+    <p class="sc-meta" id={metaId}>
+      <time datetime={a.date} data-rel>{dayMonth(a.date, anno)}</time> · {a.project}
+    </p>
+    {!coverIsTitle && <h3 class="sc-title" id={titleId} lang={lang}>{a.title}</h3>}
+    <p class="sc-text" id={textId} lang={lang} set:html={inlineHtml(a.excerpt)} />
+    {
+      a.cover && a.metric && (
+        <p class="sc-metric">
+          <b>{a.metric.value}</b> {a.metric.label}
+        </p>
+      )
+    }
+    {variant === 'home' && !(a.cover && a.metric) && <p class="sc-metric" aria-hidden="true">&nbsp;</p>}
+  </div>
+</a>
+
+<style is:global>
+  .sc-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--t-line);
+    border-radius: 20px;
+    background: var(--t-card);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color var(--dur-hover) var(--ease-out),
+      transform var(--dur-press) var(--ease-press);
+  }
+  /* hover solo con un puntatore fine: il bordo si accende, la scheda non si gonfia né si sposta
+     (lo zoom della schermata è in Copertina.astro); vale anche per la scheda finale della fila */
+  @media (hover: hover) and (pointer: fine) {
+    .sc-card:hover {
+      border-color: var(--t-accent);
+    }
+  }
+  /* la pressione non dipende dall'hover: vale anche al tocco */
+  @media (prefers-reduced-motion: no-preference) {
+    .sc-card:active {
+      transform: scale(0.98);
+    }
+  }
+  .sc-card:focus-visible {
+    outline: 2px solid var(--t-accent);
+    outline-offset: 2px;
+  }
+  .sc-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    padding: 18px 22px 22px;
+  }
+  .sc-meta {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--t-faint);
+  }
+  .sc-meta time {
+    color: var(--t-ink);
+    font-weight: 600;
+  }
+  .sc-title {
+    margin-top: 8px;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    color: var(--t-ink);
+  }
+  .sc-text {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: var(--t-muted);
+  }
+  .sc-metric {
+    margin: auto 0 0;
+    padding-top: 14px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    color: var(--t-faint);
+  }
+  .sc-metric b {
+    font-size: 1.3rem;
+    letter-spacing: -0.03em;
+    color: var(--t-ink);
+    margin-right: 2px;
+  }
+
+  /* home: corpo ad altezza fissa, in unità relative al testo. Titolo e testo tagliati a 3 righe;
+     un titolo di una riga ne riserva comunque tre; la riga del numero è sempre riservata. */
+  .sc-card.is-home .sc-body {
+    box-sizing: border-box;
+    /* `flex: 1` del corpo azzererebbe l'altezza (flex-basis 0): qui deve contare */
+    flex: none;
+    /* padding 18+22 · meta 0.82rem×1.5 · 8 + titolo 3×1.3×1.12rem · 8 + testo 3×1.5×0.95rem · numero 14 + 1.3rem×1.6 */
+    height: calc(40px + 1.23rem + 8px + 4.368rem + 8px + 4.275rem + 14px + 2.08rem);
+  }
+  .sc-card.is-home .sc-title,
+  .sc-card.is-home .sc-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .sc-card.is-home .sc-title {
+    min-height: calc(3 * 1.3em);
+  }
+  .sc-card.is-home .sc-text {
+    max-height: calc(3 * 1.5em);
+  }
+  .sc-card.is-home .sc-metric {
+    flex: none;
+    min-height: calc(14px + 2.08rem);
+  }
+</style>

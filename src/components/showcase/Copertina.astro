@@ -1,0 +1,194 @@
+---
+/*
+ * La copertina di una scheda: la schermata o il video se c'è, altrimenti il numero in grande, altrimenti il titolo.
+ * Nelle schede il video è sempre un fotogramma fermo (la locandina come immagine): niente <video>, niente controlli.
+ * Se l'immagine non si carica, un onerror segna la copertina come rotta e CSS mostra la copertina successiva
+ * (il numero, poi il titolo): per questo il ripiego è sempre in pagina, nascosto finché il media funziona.
+ */
+import { langAttr, type Articolo } from '../../data/articoli';
+
+interface Props {
+  a: Articolo;
+  /** id del titolo della scheda: lo porta la copertina solo quando è lei il titolo */
+  titleId?: string;
+}
+const { a, titleId } = Astro.props;
+const media = a.cover;
+const tipo = media ? 'media' : a.metric ? 'metric' : 'title';
+const P = media?.kind === 'curve' ? media.value.match(/[\d.]+/g)!.map(Number) : [];
+const pt = (x: number, y: number) => `${x * 100} ${100 - y * 100}`;
+const src = media?.kind === 'img' ? media.src : media?.kind === 'video' ? media.poster : '';
+---
+
+<div class:list={['sc-media', `is-${tipo}`]} data-copertina>
+  {
+    media && (media.kind === 'img' || media.kind === 'video') && (
+      <img
+        class="sc-img"
+        src={src}
+        alt=""
+        width={media.kind === 'img' ? media.width : undefined}
+        height={media.kind === 'img' ? media.height : undefined}
+        loading="lazy"
+        decoding="async"
+        onerror="this.closest('[data-copertina]').setAttribute('data-rotto','')"
+      />
+    )
+  }
+  {
+    media?.kind === 'curve' && (
+      <figure class="sc-curve" aria-hidden="true">
+        <svg viewBox="-14 -14 128 128" focusable="false">
+          <rect x="0" y="0" width="100" height="100" class="c-frame" />
+          <path d={`M ${pt(0, 0)} L ${pt(P[0], P[1])} M ${pt(1, 1)} L ${pt(P[2], P[3])}`} class="c-handle" />
+          <circle cx={P[0] * 100} cy={100 - P[1] * 100} r="2.6" class="c-knob" />
+          <circle cx={P[2] * 100} cy={100 - P[3] * 100} r="2.6" class="c-knob" />
+          <path d={`M ${pt(0, 0)} C ${pt(P[0], P[1])}, ${pt(P[2], P[3])}, ${pt(1, 1)}`} class="c-line" />
+        </svg>
+        <figcaption>{media.value}</figcaption>
+      </figure>
+    )
+  }
+  {
+    tipo === 'metric' && (
+      <p class="sc-big">
+        <b>{a.metric!.value}</b>
+        <span>{a.metric!.label}</span>
+      </p>
+    )
+  }
+  {tipo === 'title' && <h3 class="sc-cover-title" id={titleId} lang={langAttr(a)}>{a.title}</h3>}
+  {
+    /* ripiego: nascosto finché il media si carica; il titolo è già nel corpo, quindi qui è decorativo */
+    tipo === 'media' && (
+      <div class="sc-fb" aria-hidden="true">
+        {a.metric ? (
+          <p class="sc-big">
+            <b>{a.metric.value}</b>
+            <span>{a.metric.label}</span>
+          </p>
+        ) : (
+          <p class="sc-cover-title">{a.title}</p>
+        )}
+      </div>
+    )
+  }
+</div>
+
+<style is:global>
+  .sc-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--t-line);
+    background: var(--t-card);
+  }
+  .sc-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    /* zoom all'hover della scheda: dentro la copertina 16:10 (overflow: hidden), dalla stessa origine di
+       object-position (D31). Deviazione voluta a 1.03, vedi brain/chore/motion.md */
+    transform-origin: left top;
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .sc-card:hover .sc-img {
+      transform: scale(1.03);
+    }
+  }
+  .sc-curve {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 100%;
+    margin: 0;
+    padding: 16px 20px;
+  }
+  .sc-curve svg {
+    flex: none;
+    width: auto;
+    height: 58%;
+    overflow: visible;
+  }
+  .sc-curve figcaption {
+    max-width: 100%;
+    text-align: center;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.85rem;
+    color: var(--t-muted);
+  }
+  .c-frame {
+    fill: none;
+    stroke: var(--t-line);
+  }
+  .c-handle {
+    stroke: var(--t-faint);
+    stroke-width: 1;
+    fill: none;
+  }
+  .c-knob {
+    fill: var(--t-faint);
+  }
+  .c-line {
+    fill: none;
+    stroke: var(--t-accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  /* copertine senza schermata: numero o titolo in grande, sullo sfondo della scheda */
+  .sc-media.is-metric,
+  .sc-media.is-title,
+  .sc-fb {
+    display: flex;
+    align-items: flex-end;
+    padding: 22px;
+  }
+  .sc-fb {
+    position: absolute;
+    inset: 0;
+    display: none;
+    background: var(--t-card);
+  }
+  .sc-media[data-rotto] .sc-img {
+    display: none;
+  }
+  .sc-media[data-rotto] .sc-fb {
+    display: flex;
+  }
+  .sc-big {
+    margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .sc-big b {
+    display: block;
+    font-size: clamp(2.6rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--t-ink);
+  }
+  .sc-big span {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--t-muted);
+  }
+  .sc-cover-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    margin: 0;
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+    line-height: 1.2;
+    color: var(--t-ink);
+  }
+</style>
