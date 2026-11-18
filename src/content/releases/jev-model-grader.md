@@ -31,7 +31,7 @@ Il problema nasceva dal fatto che il nostro LLM estraeva le competenze in modo i
 
 ## Jev come grader
 
-Per ogni skill candidata Jev risponde a tre domande: la persona l'ha usata davvero? È una skill? Quanto è centrale nel suo percorso? Il modello si limita a prendere decisioni in parallelo, senza generare testo: così risolve il problema dell'ordinamento con latenza e costi bassi.
+Per ogni skill candidata Jev risponde a tre domande: la persona l'ha usata davvero? È una skill? Quanto è centrale nel suo percorso? Il modello si limita a prendere decisioni in parallelo, senza generare testo: così risolve il problema dell'ordinamento con latenza e costi bassi. In media impiega 0,48 secondi a profilo (su 36 richieste, al massimo 1,08 s), per circa $0,00034.
 
 ![Jev valuta ogni skill candidata: usata, è una skill, centralità](/releases/jev/2-grader.jpg)
 

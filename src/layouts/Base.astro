@@ -147,7 +147,7 @@ const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
           coperto = r.top < window.innerHeight && r.bottom > 0;
         }
         const toggle = () => fc.classList.toggle('show', window.scrollY > 480 && !coperto);
-        if (firma) {
+        if (firma && 'IntersectionObserver' in window) {
           new IntersectionObserver(([voce]) => {
             coperto = voce.isIntersecting;
             toggle();

@@ -2,7 +2,7 @@
 domain: showcase
 type: spec
 status: implemented
-links: ["[[specs/showcase/log-articoli/SPEC]]", "[[personas]]", "[[chore/product]]", "[[chore/motion]]", "[[specs/showcase/showcase-specs]]"]
+links: ["[[specs/showcase/log-articoli/SPEC]]", "[[personas]]", "[[chore/product]]", "[[chore/motion]]", "[[specs/showcase/showcase-specs]]", "[[specs/showcase/cta-articoli/REPORT]]"]
 created: 2026-11-17
 updated: 2026-11-18
 ---

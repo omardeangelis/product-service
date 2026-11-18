@@ -16,16 +16,21 @@ import { SITE, SLOTS } from '../../config';
 import { articleNode } from '../../seo';
 import { getArticles, langAttr } from '../../data/articoli';
 import { inlineHtml, longDate, testoPiano } from '../../data/articoli-testi';
-import { assegnaPiani, contaTitoli, dividiAlCentro } from '../../data/cta-articoli';
+import { assegnaPiani, contaTitoli, dividiAlCentro, titoliAnnidati } from '../../data/cta-articoli';
 
 export async function getStaticPaths() {
   const articoli = await getArticles();
   const releases = await getCollection('releases', ({ data }) => !data.draft);
   const html = (entry: (typeof releases)[number]) => {
     const h = entry.rendered?.html;
-    if (!h || h.includes('__ASTRO_IMAGE_')) {
+    if (!h || /__ASTRO_IMAGE_="/.test(h)) {
       throw new Error(
         `Release "${entry.id}": il banner divide l'HTML renderizzato, quindi le immagini del corpo devono stare in public/ (percorsi assoluti come /releases/...), non con percorsi relativi.`,
+      );
+    }
+    if (titoliAnnidati(h) > 0) {
+      throw new Error(
+        `Release "${entry.id}": c'è un "<h2" che non è un titolo di sezione (dentro una citazione, un contenitore HTML o un attributo come il testo alternativo). Il banner si posiziona sui titoli: spostalo fuori o riscrivilo.`,
       );
     }
     return h;

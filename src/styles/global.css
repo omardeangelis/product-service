@@ -135,11 +135,13 @@ footer a{color:var(--muted)}
   padding:13px 24px;border-radius:999px;font-size:14.5px;
   box-shadow:0 12px 32px rgba(47,75,255,.38);
   opacity:0;white-space:nowrap;max-width:calc(100vw - 28px);
-  transition:transform 500ms var(--ease-out-expo), opacity var(--dur-ui) var(--ease-out), box-shadow var(--dur-hover) ease; /* 500ms: viaggia 90px, curva ripida */
+  /* nascosto: niente clic né Tab; visibility scatta solo a dissolvenza finita */
+  visibility:hidden;pointer-events:none;
+  transition:transform 500ms var(--ease-out-expo), opacity var(--dur-ui) var(--ease-out), box-shadow var(--dur-hover) ease, visibility 0s linear var(--dur-ui); /* 500ms: viaggia 90px, curva ripida */
 }
 .float-cta strong{font-weight:700}
-.float-cta.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.float-cta.show{opacity:1;transform:translateX(-50%) translateY(0);visibility:visible;pointer-events:auto;transition-delay:0s}
 .float-cta:hover{box-shadow:0 16px 40px rgba(47,75,255,.5)}
 @media(max-width:600px){.float-cta .fc-long{display:none} .float-cta{font-size:14px;padding:12px 20px}}
 /* reduced motion: resta al suo posto e compare o sparisce solo in dissolvenza */
-@media(prefers-reduced-motion:reduce){.float-cta{transform:translateX(-50%);transition:opacity var(--dur-swap) linear, box-shadow var(--dur-hover) ease}}
+@media(prefers-reduced-motion:reduce){.float-cta{transform:translateX(-50%);transition:opacity var(--dur-swap) linear, box-shadow var(--dur-hover) ease, visibility 0s linear var(--dur-swap)}}

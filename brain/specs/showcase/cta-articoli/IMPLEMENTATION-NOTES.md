@@ -89,6 +89,10 @@ updated: 2026-11-18
 | AC11 | met | Valori del motion brief misurati; con reduced motion il banner fa solo la dissolvenza e la Firma resta identica. `.cta-go:active` senza scala con reduced motion: verificato solo nel CSS, perché `:active` non si simula |
 | AC12 | met | Il flottante sparisce sulla Firma e ricompare sopra; non copre mai il bottone a 1440, 375 e 280 px; non compare ricaricando in fondo |
 
+### Review 2026-11-18
+
+`adversarial-review` (7 verifier) ha dato DO NOT SHIP: pulsante flottante invisibile ma cliccabile sopra la Firma con reduced motion (AC12), punteggio 1–100 contro 0–100 nell'articolo CV/AI Report, percorso locale in `.claude/launch.json`. Tutto corretto prima del push, insieme ai minori (D17 rivisto, guardia, `.gitignore`, metrica di Jev): dettagli in [[specs/showcase/cta-articoli/REPORT]].
+
 ## Pre-existing Issues
 
 - **`.float-cta` con reduced motion.** In `src/styles/global.css:131-140` non ha una regola per `prefers-reduced-motion`. Con reduced motion entra ed esce scorrendo di 90 px, contro la regola del repo («ogni animazione rispetta `prefers-reduced-motion`»).

@@ -35,7 +35,7 @@ Viene creato un PDF con formato standard per ogni CV, in cui vengono rimossi nom
 
 ## Analizzare un'offerta in pochi secondi
 
-Il secondo strumento aiuta ad analizzare i candidati rispetto a un'offerta. Per ogni candidatura viene fornito un punteggio di compatibilità che valuta la pertinenza delle competenze, esperienze e tariffe del candidato generando un punteggio da 1 a 100.
+Il secondo strumento aiuta ad analizzare i candidati rispetto a un'offerta. Per ogni candidatura viene fornito un punteggio di compatibilità che valuta la pertinenza delle competenze, esperienze e tariffe del candidato generando un punteggio da 0 a 100.
 
 Il risultato è un report che raccoglie fino a 50 candidature, ordinate per punteggio e filtrabili per stato di candidatura, creando così una shortlist anonima, ordinata per compatibilità.
 

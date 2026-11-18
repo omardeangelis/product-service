@@ -18,6 +18,13 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-18] review | CTA negli articoli di release (pre-push)
+- Report: [[specs/showcase/cta-articoli/REPORT]]
+- Scope: spec
+- Verdict: DO NOT SHIP
+- Impact: critical
+- Verifiers: 7 (1 blocker, 2 major: float invisibile sopra la Firma con reduced motion, punteggio 1–100 vs 0–100, percorso locale in launch.json)
+
 ## [2026-11-18] implemented | Le CTA negli articoli di release
 - Source: [[specs/showcase/cta-articoli/SPEC]] (T8 fatto: prototipo `src/lab/` e rotta `/lab/[slug]` cancellati su richiesta di Omar, prima del deploy)
 - Chiuse anche D11 (resta la salita del banner) e la regola reduced motion del pulsante flottante (`global.css`)
