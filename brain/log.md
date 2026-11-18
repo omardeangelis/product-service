@@ -18,6 +18,13 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Concepts written: <count>
 -->
 
+## [2026-11-18] ingest | Le CTA negli articoli di release
+- Source: [[specs/showcase/cta-articoli/SPEC]]
+- Dominio nuovo: [[domains/showcase/showcase]] con contract
+- Flows written: 2
+- Concepts written: 2
+- Review ingested: [[specs/showcase/cta-articoli/REPORT]] (1 finding durevole in [[tech-debt/showcase/cta-articoli]])
+
 ## [2026-11-18] review | CTA negli articoli di release (pre-push)
 - Report: [[specs/showcase/cta-articoli/REPORT]]
 - Scope: spec

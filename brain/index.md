@@ -24,6 +24,7 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 | Domain | Map | Contract | Flows | Concepts |
 |---|---|---|---|---|
 | sito | [[domains/sito/sito]] | [[domains/sito/sito-contract]] | 3 | 3 |
+| showcase | [[domains/showcase/showcase]] | [[domains/showcase/showcase-contract]] | 2 | 2 |
 
 ## Specs (per domain)
 
@@ -33,13 +34,13 @@ Entry point of the knowledge base. Links the work areas: chore (informal plannin
 | home | [[specs/home/confronto-ticket/SPEC]] | Implemented (prove sul dispositivo aperte) |
 | sito | [[specs/sito/un-posto-solo/SPEC]] | Implemented (in produzione dal 2026-11-16) |
 | showcase | [[specs/showcase/log-articoli/SPEC]] | Approved (con PLAN) |
-| showcase | [[specs/showcase/cta-articoli/SPEC]] | Implemented (2026-11-18) |
+| showcase | [[specs/showcase/cta-articoli/SPEC]] | Implemented, ingested (2026-11-18) |
 
 Spec map: [[specs/home/home-specs|home-specs.md]] · [[specs/sito/sito-specs|sito-specs.md]] · [[specs/showcase/showcase-specs|showcase-specs.md]]
 
 ## Tech debt
 
-_empty_
+- [[tech-debt/showcase/cta-articoli]] — 1 NIT dalla review: pareggio tra release con la stessa data
 
 ## Feature improvements
 
@@ -52,7 +53,7 @@ _empty_
 
 > `adversarial-review` writes SHIP/DO-NOT-SHIP reports. Standalone reviews land under `<reviews>/<slug>/`; spec-implementation reviews land in the spec's review folder — inside the spec folder (`review.location: spec-folder`) or at `<reviews>/<domain>/<spec>/` (`review-tree`). Paths come from `brain/brain.config.json` (see `AGENTS.md` → Project configuration).
 
-- [[specs/showcase/cta-articoli/REPORT|showcase/cta-articoli]] — spec · do-not-ship · critical · 2026-11-18
+- [[specs/showcase/cta-articoli/REPORT|showcase/cta-articoli]] — spec · do-not-ship · critical · 2026-11-18 · corretto prima del push, ingested
 - [[review/2026-11-15-count-up-fix/REPORT|2026-11-15-count-up-fix]] — standalone · do-not-ship · critical · 2026-11-15
 - [[review/2026-11-15-seo-geo-basi/REPORT|2026-11-15-seo-geo-basi]] — standalone · do-not-ship · critical · 2026-11-15
 

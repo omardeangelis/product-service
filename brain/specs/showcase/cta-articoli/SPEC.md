@@ -4,6 +4,8 @@ type: spec
 status: implemented
 links: ["[[specs/showcase/log-articoli/SPEC]]", "[[personas]]", "[[chore/product]]", "[[chore/motion]]", "[[specs/showcase/showcase-specs]]", "[[specs/showcase/cta-articoli/REPORT]]"]
 created: 2026-11-17
+ingested: true
+last_ingested: 2026-11-18
 updated: 2026-11-18
 ---
 

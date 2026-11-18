@@ -14,8 +14,8 @@ links:
   - "[[specs/showcase/cta-articoli/SPEC]]"
   - "[[specs/showcase/cta-articoli/PLAN]]"
   - "[[specs/showcase/cta-articoli/IMPLEMENTATION-NOTES]]"
-ingested: false
-last_ingested: null
+ingested: true
+last_ingested: 2026-11-18
 created: 2026-11-18
 updated: 2026-11-18
 ---

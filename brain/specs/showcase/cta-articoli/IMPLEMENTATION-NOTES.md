@@ -4,8 +4,13 @@ type: implementation-notes
 spec: cta-articoli
 links:
   - "[[specs/showcase/cta-articoli/SPEC]]"
-ingested: false
-last_ingested: null
+  - "[[specs/showcase/cta-articoli/REPORT]]"
+  - "[[domains/showcase/flows/inviti-alla-call-in-una-release]]"
+  - "[[domains/showcase/flows/scelta-del-banner-in-build]]"
+  - "[[domains/showcase/concepts/firma]]"
+  - "[[domains/showcase/concepts/banner-intermedio]]"
+ingested: true
+last_ingested: 2026-11-18
 created: 2026-11-17
 updated: 2026-11-18
 ---
@@ -107,4 +112,4 @@ updated: 2026-11-18
 
 ## Remaining Work
 
-- Nessuno. Da offrire: `docs-maintenance` per portare la spec nel dominio showcase, e `adversarial-review` (non parte da sola, `review.mode` è `plan`).
+- Nessuno. `adversarial-review` e `docs-maintenance` fatti il 2026-11-18 (dominio [[domains/showcase/showcase]]).
