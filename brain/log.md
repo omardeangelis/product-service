@@ -3,7 +3,7 @@ domain: _root
 type: index
 links: []
 created: 2026-11-12
-updated: 2026-11-17
+updated: 2026-11-18
 ---
 
 # Brain — Log
@@ -17,6 +17,28 @@ Append-only ingest/spec log. Newest first. Cap at 50 entries; drop the oldest wh
 - Flows written: <count>
 - Concepts written: <count>
 -->
+
+## [2026-11-18] implemented | Le CTA negli articoli di release
+- Source: [[specs/showcase/cta-articoli/SPEC]] (T8 fatto: prototipo `src/lab/` e rotta `/lab/[slug]` cancellati su richiesta di Omar, prima del deploy)
+- Chiuse anche D11 (resta la salita del banner) e la regola reduced motion del pulsante flottante (`global.css`)
+- Spec `implemented`, piano `Complete`. Da fare: `docs-maintenance`
+
+## [2026-11-17] implementing | Le CTA negli articoli di release: T1–T7
+- Source: [[specs/showcase/cta-articoli/SPEC]] (T1–T7 completati; T8 dopo il deploy)
+- Firma con foto in fondo alle 6 release; un banner Partner/Team a metà corpo, deciso in build; entrate armate visibili senza JS; flottante nascosto sulla Firma
+- Build verde; verificato nel browser da 224 a 1440 px, a 1× e 1,25×, con reduced motion e senza JS. Note: [[specs/showcase/cta-articoli/IMPLEMENTATION-NOTES]]
+
+## [2026-11-17] plan | Le CTA negli articoli di release ("Firma" e banner intermedio)
+- Plan: [[specs/showcase/cta-articoli/PLAN]] (T1–T8 in catena; T1 e T8 con Omar)
+- Grill: banner automatico a metà, foto di Omar al posto delle iniziali, flottante nascosto quando la Firma è in vista (nuovo AC12 nella spec, ora Approved)
+- Motion: `design-engineer` conferma i valori del prototipo, con entrate armate (`data-armed`) invece di `.reveal` per AC10; salita del banner da riconfermare in T7 (D11)
+- Gate: adversarial-verifier (DO NOT SHIP, 0 blocker / 3 major / 4 minor / 5 nit, tutti integrati: lingua del banner nella release inglese, T6 dopo T5, controllo finale su stringhe sbagliate, margine 36 px, guardia D2, lampo del flottante, strumenti del browser)
+
+## [2026-11-17] spec | Le CTA negli articoli di release ("Firma" e banner intermedio)
+- Created spec: [[specs/showcase/cta-articoli/SPEC]]
+- Domain: showcase
+- Status: Draft
+- Da prototipo: `src/lab/cta-articoli/` (rotta `/lab/cta-articoli`), senza review UX/UI né state sweep
 
 ## [2026-11-17] implementing | Showcase: in produzione, prototipo cancellato
 - Source: [[specs/showcase/log-articoli/SPEC]] (T15, T16 e T18 completati)

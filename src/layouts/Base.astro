@@ -136,10 +136,23 @@ const structuredData = ldJson([...sharedGraph(Astro.site!), ...jsonLd]);
         });
       }
 
-      /* ----- floating CTA ----- */
+      /* ----- floating CTA: compare oltre 480px; sulle release si toglie mentre la Firma ([data-nasconde-float]) è in vista ----- */
       const fc = document.querySelector('.float-cta');
       if (fc) {
-        const toggle = () => fc.classList.toggle('show', window.scrollY > 480);
+        const firma = document.querySelector('[data-nasconde-float]');
+        // Primo valore letto subito: ricaricando in fondo il flottante non entra sopra la Firma per poi uscire.
+        let coperto = false;
+        if (firma) {
+          const r = firma.getBoundingClientRect();
+          coperto = r.top < window.innerHeight && r.bottom > 0;
+        }
+        const toggle = () => fc.classList.toggle('show', window.scrollY > 480 && !coperto);
+        if (firma) {
+          new IntersectionObserver(([voce]) => {
+            coperto = voce.isIntersecting;
+            toggle();
+          }).observe(firma);
+        }
         window.addEventListener('scroll', toggle, { passive: true });
         toggle();
       }

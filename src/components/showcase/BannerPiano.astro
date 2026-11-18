@@ -1,0 +1,62 @@
+---
+/*
+ * Banner intermedio delle release: una striscia con punto verde, testo e «Prenota →» verso Cal, al massimo uno
+ * per articolo. Due testi (Partner o Team); la scelta e la posizione vivono in src/data/cta-articoli.ts e in
+ * src/pages/showcase/[slug].astro. Entrata armata (sale e si dissolve; con reduced motion solo dissolvenza). Il testo è sempre italiano: `lang` si passa solo se l'articolo non lo è.
+ */
+import { PRICES, SITE, formatEuro } from '../../config';
+
+interface Props {
+  piano: 'partner' | 'team';
+  lang?: string;
+}
+
+const { piano, lang } = Astro.props;
+---
+
+<aside class="cta-strip" aria-label={piano === 'partner' ? 'Piano Partner' : 'Piano Team'} lang={lang}>
+  <span class="dot" aria-hidden="true"></span>
+  {
+    piano === 'partner' ? (
+      <p><b>Da {formatEuro(PRICES.partner.from)} € al mese.</b> Pausa e disdetta libere, il codice è tuo dal primo giorno.</p>
+    ) : (
+      <p><b>Un team di senior a {formatEuro(PRICES.team.sprint)} € per sprint:</b> costruisci più veloce dei tuoi competitor, valida uno sprint per volta.</p>
+    )
+  }
+  <a class="cta-go" href={SITE.calUrl} target="_blank" rel="noopener">Prenota&nbsp;→</a>
+</aside>
+
+<style>
+  .cta-strip {
+    margin: 36px 0;
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px 14px 18px; border-radius: 16px;
+    background: var(--accent-soft); border: 1px solid #dde3ff;
+  }
+  .cta-strip p { margin: 0; flex: 1; min-width: 0; color: var(--muted); font-size: .95rem; line-height: 1.5; }
+  .cta-strip p b { color: var(--ink); }
+  .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px var(--ok-soft); }
+  .cta-go {
+    flex: none; padding: 9px 16px; border-radius: 999px;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: .9rem; text-decoration: none;
+    transition: transform var(--dur-press) var(--ease-press);
+  }
+  .cta-go:active { transform: scale(.97); }
+  /* Entrata armata: nascosto solo se lo script ha armato la pagina (data-armed) e finché non è in vista (data-in). */
+  @media screen {
+    :global([data-articolo][data-armed]) .cta-strip:not([data-in]) { opacity: 0; }
+  }
+  .cta-strip[data-in] { animation: cta-rise var(--dur-reveal) var(--ease-out-expo) backwards; }
+  @keyframes cta-rise { from { opacity: 0; transform: translateY(24px); } }
+  @keyframes cta-fade { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-go:active { transform: none; }
+    .cta-strip[data-in] { animation: cta-fade var(--dur-swap) linear backwards; }
+  }
+  @media (max-width: 600px) {
+    .cta-strip { flex-wrap: wrap; align-items: flex-start; }
+    .cta-strip > .dot { margin-top: 7px; }
+    .cta-strip p { flex-basis: calc(100% - 22px); }
+    .cta-go { margin-left: 22px; }
+  }
+</style>

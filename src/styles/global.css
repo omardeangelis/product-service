@@ -141,3 +141,5 @@ footer a{color:var(--muted)}
 .float-cta.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .float-cta:hover{box-shadow:0 16px 40px rgba(47,75,255,.5)}
 @media(max-width:600px){.float-cta .fc-long{display:none} .float-cta{font-size:14px;padding:12px 20px}}
+/* reduced motion: resta al suo posto e compare o sparisce solo in dissolvenza */
+@media(prefers-reduced-motion:reduce){.float-cta{transform:translateX(-50%);transition:opacity var(--dur-swap) linear, box-shadow var(--dur-hover) ease}}

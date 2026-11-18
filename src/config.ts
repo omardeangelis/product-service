@@ -14,6 +14,8 @@ export const GUARANTEE = {
 export const SITE = {
   name: 'Spatalo',
   founder: 'Omar De Angelis',
+  // Foto della Firma in fondo alle release: 192×192, ritagliata sul viso.
+  founderPhoto: '/firma/omar.jpg',
   role: 'Studio di product engineering',
   title: 'Spatalo — Product engineering in abbonamento',
   description: `Un product engineer senior nel tuo team, a prezzo fisso mensile. Primo deploy in produzione entro ${guaranteeDays} giorni o il primo mese è gratis. Pause libere.`,
