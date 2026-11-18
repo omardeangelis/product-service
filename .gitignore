@@ -9,3 +9,7 @@ node_modules/
 .env.production
 # macOS
 .DS_Store
+# Claude Code: config locale della macchina (launch.json ha il percorso del Node locale), worktree e permessi
+.claude/launch.json
+.claude/settings.local.json
+.claude/worktrees/

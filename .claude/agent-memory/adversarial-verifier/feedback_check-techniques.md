@@ -14,6 +14,10 @@ Lessons on how to check, learned reviewing a PLAN.md (2026-11-15):
 - **"The build fails when…" claims need a scratch build, not docs.** Astro 7.3.5 `reference()` to a missing entry only logs `[ERROR] Invalid content reference` and exits 0 (content-layer.js `#validateReferences`). A plan validation expecting a non-zero exit there is unpassable.
 - **`xmllint --noout` exits 0 on namespace errors** (e.g. undeclared `atom:` prefix): a feed check must also require empty stderr.
 - **Parallel waves share one `dist/`**: `astro build` empties outDir at start (static-build.js `emptyDir`), and validations that temporarily edit content (drafts, removed fields) poison sibling tasks. Also recompute waves from `depends_on` yourself: the orchestrator does, a hand-written wave table does not bind it. "git status confirms the revert" is vacuous on uncommitted/untracked files.
+- **Run negative assertions ("X does not contain Y") against the baseline `dist/` first.** A T7 check "llms.txt has no «Prenota una call»" was already false before any change (src/pages/llms.txt.ts lists the Cal link): unpassable gate.
+- **"Build fails with our guard message" fixtures**: a fixture that references a missing file trips the framework's own error first (Astro `ImageNotFound`), so the guard never runs. Build the fixture in scratch and read which message actually appears.
+- **CSS specificity ties: read the built CSS order, don't guess.** With Astro's attribute scoping, a page rule `.x[cid] > * + *` and a child component's `.y[cid]` tie at (0,2,0), and the page CSS is emitted after the component's in `_slug_.*.css`, so the page wins. Proves/disproves "exact prototype margin" claims cheaply.
+- **Content inserted inside a `lang="en"` container inherits English**: when a plan injects fixed-language UI (banners, CTAs) into article bodies, check the container's `lang`.
 - In zsh, `echo "$(cmd) exit=$?"` reports cmd's status, not the previous command's; capture `rc=$?` first. `echo ======` fails in zsh (EQUALS expansion): quote it.
 
 **Why:** each of these produced or nearly produced a false PASS/FAIL during a review.

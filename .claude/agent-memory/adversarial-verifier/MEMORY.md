@@ -1,3 +1,3 @@
 # Memory index
 
-- [Check techniques](feedback_check-techniques.md) — harness grep masks missing -r; Astro agent auto-background hides dev errors; verify in scratch build copy; mutation vs snapshot
+- [Check techniques](feedback_check-techniques.md) — grep -r masking; Astro dev auto-background; scratch builds; baseline negative checks; CSS tie order; lang inheritance
