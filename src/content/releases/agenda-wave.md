@@ -14,11 +14,11 @@ metric:
   label: "nessun account, nessun dato tracciato"
 ---
 
-Provando a organizzare le mie giornate a [Wave by Vento](https://www.linkedin.com/company/wavebyvento/), mi sono trovato scomodo sia con l'agenda sul sito sia con l'app ufficiale. Allora ho fatto una soluzione mia per esplorare il palinsesto e pianificare la propria giornata, o le proprie giornate, durante l'evento.
+Provando a organizzare le mie giornate a [Wave by Vento](https://www.linkedin.com/company/wavebyvento/), mi sono trovato scomodo sia con l'agenda sul sito sia con l'app ufficiale. Allora ho creato una soluzione che permettesse di esplorare il palinsesto e pianificare le proprie giornate durante l'evento.
+
+Mi sembrava una cosa carina e utile per tutti, sicuramente più utile che polemizzare sullo stato attuale.
 
 La trovate su [wave.spatalo.tech](https://wave.spatalo.tech/).
-
-Ci tengo a dirlo: non è un'applicazione ufficiale. Mi sembrava una cosa carina e utile per tutti, sicuramente più utile che polemizzare sullo stato attuale.
 
 ## Il palinsesto, sala per sala
 

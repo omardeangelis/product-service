@@ -13,9 +13,9 @@ metric:
   label: "il peso di una skill che confermi tu"
 ---
 
-Non è mai banale far vedere il lavoro che si fa sul backend. Su [SeVedemo](https://www.linkedin.com/company/sevedemo/) passiamo molto tempo a rifinire il modo in cui mappiamo le competenze di un professionista, e il criterio su cui investiamo di più è la **pertinenza**.
+Non è mai banale far vedere il lavoro che si fa sul backend. Su [SeVedemo](https://www.linkedin.com/company/sevedemo/) passiamo molto tempo a rifinire la mappatura delle competenze, e il criterio su cui investiamo di più è la **pertinenza**.
 
-Con questa release SeVedemo segue meglio come cambia un professionista nel tempo: quali competenze si consolidano, quali evolvono e quali vengono lasciate indietro.
+Con questa release SeVedemo riconosce e analizza l'evoluzione di un professionista nel tempo: quali competenze si consolidano, quali evolvono e quali vengono lasciate indietro.
 
 Al centro resta la persona. Le competenze confermate da chi ha il profilo pesano di più di quelle estratte da un LLM, perché la ricerca non deve diventare una gara a chi scrive il profilo migliore per una macchina.
 
@@ -33,7 +33,7 @@ Ora ogni skill viene confrontata con il profilo (bio, esperienze e formazione) e
 
 ## Un profilo che si aggiorna
 
-Il profilo non si estrae una volta sola. Quando cambia qualcosa (un nuovo sync con LinkedIn, un'esperienza in più, un CV con un corso nuovo, una bio riscritta) SeVedemo rilegge cosa è cambiato e propone le nuove affini.
+Il profilo non si estrae una volta sola. Quando cambia qualcosa (un nuovo sync con LinkedIn, un'esperienza in più, un CV con un corso nuovo, una bio riscritta) l'applicazione riconosce il cambiamento e propone un nuovo set di competenze coerenti con l'evoluzione.
 
 Le proposte si rinnovano a ogni estrazione, mentre le scelte del freelance restano: una skill rifiutata non torna più. Nell'esempio del video, in sei mesi e quattro estrazioni un profilo da designer passa da 4 a 9 skill pertinenti, man mano che si sposta verso il motion, il 3D e il ruolo di design lead.
 
@@ -43,13 +43,13 @@ Le proposte si rinnovano a ogni estrazione, mentre le scelte del freelance resta
 
 Le skill compatibili compaiono in una sezione che vede solo il freelance. Con **+** entrano fra le sue skill, con **×** non vengono più riproposte.
 
-Ogni skill ha un nome solo: «Usability Tests» diventa «usability testing», e una skill che è già nel profilo non viene proposta di nuovo. Così il nome combacia più facilmente con quello che cerca il recruiter, e spariscono i duplicati e le skill scritte male.
+Ogni skill ha un nome solo: «Usability Tests» diventa «usability testing», e una skill che è già nel profilo non viene proposta di nuovo. Così il nome combacia più facilmente con quello che cerca l'azienda, e spariscono i duplicati e le skill scritte male.
 
 ![La sezione competenze con le skill aggiunte, i pulsanti per confermare o rifiutare e lo stato di ogni skill dopo il salvataggio](/releases/skill-suggerite/3-conferma.jpg)
 
 ## Il peso in ricerca
 
-Quando un recruiter cerca una competenza, ogni skill del profilo contribuisce così:
+Quando un'azienda cerca un professionista, i diversi gradi di pertinenza contribuiscono al risultato in modo differente:
 
 > contributo = 0,85 × similarità × peso, + 0,15 se il nome è esatto
 
