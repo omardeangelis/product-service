@@ -1,65 +1,76 @@
 ---
-title: "Beautiful UI means taking care of every state"
-excerpt: "Loading, empty, error, partial, offline. Acceleration lets you do <em>more</em>, but you are the one who decides what that more is."
+title: "Beautiful UI: curare ogni stato dell'interfaccia"
+excerpt: "Sfruttare l'accelerazione data dall'AI per dedicare tempo a curare happy path, errori e stati intermedi, validando prototipi interattivi prima di scrivere codice."
 published: "2026-11-10"
 project: "SeVedemo"
 cover:
   kind: video
   src: /releases/beautiful-ui/stati.mp4
   poster: /releases/beautiful-ui/poster.jpg
-  alt: "The action bar of an AI-generated job offer going through loading, missing data, error, plan limit and success"
+  alt: "La barra delle azioni di un'offerta generata dall'AI che passa da caricamento, dati mancanti, errore, limite del piano e riuscita"
 caseStudy: offerte-ai
-lang: en
 ---
 
-## Every state is part of the interface
+## Cosa vuol dire creare una bella interfaccia?
 
-Crafting beautiful interfaces for beautiful users means taking care of every state: loading, empty, error, partial, offline. The happy path is the screen you design first, but the other states are where people actually end up: when the network drops, when a field is missing, when their plan runs out.
+Un'interfaccia è più di un happy path e del semplice raggiungimento di un obiettivo.
 
-The video shows the review step of a job offer written by an AI assistant. A single action bar carries every outcome the real system can return, and each one tells people what happened and what they can do next.
+È la cura di ogni scenario: dal caricamento all'errore, dal completamento parziale alla ripresa. Vuol dire avere una soluzione chiara e una decisione presa per ogni schermata che l'utente si troverà davanti, anche quando è offline.
 
-### Loading
+In questo esempio mostriamo il flusso di revisione di un'[offerta di lavoro scritta da un assistente AI](/case-study/offerte-ai).
 
-![The bar lists the steps: creating the offer, then looking for matching freelancers](/releases/beautiful-ui/1-caricamento.jpg)
+La soluzione implementata è una semplice floating bar che rende espliciti errori e campi mancanti e guida l'utente verso la prossima azione.
 
-The bar says what is happening, step by step, instead of showing a spinner and nothing else.
+### Caricamento
 
-### Partial
+![La barra elenca i passi: creazione dell'offerta, poi ricerca dei freelance compatibili](/releases/beautiful-ui/1-caricamento.jpg)
 
-![Four fields are missing: rate, duration, commitment and location, each one a chip](/releases/beautiful-ui/2-dati-mancanti.jpg)
+La barra racconta cosa sta succedendo, passo per passo.
 
-Four fields are missing. Each one is a chip that takes you straight to the field to fill in.
+### Parziale
 
-### Error
+![Mancano quattro campi: tariffa, durata, impegno e sede, ognuno in un chip](/releases/beautiful-ui/2-dati-mancanti.jpg)
 
-![The offer could not be created, the edits are still there, with a Retry button](/releases/beautiful-ui/3-errore.jpg)
+Mancano quattro campi. Ognuno è un chip che porta dritto al campo da compilare.
 
-The request failed, but nothing is lost: the edits are still there and retrying is one click away.
+### Errore
 
-### Plan limit
+![L'offerta non è stata creata, le modifiche restano e c'è un pulsante per riprovare](/releases/beautiful-ui/3-errore.jpg)
 
-![The plan's active-offer limit is reached, with a link to upgrade](/releases/beautiful-ui/4-limite-piano.jpg)
+La richiesta è fallita e le modifiche sono ancora lì: per riprovare basta un clic.
 
-Not an error: the draft is saved and the way forward is an upgrade, not a dead end.
+### Limite del piano
 
-### Success
+![Raggiunto il limite di offerte attive del piano, con il link per fare l'upgrade](/releases/beautiful-ui/4-limite-piano.jpg)
 
-![Offer created, and the matching profiles are on their way](/releases/beautiful-ui/5-riuscita.jpg)
+La bozza è salvata e, una volta fatto l'upgrade, si potrà andare avanti.
 
-A confirmation, and the next thing that is about to happen.
+### Riuscita
 
-## What “more” should mean
+![Offerta creata, e i profili compatibili sono in arrivo](/releases/beautiful-ui/5-riuscita.jpg)
 
-Acceleration allows you to do “more”, but you are the one who decides what that “more” is. In my view it means:
+Una conferma, e la prossima cosa che sta per succedere.
 
-- more quality gates;
-- more time to discover and handle edge cases;
-- more time to bring creativity into the process.
+## La gestione degli stati intermedi
 
-The goal is to take back your time and invest it in what you believe matters most, instead of empty productivity or busywork. Faster code generation does not make an error state less important; it just leaves you with no excuse to skip it.
+Gli stati intermedi descrivono gli scenari in cui l'utente cambia idea, riceve un errore, dimentica un campo o si interrompe per concludere in un secondo momento.
 
-## Try it: the /prototype skill
+La difficoltà principale sta nel riuscire a immedesimarsi in un utente che non sa come raggiungere l'obiettivo, o a cui il percorso non è chiaro.
 
-The bar above is a prototype: the panel on the left forces each outcome, so every state can be seen and tested before a line of production code exists.
+Lavorando da solo il problema cresce: manca un collega che chieda «e se l'utente cambia idea a metà?». Una possibile soluzione è la skill [ui-sweep](/showcase/ui-sweep/), con cui ho mitigato questo problema: nell'articolo racconto come bilanciare l'accelerazione rafforzando il processo di refinement e analizzando ogni stato prima di scrivere codice di produzione.
 
-If you want to iterate on and test a prototype the same way, try the `/prototype` skill. It builds divergent variants of the same piece of UI, lets you pick a winner and sweeps through its states before it turns into a spec. It is part of [brain-manager](https://www.npmjs.com/package/brain-manager), and you do not need the whole package: ask your agent to install just this one skill.
+## Produrre di più o produrre più qualità
+
+L'accelerazione ti permette di fare «di più», ma sei tu a decidere cosa sia quel «di più»:
+
+- più quality gate;
+- più tempo per scoprire e gestire i casi limite;
+- più tempo per portare creatività nel processo.
+
+L'obiettivo è riprenderti il tuo tempo e investirlo in ciò che conta davvero. Il codice ora si genera più in fretta: il tempo per curare ogni stato di errore c'è.
+
+## Esplorare più soluzioni con prototipi interattivi
+
+La barra qui sopra è un prototipo: il pannello a sinistra forza ogni esito, così ogni stato si può vedere e testare prima che esista una riga di codice di produzione.
+
+Se vuoi iterare e testare un prototipo allo stesso modo, prova la skill `/prototype`. Costruisce varianti divergenti dello stesso pezzo di UI, ti fa scegliere la vincente e ne passa in rassegna gli stati prima che diventi una specifica. Come ui-sweep, fa parte di [brain-manager](https://www.npmjs.com/package/brain-manager): per usarla basta chiedere al proprio agente di installare solo questa skill.
